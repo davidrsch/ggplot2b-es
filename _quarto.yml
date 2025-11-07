@@ -34,7 +34,7 @@ book:
           - text: Original
             url: https://github.com/hadley/ggplot2-book/
           - text: Traducción
-            url: https://github.com/davidrsch/ggplot2-bookes
+            url: https://github.com/davidrsch/ggplot2b-es
   page-navigation: true
 
   chapters:
