@@ -14,13 +14,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Insatall OS packages
+      - name: Install OS packages
         run: |
-          sudo apt-get install libgdal-dev
-          sudo apt-get install libgeos-dev
-          sudo apt-get install libproj-dev
-          sudo apt-get install libfontconfig1-dev
-          sudo apt-get install libudunits2-dev
+          # Ensure apt package lists are fresh and handle release info changes on some runners
+          sudo apt-get clean
+          sudo apt-get update --allow-releaseinfo-change
+
+          # Install all required packages in a single command, non-interactively.
+          # Use --fix-missing to tolerate transient 404/mirror issues and --no-install-recommends to keep image small.
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --fix-missing \
+            libgdal-dev libgeos-dev libproj-dev libfontconfig1-dev libudunits2-dev libpoppler-dev poppler-utils
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
