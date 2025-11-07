@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>La Gramática – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -86,14 +86,15 @@ div.csl-indent {
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,7 +108,7 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -131,7 +132,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -163,7 +164,9 @@ window.Quarto = {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -176,7 +179,7 @@ window.Quarto = {
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -457,8 +460,8 @@ window.Quarto = {
 <section id="sec-simple-plot" class="level2"><h2 class="anchored" data-anchor-id="sec-simple-plot">Construyendo un diagrama de dispersión</h2>
 <p>¿Cómo se relacionan el tamaño del motor y la economía de combustible? Podríamos crear un diagrama de dispersión de la cilindrada del motor y las mpg en carretera con puntos coloreados según el número de cilindros:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="mastery_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -524,13 +527,13 @@ window.Quarto = {
 </div>
 </div>
 <p>Este nuevo conjunto de datos es el resultado de aplicar las asignaciones estéticas a los datos originales. Podemos crear muchos tipos diferentes de gráficos utilizando estos datos. El diagrama de dispersión utiliza puntos, pero si en su lugar se dibujasen líneas obtendríamos un diagrama de líneas. Si usáramos barras, obtendríamos un diagrama de barras. Ninguno de esos ejemplos tiene sentido para estos datos, pero aún así podríamos dibujarlos (hemos omitido las leyendas para ahorrar espacio):</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -579,10 +582,10 @@ window.Quarto = {
 </table>
 <p>Las gráficas más complejas con combinaciones de múltiples geoms no tienen un nombre especial y tenemos que describirlas a mano. Por ejemplo, este gráfico superpone una línea de regresión por grupo encima de un diagrama de dispersión:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="mastery_files/figure-html/complex-plot-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -679,10 +682,10 @@ window.Quarto = {
 </section></section><section id="sec-complex-plot" class="level2"><h2 class="anchored" data-anchor-id="sec-complex-plot">Añadiendo complejidad</h2>
 <p>Con un ejemplo simple en nuestro haber, veamos ahora este ejemplo un poco más complicado:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">year</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">year</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="mastery_files/figure-html/complex-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -786,7 +789,76 @@ Wickham, Hadley. 2008. <span>«Practical tools for exploring data and models»</
 Wilkinson, Leland. 2005. <em>The Grammar of Graphics</em>. 2nd ed. Statistics y Computing. Springer.
 </div>
 </div>
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -837,13 +909,14 @@ Wilkinson, Leland. 2005. <em>The Grammar of Graphics</em>. 2nd ed. Statistics y 
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

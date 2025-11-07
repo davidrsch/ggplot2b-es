@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>6&nbsp; Mapas – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -86,14 +86,15 @@ div.csl-indent {
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,7 +108,7 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -137,7 +138,9 @@ div.csl-indent {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -150,7 +153,7 @@ div.csl-indent {
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -425,7 +428,7 @@ div.csl-indent {
 <p> </p>
 <p>Quizás el método más sencillo para dibujar mapas sea utilizar <code>geom_polygon()</code> para dibujar límites para diferentes regiones. Para este ejemplo tomamos datos del paquete de mapas usando <code><a href="https://ggplot2.tidyverse.org/reference/map_data.html">ggplot2::map_data()</a></code>. El paquete de mapas no es particularmente preciso ni está actualizado, pero está integrado en R, por lo que es un lugar fácil para comenzar. Aquí hay un conjunto de datos que especifica los límites del condado de Michigan:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mi_counties</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">"county"</span>, <span class="st">"michigan"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mi_counties</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">"county"</span>, <span class="st">"michigan"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">select</span><span class="op">(</span>lon <span class="op">=</span> <span class="va">long</span>, <span class="va">lat</span>, <span class="va">group</span>, id <span class="op">=</span> <span class="va">subregion</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mi_counties</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     lon  lat group     id</span></span>
@@ -434,16 +437,16 @@ div.csl-indent {
 <span><span class="co">#&gt; 3 -83.4 44.9     1 alcona</span></span>
 <span><span class="co">#&gt; 4 -83.3 44.8     1 alcona</span></span>
 <span><span class="co">#&gt; 5 -83.3 44.8     1 alcona</span></span>
-<span><span class="co">#&gt; 6 -83.3 44.8     1 alcona</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; 6 -83.3 44.8     1 alcona</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En este conjunto de datos tenemos cuatro variables: <code>lat</code> y <code>long</code> especifican la latitud y longitud de un vértice (es decir, una esquina del polígono), <code>id</code> especifica el nombre de una región y <code>group</code> proporciona un valor único. identificador de áreas contiguas dentro de una región (por ejemplo, si una región constaba de varias islas). Para tener una mejor idea de lo que contienen los datos, podemos trazar <code>mi_counties</code> usando <code>geom_point()</code>, como se muestra en el panel izquierdo a continuación. En este gráfico, cada fila del marco de datos se traza como un único punto, lo que produce un diagrama de dispersión que muestra las esquinas de cada condado. Para convertir este diagrama de dispersión en un mapa, usamos <code>geom_polygon()</code>, que dibuja cada condado como un polígono distinto. Esto se ilustra en el panel derecho a continuación.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mi_counties</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mi_counties</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.25</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mi_counties</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_polygon</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -460,7 +463,7 @@ div.csl-indent {
 <p>El enfoque descrito anteriormente tiene algunas limitaciones, entre las que destaca el hecho de que el formato de datos simple “longitud-latitud” no se utiliza normalmente en la cartografía del mundo real. Los datos vectoriales para mapas normalmente se codifican utilizando el estándar de “características simples” producido por el Open Geospatial Consortium. El paquete sf <span class="citation" data-cites="sf">(<a href="#ref-sf" role="doc-biblioref">Pebesma 2018</a>)</span> desarrollado por Edzer Pebesma <a href="https://github.com/r-spatial/sf" class="uri">https://github.com/r-spatial/sf</a> proporciona un excelente conjunto de herramientas para trabajar con dichos datos y las funciones <code>geom_sf()</code> y <code>coord_sf()</code> en ggplot2 están diseñados para funcionar junto con el paquete sf.</p>
 <p>Para presentar estas funciones, nos basamos en el paquete ozmaps de Michael Sumner <a href="https://github.com/mdsumner/ozmaps/" class="uri">https://github.com/mdsumner/ozmaps/</a> que proporciona mapas de las fronteras estatales de Australia, áreas de gobierno local, límites electorales, etc. <span class="citation" data-cites="ozmaps">(<a href="#ref-ozmaps" role="doc-biblioref">Sumner 2019</a>)</span> . Para ilustrar cómo se ve un conjunto de datos sf, importamos un conjunto de datos que representa las fronteras de los estados y territorios australianos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mdsumner/ozmaps">ozmaps</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mdsumner/ozmaps">ozmaps</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE</span></span>
 <span></span>
@@ -480,14 +483,14 @@ div.csl-indent {
 <span><span class="co">#&gt; 4 South Australia   (((137 -34.5, 137 -34.5, 137 -34.5, 137 -34.5, 137 -34.5, 1…</span></span>
 <span><span class="co">#&gt; 5 Western Australia (((126 -14, 126 -14, 126 -14, 126 -14, 126 -14)), ((124 -16…</span></span>
 <span><span class="co">#&gt; 6 Tasmania          (((148 -40.3, 148 -40.3, 148 -40.3, 148 -40.3)), ((147 -39.…</span></span>
-<span><span class="co">#&gt; # ℹ 3 more rows</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; # ℹ 3 more rows</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Este resultado muestra algunos de los metadatos asociados con los datos (que se analizan momentáneamente) y nos dice que los datos son esencialmente un tibble con 9 filas y 2 columnas. Una ventaja de los datos de ciencia ficción es inmediatamente evidente: podemos ver fácilmente la estructura general de los datos: Australia se compone de seis estados y algunos territorios. Hay 9 unidades geográficas distintas, por lo que hay 9 filas en este tibble (cf.&nbsp;<code>mi_counties data</code> donde hay una fila por vértice del polígono).</p>
 <p>La columna más importante es “geometría” <code>geometry</code>, que especifica la geometría espacial para cada uno de los estados y territorios. Cada elemento de la columna <code>geometry</code> es un objeto multipolígono que, como su nombre indica, contiene datos que especifican los vértices de uno o más polígonos que delimitan el borde de una región. Dados los datos en este formato, podemos usar <code>geom_sf()</code> y <code>coord_sf()</code> para dibujar un mapa útil sin especificar ningún parámetro o incluso declarar explícitamente ninguna estética:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">oz_states</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">oz_states</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -507,15 +510,15 @@ div.csl-indent {
 <p>En algunos casos, es posible que desees superponer un mapa encima de otro. El paquete ggplot2 admite esto permitiéndole agregar múltiples capas <code>geom_sf()</code> a un gráfico. Como ejemplo, usaremos los datos de “oz_states” para dibujar los estados australianos en diferentes colores y superpondremos este gráfico con los límites de las regiones electorales australianas. Para hacer esto, hay que realizar dos pasos de preprocesamiento. Primero, usaremos <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> para eliminar los “Other Territories” de las fronteras estatales.</p>
 <p>El siguiente código dibuja un gráfico con dos capas de mapa: la primera usa <code>oz_states</code> para llenar los estados en diferentes colores, y la segunda usa <code>oz_votes</code> para dibujar los límites electorales. En segundo lugar, extraeremos los límites electorales de forma simplificada utilizando la función <code>ms_simplify()</code> del paquete rmapshaper <span class="citation" data-cites="rmapshaper">(<a href="#ref-rmapshaper" role="doc-biblioref">Teucher y Russell 2018</a>)</span>. Generalmente, esto es una buena idea si el conjunto de datos original (en este caso, <code><a href="https://rdrr.io/pkg/ozmaps/man/abs-data.html">ozmaps::abs_ced</a></code>) se almacena a una resolución más alta que la que requiere su gráfico, para reducir el tiempo necesario para renderizar el gráfico.</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oz_states</span> <span class="op">&lt;-</span> <span class="fu">ozmaps</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ozmaps/man/ozmap_states.html">ozmap_states</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME</span> <span class="op">!=</span> <span class="st">"Other Territories"</span><span class="op">)</span></span>
-<span><span class="va">oz_votes</span> <span class="op">&lt;-</span> <span class="fu">rmapshaper</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rmapshaper/man/ms_simplify.html">ms_simplify</a></span><span class="op">(</span><span class="fu">ozmaps</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ozmaps/man/abs-data.html">abs_ced</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oz_states</span> <span class="op">&lt;-</span> <span class="fu">ozmaps</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ozmaps/man/ozmap_states.html">ozmap_states</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME</span> <span class="op">!=</span> <span class="st">"Other Territories"</span><span class="op">)</span></span>
+<span><span class="va">oz_votes</span> <span class="op">&lt;-</span> <span class="fu">rmapshaper</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rmapshaper/man/ms_simplify.html">ms_simplify</a></span><span class="op">(</span><span class="fu">ozmaps</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ozmaps/man/abs-data.html">abs_ced</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora que tenemos los conjuntos de datos <code>oz_states</code> y <code>oz_votes</code> para representar las fronteras estatales y electorales respectivamente, el gráfico deseado se puede construir agregando dos capas <code>geom_sf()</code> al gráfico:</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">oz_states</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">NAME</span><span class="op">)</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">oz_votes</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -528,7 +531,7 @@ div.csl-indent {
 <span class="header-section-number">6.2.2</span> Mapas etiquetados</h3>
 <p>Agregar etiquetas a mapas es un ejemplo de anotar gráficos (<a href="annotations.html" class="quarto-xref"><span>Capítulo 8</span></a>) y es compatible con <code>geom_sf_label()</code> y <code>geom_sf_text()</code>. Por ejemplo, si bien es razonable esperar que una audiencia australiana conozca los nombres de los estados australianos (y no están etiquetados en el gráfico anterior), pocos australianos conocerían los nombres de los diferentes electorados en la región metropolitana de Sydney. Entonces, para dibujar un mapa electoral de Sydney, primero necesitaríamos extraer los datos del mapa para los electorados relevantes y luego agregar la etiqueta. El siguiente gráfico se acerca a la región de Sydney especificando <code>xlim</code> y <code>ylim</code> en <code>coord_sf()</code> y luego usa <code>geom_sf_label()</code> para superponer cada electorado con una etiqueta:</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Filtrar electorados en la región metropolitana de Sydney</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Filtrar electorados en la región metropolitana de Sydney</span></span>
 <span><span class="va">sydney_map</span> <span class="op">&lt;-</span> <span class="fu">ozmaps</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ozmaps/man/abs-data.html">abs_ced</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Sydney"</span>, <span class="st">"Wentworth"</span>, <span class="st">"Warringah"</span>, <span class="st">"Kingsford Smith"</span>, <span class="st">"Grayndler"</span>, <span class="st">"Lowe"</span>, </span>
 <span>  <span class="st">"North Sydney"</span>, <span class="st">"Barton"</span>, <span class="st">"Bradfield"</span>, <span class="st">"Banks"</span>, <span class="st">"Blaxland"</span>, <span class="st">"Reid"</span>, </span>
@@ -542,7 +545,7 @@ div.csl-indent {
 <span>  <span class="fu">coord_sf</span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">150.97</span>, <span class="fl">151.3</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">33.98</span>, <span class="op">-</span><span class="fl">33.79</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_sf_label</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">NAME</span><span class="op">)</span>, label.padding <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">1</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not</span></span>
-<span><span class="co">#&gt; give correct results for longitude/latitude data</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; give correct results for longitude/latitude data</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -556,7 +559,7 @@ div.csl-indent {
 <span class="header-section-number">6.2.3</span> Agregar otras geomas</h3>
 <p>Aunque <code>geom_sf()</code> es especial en algunos aspectos, se comporta de la misma manera que cualquier otra geom, lo que permite trazar datos adicionales en un mapa con geoms estándar. Por ejemplo, es posible que deseemos trazar las ubicaciones de las capitales australianas en el mapa usando <code>geom_point()</code>. El siguiente código ilustra cómo se hace esto:</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oz_capitals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oz_capitals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span> </span>
 <span>  <span class="op">~</span><span class="va">city</span>,           <span class="op">~</span><span class="va">lat</span>,     <span class="op">~</span><span class="va">lon</span>,</span>
 <span>  <span class="st">"Sydney"</span>,    <span class="op">-</span><span class="fl">33.8688</span>, <span class="fl">151.2093</span>,  </span>
 <span>  <span class="st">"Melbourne"</span>, <span class="op">-</span><span class="fl">37.8136</span>, <span class="fl">144.9631</span>, </span>
@@ -572,7 +575,7 @@ div.csl-indent {
 <span>  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">oz_votes</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">oz_states</span>, colour <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">oz_capitals</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -594,7 +597,7 @@ div.csl-indent {
 <p>Y desafortunadamente, no es posible que ninguna proyección conserve la forma y el área. Esto hace que esté un poco más allá del alcance de este libro discutir las proyecciones cartográficas en detalle, aparte de señalar que la especificación de características simples le permite indicar qué proyección cartográfica desea utilizar. Para obtener más información sobre proyecciones de mapas, consulte Geocómputo con R <a href="https://geocompr.robinlovelace.net/" class="uri">https://geocompr.robinlovelace.net/</a> <span class="citation" data-cites="lovelace_geocomputation_2019">(<a href="#ref-lovelace_geocomputation_2019" role="doc-biblioref">Lovelace, Nowosad, y Muenchow 2019</a>)</span>.</p>
 <p>En conjunto, el datum geodésico (p.&nbsp;ej., WGS84), el tipo de proyección cartográfica (p.&nbsp;ej., Mercator) y los parámetros de la proyección (p.&nbsp;ej., ubicación del origen) especifican un <strong>sistema de referencia de coordenadas</strong>, o CRS, un conjunto completo de suposiciones utilizadas para traducir la información de latitud y longitud en un mapa bidimensional. Un objeto sf a menudo incluye un CRS predeterminado, como se ilustra a continuación:</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">oz_votes</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">oz_votes</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Coordinate Reference System:</span></span>
 <span><span class="co">#&gt;   User input: EPSG:4283 </span></span>
 <span><span class="co">#&gt;   wkt:</span></span>
@@ -615,16 +618,16 @@ div.csl-indent {
 <span><span class="co">#&gt;         SCOPE["Horizontal component of 3D system."],</span></span>
 <span><span class="co">#&gt;         AREA["Australia including Lord Howe Island, Macquarie Islands, Ashmore and Cartier Islands, Christmas Island, Cocos (Keeling) Islands, Norfolk Island. All onshore and offshore."],</span></span>
 <span><span class="co">#&gt;         BBOX[-60.56,93.41,-8.47,173.35]],</span></span>
-<span><span class="co">#&gt;     ID["EPSG",4283]]</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt;     ID["EPSG",4283]]</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La mayor parte de este resultado corresponde a una cadena de <strong>texto conocido</strong> (WKT) que describe sin ambigüedades el CRS. sf utiliza esta representación detallada de WKT internamente, pero hay varias formas de proporcionar información al usuario que sf comprenda. Uno de esos métodos es proporcionar entrada numérica en forma de <strong>código EPSG</strong> (consulte <a href="https://epsg.org/home.html" class="uri">https://epsg.org/home.html</a>). El CRS predeterminado en los datos <code>oz_votes</code> corresponde al código EPSG 4283: El CRS predeterminado en los datos <code>oz_votes</code> corresponde al código EPSG 4283:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">oz_votes</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="fl">4283</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">oz_votes</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="fl">4283</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En ggplot2, el CRS está controlado por <code>coord_sf()</code>, lo que garantiza que cada capa del gráfico utilice la misma proyección. Por defecto, <code>coord_sf()</code> usa el CRS asociado con la columna de geometría de los datos<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Dado que los datos de ciencia ficción suelen ofrecer una opción sensata de CRS, este proceso normalmente se desarrolla de forma invisible y no requiere intervención del usuario. Sin embargo, si necesita configurar el CRS usted mismo, puede especificar el parámetro <code>crs</code> pasando una entrada de usuario válida a <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs()</a></code>. El siguiente ejemplo ilustra cómo cambiar del CRS predeterminado al código EPSG 3112:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">oz_votes</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">oz_votes</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">coord_sf</span><span class="op">(</span>crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="fl">3112</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">oz_votes</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">oz_votes</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">coord_sf</span><span class="op">(</span>crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="fl">3112</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -639,11 +642,11 @@ div.csl-indent {
 <span class="header-section-number">6.4</span> Trabajar con datos sf</h2>
 <p>Como se señaló anteriormente, los mapas creados usando <code>geom_sf()</code> y <code>coord_sf()</code> dependen en gran medida de las herramientas proporcionadas por el paquete sf y, de hecho, el paquete sf contiene muchas más herramientas útiles para manipular datos de características simples. En esta sección proporcionamos una introducción a algunas de estas herramientas; Puede encontrar una cobertura más detallada en el sitio web del paquete SF <a href="https://r-spatial.github.io/sf/" class="uri">https://r-spatial.github.io/sf/</a>.</p>
 <p>Para comenzar, recuerde que una ventaja de las características simples sobre otras representaciones de datos espaciales es que las unidades geográficas pueden tener una estructura complicada. Un buen ejemplo de esto en los datos de los mapas australianos es el distrito electoral de Eden-Monaro, que se muestra a continuación:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edenmonaro</span> <span class="op">&lt;-</span> <span class="fu">ozmaps</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ozmaps/man/abs-data.html">abs_ced</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME</span> <span class="op">==</span> <span class="st">"Eden-Monaro"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edenmonaro</span> <span class="op">&lt;-</span> <span class="fu">ozmaps</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ozmaps/man/abs-data.html">abs_ced</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME</span> <span class="op">==</span> <span class="st">"Eden-Monaro"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">edenmonaro</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu">coord_sf</span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">147.75</span>, <span class="fl">150.25</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">37.5</span>, <span class="op">-</span><span class="fl">34.5</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="va">p</span> <span class="op">+</span> <span class="fu">coord_sf</span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">150.25</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">36.3</span>, <span class="op">-</span><span class="fl">36</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu">coord_sf</span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">150.25</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">36.3</span>, <span class="op">-</span><span class="fl">36</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -657,32 +660,32 @@ div.csl-indent {
 <p>Como lo ilustra esto, Eden-Monaro se define en términos de dos polígonos distintos, uno grande en el continente australiano y una isla pequeña. Sin embargo, la gran región tiene un agujero en el medio (el agujero existe porque el Territorio de la Capital Australiana es una unidad política distinta que está totalmente contenida dentro de Eden-Monaro y, como se ilustra arriba, las fronteras electorales en Australia no cruzan las fronteras estatales). En terminología sf, este es un ejemplo de geometría <code>MULTIPOLYGON</code>. En esta sección hablaremos sobre la estructura de estos objetos y cómo trabajar con ellos.</p>
 <p>Primero, usemos dplyr para tomar solo el objeto de geometría:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edenmonaro</span> <span class="op">&lt;-</span> <span class="va">edenmonaro</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">pull</span><span class="op">(</span><span class="va">geometry</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edenmonaro</span> <span class="op">&lt;-</span> <span class="va">edenmonaro</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">pull</span><span class="op">(</span><span class="va">geometry</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Se puede acceder a los metadatos del objeto edenmonaro mediante funciones auxiliares. Por ejemplo, <code><a href="https://r-spatial.github.io/sf/reference/st_geometry_type.html">st_geometry_type()</a></code> extrae el tipo de geometría (por ejemplo, <code>MULTIPOLYGON</code>), <code><a href="https://r-spatial.github.io/sf/reference/geos_query.html">st_dimension()</a></code> extrae el número de dimensiones (2 para datos XY, 3 para XYZ), <code><a href="https://r-spatial.github.io/sf/reference/st_bbox.html">st_bbox()</a></code> extrae el cuadro delimitador como un vector numérico, y <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs()</a></code> extrae el CRS como una lista con dos componentes, uno para el código EPSG y el otro para proj4string. Por ejemplo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html">st_bbox</a></span><span class="op">(</span><span class="va">edenmonaro</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html">st_bbox</a></span><span class="op">(</span><span class="va">edenmonaro</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  xmin  ymin  xmax  ymax </span></span>
-<span><span class="co">#&gt; 147.7 -37.5 150.2 -34.5</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; 147.7 -37.5 150.2 -34.5</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Normalmente, cuando imprimimos el objeto <code>edenmonaro</code>, la salida mostrará toda la información adicional (dimensión, cuadro delimitador, dato geodésico, etc.), pero durante el resto de esta sección mostraremos solo las líneas relevantes de la salida. En este caso, edenmonaro está definido por una geometría MULTIPOLYGON que contiene una característica:</p>
 <div class="cell" data-output.lines="[-3,-4,-5,-6]">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edenmonaro</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">edenmonaro</span> </span>
 <span><span class="co">#&gt; Geometry set for 1 feature </span></span>
 <span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
-<span><span class="co">#&gt; MULTIPOLYGON (((150 -36.2, 150 -36.2, 150 -36.3...</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; MULTIPOLYGON (((150 -36.2, 150 -36.2, 150 -36.3...</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Sin embargo, podemos “fundir” el MULTIPOLYGON en las dos geometrías POLYGON distintas a partir de las cuales está construido usando <code><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast()</a></code>:</p>
 <div class="cell" data-output.lines="[-3,-4,-5,-6]">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast</a></span><span class="op">(</span><span class="va">edenmonaro</span>, <span class="st">"POLYGON"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast</a></span><span class="op">(</span><span class="va">edenmonaro</span>, <span class="st">"POLYGON"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Geometry set for 2 features </span></span>
 <span><span class="co">#&gt; Geometry type: POLYGON</span></span>
 <span><span class="co">#&gt; POLYGON ((150 -36.2, 150 -36.2, 150 -36.3, 150 ...</span></span>
-<span><span class="co">#&gt; POLYGON ((148 -36.7, 148 -36.7, 148 -36.7, 148 ...</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; POLYGON ((148 -36.7, 148 -36.7, 148 -36.7, 148 ...</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Para ilustrar cuándo esto podría ser útil, consideremos el electorado de Dawson, que consta de 69 islas además de una región costera en el continente australiano.</p>
 <div class="cell" data-output.lines="[-3,-4,-5,-6]">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dawson</span> <span class="op">&lt;-</span> <span class="fu">ozmaps</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ozmaps/man/abs-data.html">abs_ced</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dawson</span> <span class="op">&lt;-</span> <span class="fu">ozmaps</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ozmaps/man/abs-data.html">abs_ced</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME</span> <span class="op">==</span> <span class="st">"Dawson"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">pull</span><span class="op">(</span><span class="va">geometry</span><span class="op">)</span></span>
 <span><span class="va">dawson</span></span>
@@ -692,7 +695,7 @@ div.csl-indent {
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">dawson</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -702,15 +705,15 @@ div.csl-indent {
 </div>
 <p>Supongamos, sin embargo, que nuestro interés es sólo cartografiar las islas. Si es así, primero podemos usar la función <code><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast()</a></code> para dividir el electorado de Dawson en los polígonos constituyentes. Después de hacerlo, podemos usar <code><a href="https://r-spatial.github.io/sf/reference/geos_measures.html">st_area()</a></code> para calcular el área de cada polígono y <code><a href="https://rdrr.io/r/base/which.min.html">which.max()</a></code> para encontrar el polígono con área máxima:</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dawson</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast</a></span><span class="op">(</span><span class="va">dawson</span>, <span class="st">"POLYGON"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dawson</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast</a></span><span class="op">(</span><span class="va">dawson</span>, <span class="st">"POLYGON"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_measures.html">st_area</a></span><span class="op">(</span><span class="va">dawson</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 69</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; [1] 69</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La gran región continental corresponde al polígono 69 dentro de Dawson. Armados con este conocimiento, podemos dibujar un mapa que muestre solo las islas:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">dawson</span><span class="op">[</span><span class="op">-</span><span class="fl">69</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">dawson</span><span class="op">[</span><span class="op">-</span><span class="fl">69</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -724,16 +727,16 @@ div.csl-indent {
 <p>Una segunda forma de proporcionar información geoespacial para la cartografía es confiar en <strong>datos ráster</strong>. A diferencia del formato de entidades simples, en el que las entidades geográficas se especifican en términos de un conjunto de líneas, puntos y polígonos, los rásteres toman la forma de imágenes. En el caso más simple, los datos ráster pueden no ser más que un archivo de mapa de bits, pero existen muchos formatos de imagen diferentes. Específicamente en el contexto geoespacial, existen formatos de imágenes que incluyen metadatos (por ejemplo, datos geodésicos, sistema de referencia de coordenadas) que se pueden usar para mapear la información de la imagen en la superficie de la Tierra. Por ejemplo, un formato común es GeoTIFF, que es un archivo TIFF normal con metadatos adicionales. Afortunadamente, la mayoría de los formatos se pueden leer fácilmente en R con la ayuda de GDAL (la Biblioteca de abstracción de datos geoespaciales, <a href="https://gdal.org/" class="uri">https://gdal.org/</a>). Por ejemplo, el paquete sf contiene una función <code><a href="https://r-spatial.github.io/sf/reference/gdal.html">sf::gdal_read()</a></code> que proporciona acceso a los controladores ráster GDAL desde R. Sin embargo, rara vez es necesario llamar a esta función directamente, ya que existen otras funciones de alto nivel que se encargan de esto. para ti.</p>
 <p>Como ilustración, usaremos una imagen de satélite tomada por el satélite geoestacionario Himawari-8 operado por la Agencia Meteorológica de Japón y obtenida originalmente del sitio web de la Oficina Australiana de Meteorología. Esta imagen está almacenada en un archivo GeoTIFF llamado “IDE00422.202001072100.tif”.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Para importar estos datos a R, usaremos el paquete de estrellas <span class="citation" data-cites="stars">(<a href="#ref-stars" role="doc-biblioref">Pebesma 2020</a>)</span> para crear objetos de estrellas:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/stars/">stars</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/stars/">stars</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: abind</span></span>
 <span><span class="va">sat_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/stars/reference/read_stars.html">read_stars</a></span><span class="op">(</span></span>
 <span>  <span class="st">"IDE00422.202001072100.tif"</span>, </span>
 <span>  RasterIO <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nBufXSize <span class="op">=</span> <span class="fl">600</span>, nBufYSize <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En el código anterior, el primer argumento especifica la ruta al archivo ráster y el argumento <code>RasterIO</code> se usa para pasar una lista de parámetros de bajo nivel a GDAL. En este caso, hemos utilizado <code>nBufXSize</code> y <code>nBufYSize</code> para garantizar que R lea los datos en baja resolución (como una imagen de 600x600 píxeles). Para ver qué información ha importado R, podemos inspeccionar el objeto <code>sat_vis</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sat_vis</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sat_vis</span></span>
 <span><span class="co">#&gt; stars object with 3 dimensions and 1 attribute</span></span>
 <span><span class="co">#&gt; attribute(s), summary of first 1e+05 cells:</span></span>
 <span><span class="co">#&gt;                            Min. 1st Qu. Median Mean 3rd Qu. Max.</span></span>
@@ -742,14 +745,14 @@ div.csl-indent {
 <span><span class="co">#&gt;      from  to   offset  delta                  refsys point x/y</span></span>
 <span><span class="co">#&gt; x       1 600 -5500000  18333 Geostationary_Satellite FALSE [x]</span></span>
 <span><span class="co">#&gt; y       1 600  5500000 -18333 Geostationary_Satellite FALSE [y]</span></span>
-<span><span class="co">#&gt; band    1   3       NA     NA                      NA    NA</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; band    1   3       NA     NA                      NA    NA</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Este resultado nos dice algo sobre la estructura de un objeto estrella. Para el objeto <code>sat_vis</code>, los datos subyacentes se almacenan como una matriz tridimensional, con las dimensiones <code>x</code> e <code>y</code> que especifican los datos espaciales. La dimensión <code>band</code> en este caso corresponde al canal de color (RGB), pero es redundante para esta imagen ya que los datos están en escala de grises. En otros conjuntos de datos puede haber bandas correspondientes a diferentes sensores y posiblemente también una dimensión temporal. Tenga en cuenta que los datos espaciales también están asociados con un sistema de referencia de coordenadas (denominado “refsys” en el resultado).</p>
 <p>Para trazar los datos <code>sat_vis</code> en ggplot2, podemos usar la función <code><a href="https://r-spatial.github.io/stars/reference/geom_stars.html">geom_stars()</a></code> proporcionada por el paquete stars. Un gráfico mínimo podría verse así:</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://r-spatial.github.io/stars/reference/geom_stars.html">geom_stars</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sat_vis</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -759,11 +762,11 @@ div.csl-indent {
 </div>
 <p>La función <code><a href="https://r-spatial.github.io/stars/reference/geom_stars.html">geom_stars()</a></code> requiere que el argumento <code>data</code> sea un objeto de estrellas y asigna los datos ráster a la estética de relleno. En consecuencia, el sombreado azul en la imagen de satélite de arriba está determinado por la escala ggplot2, no por la imagen en sí. Es decir, aunque <code>sat_vis</code> contiene tres bandas, el gráfico anterior solo muestra la primera, y los valores de datos sin procesar (que van de 0 a 255) se asignan a la paleta azul predeterminada que usa ggplot2 para datos continuos. Para ver cómo se ve “realmente” el archivo de imagen, podemos separar las bandas usando <code>facet_wrap()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://r-spatial.github.io/stars/reference/geom_stars.html">geom_stars</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sat_vis</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">band</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_fill_gradient</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"black"</span>, high <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_fill_gradient</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"black"</span>, high <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="2400"></p>
@@ -773,16 +776,16 @@ div.csl-indent {
 </div>
 <p>Una limitación para mostrar solo la imagen sin procesar es que no es fácil determinar dónde están las masas de tierra relevantes y es posible que deseemos superponer los datos satelitales con el mapa vectorial <code>oz_states</code> para mostrar los contornos de las entidades políticas australianas. Sin embargo, se requiere cierto cuidado al hacerlo porque las dos fuentes de datos están asociadas con diferentes sistemas de referencia de coordenadas. Para proyectar los datos <code>oz_states</code> correctamente, los datos deben transformarse usando la función <code><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform()</a></code> del paquete sf. En el código siguiente, extraemos el CRS del objeto ráster <code>sat_vis</code> y transformamos los datos <code>oz_states</code> para usar el mismo sistema.</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oz_states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="va">oz_states</span>, crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">sat_vis</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oz_states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="va">oz_states</span>, crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">sat_vis</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Una vez hecho esto, ahora podemos dibujar el mapa vectorial sobre la parte superior de la imagen rasterizada para que la imagen sea más interpretable para el lector. Ahora se desprende claramente de la inspección que la imagen de satélite fue tomada durante el amanecer en Australia:</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://r-spatial.github.io/stars/reference/geom_stars.html">geom_stars</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sat_vis</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">oz_states</span>, fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">theme_void</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_fill_gradient</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"black"</span>, high <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_fill_gradient</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"black"</span>, high <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -792,22 +795,22 @@ div.csl-indent {
 </div>
 <p>¿Qué pasaría si quisiéramos trazar datos más convencionales en la parte superior? Un ejemplo sencillo de esto sería trazar las ubicaciones de las capitales australianas según el marco de datos <code>oz_capitals</code> que contiene datos de latitud y longitud. Sin embargo, debido a que estos datos no están asociados con un CRS y no están en la misma escala que los datos ráster en <code>sat_vis</code>, <em>también</em> deberán transformarse. Para hacerlo, primero necesitamos crear un objeto sf a partir de los datos de <code>oz_capitals</code> usando <code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf()</a></code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cities</span> <span class="op">&lt;-</span> <span class="va">oz_capitals</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cities</span> <span class="op">&lt;-</span> <span class="va">oz_capitals</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Esta proyección se establece utilizando el código EPSG 4326, una proyección elipsoidal que utiliza los valores de latitud y longitud como coordenadas y se basa en el datum WGS84. Una vez hecho esto, ahora podemos transformar las coordenadas de la geometría de latitud-longitud para que coincidan con la geometría de nuestros datos <code>sat_vis</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="va">cities</span>, <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">sat_vis</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="va">cities</span>, <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">sat_vis</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Los datos transformados ahora se pueden superponer usando <code>geom_sf()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://r-spatial.github.io/stars/reference/geom_stars.html">geom_stars</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sat_vis</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">oz_states</span>, fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">cities</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">coord_sf</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">theme_void</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_fill_gradient</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"black"</span>, high <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_fill_gradient</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"black"</span>, high <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="maps_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -817,7 +820,7 @@ div.csl-indent {
 </div>
 <p>Esta versión de la imagen deja más claro que la imagen de satélite fue tomada aproximadamente al amanecer en Darwin: el sol había salido en todas las ciudades del este, pero no en Perth. Esto podría aclararse en la visualización de datos usando la función <code>geom_sf_text()</code> para agregar etiquetas a cada ciudad. Por ejemplo, podríamos agregar otra capa al gráfico usando un código como este:</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geom_sf_text</span><span class="op">(</span>data <span class="op">=</span> <span class="va">cities</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">city</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geom_sf_text</span><span class="op">(</span>data <span class="op">=</span> <span class="va">cities</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">city</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>aunque se requeriría algo de cuidado para asegurar que el texto esté bien colocado (ver <a href="annotations.html" class="quarto-xref"><span>Capítulo 8</span></a>).</p>
 </section><section id="fuentes-de-datos" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="fuentes-de-datos">
@@ -864,7 +867,76 @@ Walker, Kyle. 2019. <em>tigris: Load Census TIGER/Line Shapefiles</em>. <a href=
 <ol>
 <li id="fn1"><p>Si hay varios conjuntos de datos con un CRS asociado diferente, utiliza el CRS de la primera capa.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Si desea probar este código usted mismo, puede encontrar una copia de la imagen en el repositorio de GitHub del libro: <a href="https://github.com/hadley/ggplot2-book/raw/master/IDE00422.202001072100.tif" class="uri">https://github.com/hadley/ggplot2-book/raw/master/IDE00422.202001072100.tif</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</ol></section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -915,13 +987,14 @@ Walker, Kyle. 2019. <em>tigris: Load Census TIGER/Line Shapefiles</em>. <a href=
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

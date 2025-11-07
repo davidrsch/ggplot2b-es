@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>14&nbsp; Escalas y guías – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -86,14 +86,15 @@ div.csl-indent {
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,7 +108,7 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -137,7 +138,9 @@ div.csl-indent {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -150,7 +153,7 @@ div.csl-indent {
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -481,27 +484,27 @@ how scale_* has extra scale stuff, and the helpers have extra theme stuff ??? --
 <span class="header-section-number">14.1.1</span> Especificación de escala</h3>
 <p>Una propiedad importante de ggplot2 es el principio de que cada estética de su gráfica está asociada exactamente con una escala. Por ejemplo, cuando escribes esto</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>ggplot2 agrega una escala predeterminada para cada estética utilizada en la gráfica:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La elección de la escala predeterminada depende de la estética y del tipo de variable. En este ejemplo, <code>hwy</code> es una variable continua asignada a la estética y, por lo que la escala predeterminada es <code>scale_y_continuous()</code>; de manera similar, <code>class</code> es discreta, por lo que cuando se asigna a la estética del color, la escala predeterminada se convierte en <code>scale_colour_discrete()</code>. Especificar estos valores predeterminados sería tedioso, por lo que ggplot2 lo hace por usted. Pero si desea anular los valores predeterminados, deberá agregar la escala usted mismo, de esta manera: </p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Una etiqueta del eje x realmente impresionante."</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Una etiqueta del eje Y increíblemente genial."</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Una etiqueta del eje Y increíblemente genial."</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En la práctica, normalmente usarías <code>labs()</code> para esto, lo cual se analiza en <a href="annotations.html#sec-titles" class="quarto-xref"><span>Sección 8.1</span></a>, pero conceptualmente es útil comprender que las etiquetas de los ejes y los títulos de las leyendas son ejemplos de nombres de escala: consulta <a href="#sec-scale-names" class="quarto-xref"><span>Sección 14.2</span></a>.</p>
 <p>El uso de <code>+</code> para “agregar” escalas a una gráfica es un poco engañoso porque si proporcionas dos escalas para la misma estética, la última escala tiene prioridad. En otras palabras, cuando haces <code>+</code> en una escala, en realidad no la agregas al gráfico, sino que anulas la escala existente. Esto significa que las dos especificaciones siguientes son equivalentes: </p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Etiqueta 1"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Etiqueta 2"</span><span class="op">)</span></span>
@@ -510,17 +513,17 @@ how scale_* has extra scale stuff, and the helpers have extra theme stuff ??? --
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Etiqueta 2"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Etiqueta 2"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 
 </div>
 <p>Tenga en cuenta el mensaje cuando agrega varias escalas para la misma estética, lo que hace que sea más difícil sobrescribir accidentalmente una escala existente. Si ve esto en su propio código, debe asegurarse de agregar solo una escala a cada estética.</p>
 <p>Si está haciendo pequeños ajustes a las escalas, puede continuar usando las escalas predeterminadas, proporcionando algunos argumentos adicionales. Si desea realizar cambios más radicales, anulará las escalas predeterminadas con alternativas:</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_sqrt</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_colour_brewer</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_colour_brewer</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Aquí <code>scale_x_sqrt()</code> cambia la escala para la escala del eje x, y <code>scale_colour_brewer()</code> hace lo mismo para la escala de color.</p>
 </section><section id="esquema-de-nombres" class="level3" data-number="14.1.2"><h3 data-number="14.1.2" class="anchored" data-anchor-id="esquema-de-nombres">
@@ -572,14 +575,14 @@ for that it would be an esoteric theory thing. -->
 continuous. try to cover most of the oob_* functions. might be valuable to highlight 
 oob_keep() for position scales, as a way of making limits behave like zoom -->
 <p>El comportamiento predeterminado en ggplot2 es convertir valores fuera de límites a <code>NA</code>, la lógica para esto es que si un valor de datos no es parte de la región asignada, debe tratarse como faltante. En ocasiones, esto puede provocar un comportamiento inesperado, como se ilustra en <a href="scales-position.html#sec-zooming-in" class="quarto-xref"><span>Sección 10.1.2</span></a>. Puede anular este valor predeterminado configurando el argumento <code>oob</code> de la escala, una función que se aplica a todas las observaciones fuera de los límites de la escala. El valor predeterminado es <code><a href="https://scales.r-lib.org/reference/oob.html">scales::oob_censor()</a></code> que reemplaza cualquier valor fuera de los límites con <code>NA</code>. Otra opción es <code><a href="https://scales.r-lib.org/reference/oob.html">scales::oob_squish()</a></code> que comprime todos los valores en el rango. A continuación se muestra un ejemplo que utiliza una escala de relleno:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, y <span class="op">=</span> <span class="fl">8</span><span class="op">:</span><span class="fl">13</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, y <span class="op">=</span> <span class="fl">8</span><span class="op">:</span><span class="fl">13</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_col</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>                    <span class="co"># bar chart</span></span>
 <span>  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">3.5</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="co"># for visual clarity only</span></span>
 <span></span>
 <span><span class="va">base</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, oob <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/oob.html">squish</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, oob <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/oob.html">squish</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -653,13 +656,13 @@ oob_keep() for position scales, as a way of making limits behave like zoom -->
 </section><section id="sec-scale-transformation-extras" class="level2" data-number="14.6"><h2 data-number="14.6" class="anchored" data-anchor-id="sec-scale-transformation-extras">
 <span class="header-section-number">14.6</span> Transformación de escala</h2>
 <p>El uso más común de las transformaciones de escala es ajustar una escala de posición continua, como se explica en <a href="scales-position.html#sec-scale-transformation" class="quarto-xref"><span>Sección 10.1.7</span></a>. Sin embargo, a veces pueden resultar útiles cuando se aplican a otras estéticas. A menudo esto es puramente una cuestión de énfasis visual. A continuación se muestra un ejemplo de esto para el gráfico de densidad de Old Faithful. La escala mapeada linealmente a la izquierda hace que sea fácil ver los picos de la distribución, mientras que la representación transformada a la derecha hace que sea más fácil ver las regiones de densidad no despreciable alrededor de esos picos: </p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_raster</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="va">base</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_continuous</span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"sqrt"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_continuous</span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"sqrt"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -671,11 +674,11 @@ oob_keep() for position scales, as a way of making limits behave like zoom -->
 </div>
 </div>
 <p>Transformar la estética del tamaño también es posible:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, size <span class="op">=</span> <span class="va">z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span> </span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_size</span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"reverse"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_size</span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"reverse"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -772,13 +775,13 @@ ggplot(df, aes(val)) + geom_bar() +
 </div>
 </div>
 <p>De forma predeterminada, una capa solo aparecerá si la estética correspondiente se asigna a una variable con <code>aes()</code>. Puede anular si una capa aparece o no en la leyenda con <code>show.legend</code>: <code>FALSE</code> para evitar que una capa aparezca en la leyenda; <code>TRUE</code> lo obliga a aparecer cuando de otro modo no lo haría. Usar <code>TRUE</code> puede ser útil junto con el siguiente truco para resaltar los puntos:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">up</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">up</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span>, colour <span class="op">=</span> <span class="st">"grey20"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">txt</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">up</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span>, colour <span class="op">=</span> <span class="st">"grey20"</span>, show.legend <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">txt</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">txt</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -790,11 +793,11 @@ ggplot(df, aes(val)) + geom_bar() +
 </div>
 </div>
 <p>ggplot2 intenta utilizar la menor cantidad de leyendas para transmitir con precisión la estética utilizada en la gráfica. Lo hace combinando leyendas donde la misma variable se asigna a diferentes estéticas. La siguiente figura muestra cómo funciona esto para puntos: si tanto el color como la forma se asignan a la misma variable, entonces solo es necesaria una única leyenda. </p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">const</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">const</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span><span class="cn">NULL</span>, breaks <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">txt</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="va">txt</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="va">txt</span>, colour <span class="op">=</span> <span class="va">txt</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="va">txt</span>, colour <span class="op">=</span> <span class="va">txt</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -809,13 +812,13 @@ ggplot(df, aes(val)) + geom_bar() +
 </div>
 </div>
 <p>Para que las leyendas se fusionen, deben tener el mismo “nombre”. Entonces, si cambia el nombre de una de las escalas, deberá cambiarlo para todas ellas. Una forma de hacer esto es usando la función auxiliar <code>labs()</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">const</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">const</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="va">txt</span>, colour <span class="op">=</span> <span class="va">txt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span><span class="cn">NULL</span>, breaks <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"Split legend"</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"Merged legend"</span>, colour <span class="op">=</span> <span class="st">"Merged legend"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>shape <span class="op">=</span> <span class="st">"Merged legend"</span>, colour <span class="op">=</span> <span class="st">"Merged legend"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -833,7 +836,7 @@ ggplot(df, aes(val)) + geom_bar() +
 <span class="header-section-number">14.7.2</span> Dividiendo leyendas</h3>
 <p>Dividir una leyenda es una tarea de visualización de datos mucho menos común. En general, no es recomendable asignar una estética (por ejemplo, color) a múltiples variables y, por lo tanto, de forma predeterminada, ggplot2 no le permite “dividir” la estética del color en múltiples escalas con leyendas separadas. Sin embargo, existen excepciones a esta regla general y es posible anular este comportamiento utilizando el paquete ggnewscale <span class="citation" data-cites="ggnewscale">(<a href="#ref-ggnewscale" role="doc-biblioref">Campitelli 2020</a>)</span>. El comando <code><a href="https://eliocamp.github.io/ggnewscale/reference/new_scale.html">ggnewscale::new_scale_colour()</a></code> actúa como una instrucción para ggplot2 para inicializar una nueva escala de color: los comandos de escala y guía que aparecen encima del comando <code>new_scale_colour()</code> se aplicarán a la primera escala de color, y los comandos que aparecen A continuación se aplican a la segunda escala de colores.</p>
 <p>Para ilustrar esto, el gráfico de la izquierda usa <code>geom_point()</code> para mostrar un marcador grande para cada marca de vehículo en los datos de <code>mpg</code>, con una escala de color única que se asigna al año. A la derecha, una segunda capa <code>geom_point()</code> se superpone en el gráfico mediante pequeños marcadores: esta capa está asociada a una escala de colores diferente, que se utiliza para indicar si el vehículo tiene un motor de 4 cilindros.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_colour_brewer</span><span class="op">(</span><span class="st">"year"</span>, type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> </span>
 <span></span>
@@ -841,7 +844,7 @@ ggplot(df, aes(val)) + geom_bar() +
 <span><span class="va">base</span> <span class="op">+</span> </span>
 <span>  <span class="fu">ggnewscale</span><span class="fu">::</span><span class="fu"><a href="https://eliocamp.github.io/ggnewscale/reference/new_scale.html">new_scale_colour</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_colour_manual</span><span class="op">(</span><span class="st">"4 cylinder"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"grey60"</span>, <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_colour_manual</span><span class="op">(</span><span class="st">"4 cylinder"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"grey60"</span>, <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -856,10 +859,10 @@ ggplot(df, aes(val)) + geom_bar() +
 </section></section><section id="sec-legend-glyph" class="level2" data-number="14.8"><h2 data-number="14.8" class="anchored" data-anchor-id="sec-legend-glyph">
 <span class="header-section-number">14.8</span> Glifos clave de leyenda</h2>
 <p>En la mayoría de los casos, los glifos predeterminados que se muestran en la clave de leyenda serán apropiados para la capa y la estética. Los diagramas de líneas de diferentes colores aparecerán como líneas de diferentes colores en la leyenda, los diagramas de caja aparecerán como diagramas de caja pequeños en la leyenda, y así sucesivamente. Si necesita anular este comportamiento, el argumento <code>key_glyph</code> se puede utilizar para asociar una capa particular con un tipo diferente de glifo. Por ejemplo:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">economics</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">psavert</span>, color <span class="op">=</span> <span class="st">"savings"</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">economics</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">psavert</span>, color <span class="op">=</span> <span class="st">"savings"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span>key_glyph <span class="op">=</span> <span class="st">"timeseries"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span>key_glyph <span class="op">=</span> <span class="st">"timeseries"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -882,7 +885,76 @@ ggplot(df, aes(val)) + geom_bar() +
 Campitelli, Elio. 2020. <em>ggnewscale: Multiple Fill and Colour Scales in ’ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggnewscale">https://CRAN.R-project.org/package=ggnewscale</a>.
 </div>
 </div>
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -933,13 +1005,14 @@ Campitelli, Elio. 2020. <em>ggnewscale: Multiple Fill and Colour Scales in ’gg
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

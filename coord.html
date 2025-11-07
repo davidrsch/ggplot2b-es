@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>15&nbsp; Sistemas coordinados – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -66,14 +66,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -87,7 +88,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -117,7 +118,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -130,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -427,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">15.1.1</span> Acercándose a una gráfica con <code>coord_cartesian()</code>
 </h3>
 <p><code>coord_cartesian()</code> tiene argumentos <code>xlim</code> y <code>ylim</code>. Si recuerda el capítulo de las escalas, se preguntará por qué las necesitamos. ¿El argumento de los límites de la balanza no nos permite ya controlar lo que aparece en la gráfica? La diferencia clave es cómo funcionan los límites: al establecer límites de escala, cualquier dato fuera de los límites se desecha; pero al establecer los límites del sistema de coordenadas, todavía usamos todos los datos, pero solo mostramos una pequeña región del gráfico. Establecer los límites del sistema de coordenadas es como mirar el gráfico con una lupa. </p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -443,7 +446,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co">#&gt; (`geom_point()`).</span></span>
 <span><span class="co"># Hacer zoom a 4--6 mantiene todos los datos pero solo muestra algunos de ellos</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_cartesian</span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -461,7 +464,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">15.1.2</span> Voltear los ejes con <code>coord_flip()</code>
 </h3>
 <p>La mayoría de las estadísticas y geoms asumen que usted está interesado en los valores de y condicionados a los valores de x (por ejemplo, suave, resumen, diagrama de caja, línea): en la mayoría de los modelos estadísticos, se supone que los valores de x se miden sin errores. Si está interesado en x condicional a y (o simplemente desea rotar el gráfico 90 grados), puede usar <code>coord_flip()</code> para intercambiar los ejes x e y. Compare esto con simplemente intercambiar las variables asignadas a x e y: </p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span>
@@ -477,7 +480,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -498,7 +501,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section></section><section id="sec-coord-non-linear" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="sec-coord-non-linear">
 <span class="header-section-number">15.2</span> Sistemas de coordenadas no lineales</h2>
 <p>A diferencia de las coordenadas lineales, las coordenadas no lineales pueden cambiar la forma de las geoms. Por ejemplo, en coordenadas polares un rectángulo se convierte en un arco; En una proyección cartográfica, el camino más corto entre dos puntos no es necesariamente una línea recta. El siguiente código muestra cómo se representan una línea y un rectángulo en algunos sistemas de coordenadas diferentes. </p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rect</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">50</span>, y <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rect</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">50</span>, y <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
 <span><span class="va">line</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">200</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_tile</span><span class="op">(</span>data <span class="op">=</span> <span class="va">rect</span>, <span class="fu">aes</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">50</span>, height <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -506,7 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="va">base</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_polar</span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_polar</span><span class="op">(</span><span class="st">"y"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_polar</span><span class="op">(</span><span class="st">"y"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -520,9 +523,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_trans</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -542,10 +545,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <p>Empezamos con una línea parametrizada por sus dos extremos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">r</span>, <span class="va">theta</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="coord_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -557,7 +560,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <p>Lo dividimos en varios segmentos de línea, cada uno con dos puntos finales.</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">interp</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rng</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">interp</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rng</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">rng</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">rng</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, length <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="va">munched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
@@ -567,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">munched</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">r</span>, <span class="va">theta</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="coord_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -579,7 +582,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <p>Transformamos las ubicaciones de cada pieza:</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transformed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">munched</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transformed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">munched</span>,</span>
 <span>  x <span class="op">=</span> <span class="va">r</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">r</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -587,7 +590,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">transformed</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_path</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="coord_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -602,7 +605,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">15.2.1</span> Transformaciones con <code>coord_trans()</code>
 </h3>
 <p>Al igual que los límites, también podemos transformar los datos en dos lugares: a nivel de escala o a nivel del sistema de coordenadas. <code>coord_trans()</code> tiene argumentos <code>x</code> e <code>y</code> que deberían ser cadenas que nombren el transformador o los objetos del transformador (ver <a href="scales-position.html" class="quarto-xref"><span>Capítulo 10</span></a>). La transformación a nivel de escala ocurre antes de que se calculen las estadísticas y no cambia la forma de la geom. La transformación a nivel del sistema de coordenadas ocurre después de que se han calculado las estadísticas y afecta la forma de la geom. Usar ambos juntos nos permite modelar los datos en una escala transformada y luego transformarlos para su interpretación: un patrón común en el análisis. </p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># El modelo lineal en la escala original no se ajusta bien</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># El modelo lineal en la escala original no se ajusta bien</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">carat</span>, <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">stat_bin2d</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -622,7 +625,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">base</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_trans</span><span class="op">(</span>x <span class="op">=</span> <span class="va">pow10</span>, y <span class="op">=</span> <span class="va">pow10</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_trans</span><span class="op">(</span>x <span class="op">=</span> <span class="va">pow10</span>, y <span class="op">=</span> <span class="va">pow10</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -641,7 +644,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </h3>
 <p>El uso de coordenadas polares da lugar a gráficos circulares y rosas de los vientos (de geomas de barras) y gráficos de radar (de geomas de líneas). Las coordenadas polares se utilizan a menudo para datos circulares, particularmente tiempo o dirección, pero las propiedades de percepción no son buenas porque el ángulo es más difícil de percibir para radios pequeños que para radios grandes. El argumento <code>theta</code> determina qué variable de posición se asigna al ángulo (por defecto, x) y cuál al radio.</p>
 <p>El siguiente código muestra cómo podemos convertir una barra en un gráfico circular o en un gráfico de diana cambiando el sistema de coordenadas. La documentación incluye otros ejemplos. </p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu">aes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu">aes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_bar</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_x_discrete</span><span class="op">(</span><span class="cn">NULL</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -654,7 +657,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_polar</span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># El gráfico de diana</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_polar</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_polar</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -675,7 +678,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>
 <p><code>coord_quickmap()</code> es una aproximación rápida y sucia que establece la relación de aspecto para garantizar que 1 m de latitud y 1 m de longitud estén a la misma distancia en el medio de la gráfica. Este es un punto de partida razonable para regiones más pequeñas y es muy rápido.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Preparar un mapa de Nueva Zelanda</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Preparar un mapa de Nueva Zelanda</span></span>
 <span><span class="va">nzmap</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="fu">map_data</span><span class="op">(</span><span class="st">"nz"</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_polygon</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
@@ -683,7 +686,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co"># Trazarlo en coordenadas cartesianas</span></span>
 <span><span class="va">nzmap</span></span>
 <span><span class="co"># Con la aproximación de la relación de aspecto</span></span>
-<span><span class="va">nzmap</span> <span class="op">+</span> <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">nzmap</span> <span class="op">+</span> <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -697,7 +700,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
 <li>
 <p><code>coord_map()</code> utiliza el paquete <strong>mapproj</strong>, <a href="https://cran.r-project.org/package=mapproj" class="uri">https://cran.r-project.org/package=mapproj</a> para hacer una proyección cartográfica formal. Toma los mismos argumentos que <code><a href="https://rdrr.io/pkg/mapproj/man/mapproject.html">mapproj::mapproject()</a></code> para controlar la proyección. Es mucho más lento que <code>coord_quickmap()</code> porque debe masticar los datos y transformar cada pieza.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">world</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">"world"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">world</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">"world"</span><span class="op">)</span></span>
 <span><span class="va">worldmap</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">world</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_path</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="cn">NULL</span>, breaks <span class="op">=</span> <span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">*</span> <span class="fl">30</span>, labels <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
@@ -706,7 +709,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">worldmap</span> <span class="op">+</span> <span class="fu">coord_map</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># Algunas proyecciones más locas</span></span>
 <span><span class="va">worldmap</span> <span class="op">+</span> <span class="fu">coord_map</span><span class="op">(</span><span class="st">"ortho"</span><span class="op">)</span></span>
-<span><span class="va">worldmap</span> <span class="op">+</span> <span class="fu">coord_map</span><span class="op">(</span><span class="st">"stereographic"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">worldmap</span> <span class="op">+</span> <span class="fu">coord_map</span><span class="op">(</span><span class="st">"stereographic"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -724,7 +727,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -775,13 +847,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

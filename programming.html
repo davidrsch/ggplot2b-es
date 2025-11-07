@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>18&nbsp; Programar con ggplot2 – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -66,14 +66,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -87,7 +88,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -117,7 +118,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -130,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -430,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="componentes-individuales" class="level2" data-number="18.2"><h2 data-number="18.2" class="anchored" data-anchor-id="componentes-individuales">
 <span class="header-section-number">18.2</span> Componentes individuales</h2>
 <p>Cada componente de un gráfico ggplot es un objeto. La mayoría de las veces usted crea el componente y lo agrega inmediatamente a un gráfico, pero no es necesario. En su lugar, puede guardar cualquier componente en una variable (dándole un nombre) y luego agregarlo a varios gráficos:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bestfit</span> <span class="op">&lt;-</span> <span class="fu">geom_smooth</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bestfit</span> <span class="op">&lt;-</span> <span class="fu">geom_smooth</span><span class="op">(</span></span>
 <span>  method <span class="op">=</span> <span class="st">"lm"</span>, </span>
 <span>  se <span class="op">=</span> <span class="cn">FALSE</span>, </span>
 <span>  colour <span class="op">=</span> <span class="fu">alpha</span><span class="op">(</span><span class="st">"steelblue"</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
@@ -443,7 +446,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="va">bestfit</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -455,7 +458,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Esta es una excelente manera de reducir los tipos simples de duplicación (¡es mucho mejor que copiar y pegar!), pero requiere que el componente sea exactamente el mismo cada vez. Si necesita más flexibilidad, puede envolver estos fragmentos reutilizables en una función. Por ejemplo, podríamos extender nuestro objeto <code>bestfit</code> a una función más general para agregar líneas de mejor ajuste a un gráfico. El siguiente código crea un <code>geom_lm()</code> con tres parámetros: el modelo <code>formula</code>, la línea <code>colour</code> y el <code>linewidth</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_lm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span> <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, <span class="va">colour</span> <span class="op">=</span> <span class="fu">alpha</span><span class="op">(</span><span class="st">"steelblue"</span>, <span class="fl">0.5</span><span class="op">)</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_lm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span> <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, <span class="va">colour</span> <span class="op">=</span> <span class="fu">alpha</span><span class="op">(</span><span class="st">"steelblue"</span>, <span class="fl">0.5</span><span class="op">)</span>, </span>
 <span>                    <span class="va">linewidth</span> <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span>  <span class="op">{</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">formula</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, method <span class="op">=</span> <span class="st">"lm"</span>, colour <span class="op">=</span> <span class="va">colour</span>,</span>
 <span>    linewidth <span class="op">=</span> <span class="va">linewidth</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -465,7 +468,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu">geom_lm</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="fl">1</span> <span class="op">/</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_lm</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">1</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_lm</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">1</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -488,14 +491,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol></section></section><section id="múltiples-componentes" class="level2" data-number="18.3"><h2 data-number="18.3" class="anchored" data-anchor-id="múltiples-componentes">
 <span class="header-section-number">18.3</span> Múltiples componentes</h2>
 <p>No siempre es posible lograr tus objetivos con un solo componente. Afortunadamente, ggplot2 tiene una manera conveniente de agregar múltiples componentes a un gráfico en un solo paso con una lista. La siguiente función agrega dos capas: una para mostrar la media y otra para mostrar su intervalo de confianza del 95%:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>    <span class="fu">stat_summary</span><span class="op">(</span>fun <span class="op">=</span> <span class="st">"mean"</span>, geom <span class="op">=</span> <span class="st">"bar"</span>, fill <span class="op">=</span> <span class="st">"grey70"</span><span class="op">)</span>,</span>
 <span>    <span class="fu">stat_summary</span><span class="op">(</span>fun.data <span class="op">=</span> <span class="st">"mean_cl_normal"</span>, geom <span class="op">=</span> <span class="st">"errorbar"</span>, width <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">class</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_mean</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">drv</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_mean</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">drv</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_mean</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -507,7 +510,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Si la lista contiene elementos <code>NULL</code>, se ignoran. Esto facilita la adición condicional de componentes:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">se</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">se</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>    <span class="fu">stat_summary</span><span class="op">(</span>fun <span class="op">=</span> <span class="st">"mean"</span>, geom <span class="op">=</span> <span class="st">"bar"</span>, fill <span class="op">=</span> <span class="st">"grey70"</span><span class="op">)</span>,</span>
 <span>    <span class="kw">if</span> <span class="op">(</span><span class="va">se</span><span class="op">)</span> </span>
@@ -516,7 +519,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">drv</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_mean</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">drv</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_mean</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">drv</span>, <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_mean</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -545,7 +548,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Un ejemplo de esta técnica es la función <code>borders()</code> integrada en ggplot2. Está diseñado para agregar bordes de mapas desde uno de los conjuntos de datos del paquete de mapas: </p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">borders</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">database</span> <span class="op">=</span> <span class="st">"world"</span>, <span class="va">regions</span> <span class="op">=</span> <span class="st">"."</span>, <span class="va">fill</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">borders</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">database</span> <span class="op">=</span> <span class="st">"world"</span>, <span class="va">regions</span> <span class="op">=</span> <span class="st">"."</span>, <span class="va">fill</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
 <span>                    <span class="va">colour</span> <span class="op">=</span> <span class="st">"grey50"</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="va">database</span>, <span class="va">regions</span><span class="op">)</span></span>
 <span>  <span class="fu">geom_polygon</span><span class="op">(</span></span>
@@ -553,13 +556,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    data <span class="op">=</span> <span class="va">df</span>, fill <span class="op">=</span> <span class="va">fill</span>, colour <span class="op">=</span> <span class="va">colour</span>, <span class="va">...</span>, </span>
 <span>    inherit.aes <span class="op">=</span> <span class="cn">FALSE</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="argumentos-adicionales" class="level3" data-number="18.3.3"><h3 data-number="18.3.3" class="anchored" data-anchor-id="argumentos-adicionales">
 <span class="header-section-number">18.3.3</span> Argumentos adicionales</h3>
 <p>Si desea pasar argumentos adicionales a los componentes de su función, <code>...</code> no sirve: no hay forma de dirigir diferentes argumentos a diferentes componentes. En su lugar, deberá pensar en cómo desea que funcione su función, equilibrando los beneficios de tener una función que lo haga todo con el costo de tener una función compleja que sea más difícil de entender. </p>
 <p>Para comenzar, aquí hay un enfoque que utiliza <code><a href="https://rdrr.io/r/utils/modifyList.html">modifyList()</a></code> y <code><a href="https://rdrr.io/r/base/do.call.html">do.call()</a></code>: </p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">bar.params</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">errorbar.params</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">bar.params</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">errorbar.params</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span>  <span class="va">bar.params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/modifyList.html">modifyList</a></span><span class="op">(</span><span class="va">params</span>, <span class="va">bar.params</span><span class="op">)</span></span>
 <span>  <span class="va">errorbar.params</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/modifyList.html">modifyList</a></span><span class="op">(</span><span class="va">params</span>, <span class="va">errorbar.params</span><span class="op">)</span></span>
@@ -585,7 +588,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu">geom_mean</span><span class="op">(</span></span>
 <span>    bar.params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"steelblue"</span><span class="op">)</span>,</span>
 <span>    errorbar.params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -608,14 +611,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>La creación de pequeños componentes reutilizables está más en línea con el espíritu de ggplot2: puedes recombinarlos de manera flexible para crear cualquier trama que desees. Pero a veces estás creando la misma trama una y otra vez y no necesitas esa flexibilidad. En lugar de crear componentes, es posible que desee escribir una función que tome datos y parámetros y devuelva un gráfico completo. </p>
 <p>Por ejemplo, podrías resumir el código completo necesario para hacer un gráfico circular:</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">piechart</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">mapping</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">piechart</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">mapping</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">data</span>, <span class="va">mapping</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">geom_bar</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu">coord_polar</span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu">xlab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu">ylab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu">piechart</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">piechart</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="programming_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -625,7 +628,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Esto es mucho menos flexible que el enfoque basado en componentes, pero igualmente es mucho más conciso. Tenga en cuenta que tuvimos cuidado de devolver el objeto de la trama, en lugar de imprimirlo. Eso hace posible agregar otros componentes de ggplot2.</p>
 <p>Puede adoptar un enfoque similar para dibujar gráficos de coordenadas paralelas (PCP). Los PCP requieren una transformación de los datos, por lo que recomendamos escribir dos funciones: una que haga la transformación y otra que genere el gráfico. Mantener estas dos piezas separadas hace la vida mucho más fácil si luego deseas reutilizar la misma transformación para una visualización diferente. </p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pcp_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pcp_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">is_numeric</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.numeric</span>, <span class="fu"><a href="https://rdrr.io/r/base/logical.html">logical</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="co"># Cambiar la escala de columnas numéricas</span></span>
@@ -652,7 +655,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co">#&gt; ℹ Please use `gather()` instead.</span></span>
 <span><span class="fu">pcp</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: `gather_()` was deprecated in tidyr 1.2.0.</span></span>
-<span><span class="co">#&gt; ℹ Please use `gather()` instead.</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; ℹ Please use `gather()` instead.</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -668,32 +671,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>La función <code>piechart()</code> anterior es un poco poco atractiva porque requiere que el usuario conozca la especificación exacta <code>aes()</code> que genera un gráfico circular. Sería más conveniente si el usuario pudiera simplemente especificar el nombre de la variable a trazar. Para hacer eso necesitarás aprender un poco más sobre cómo funciona <code>aes()</code>.</p>
 <p><code>aes()</code> usa evaluación ordenada: en lugar de mirar los valores de sus argumentos, mira sus expresiones. Esto dificulta la programación porque cuando desea que se refiera a una variable proporcionada en un argumento, utiliza el nombre del argumento:</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x_var</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x_var</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_var</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">my_function</span><span class="op">(</span><span class="va">abc</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Aesthetic mapping: </span></span>
-<span><span class="co">#&gt; * `x` -&gt; `x_var`</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; * `x` -&gt; `x_var`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Esto lo resolvemos utilizando la técnica estándar de programación con tidy-evaluación: abrazar. Abrazar le dice a gglot2 que mire “dentro” del argumento y use su valor, no su nombre literal:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x_var</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x_var</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="op">{</span><span class="op">{</span> <span class="va">x_var</span> <span class="op">}</span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">my_function</span><span class="op">(</span><span class="va">abc</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Aesthetic mapping: </span></span>
-<span><span class="co">#&gt; * `x` -&gt; `abc`</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; * `x` -&gt; `abc`</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Esto facilita la actualización de nuestra función de gráfico circular:</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">piechart</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">var</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">piechart</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">var</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">data</span>, <span class="fu">aes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, fill <span class="op">=</span> <span class="op">{</span><span class="op">{</span> <span class="va">var</span> <span class="op">}</span><span class="op">}</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">geom_bar</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu">coord_polar</span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu">xlab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu">ylab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="va">mpg</span> <span class="op">|&gt;</span> <span class="fu">piechart</span><span class="op">(</span><span class="va">class</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">mpg</span> <span class="op">|&gt;</span> <span class="fu">piechart</span><span class="op">(</span><span class="va">class</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="programming_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -709,7 +712,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol></section></section><section id="programación-funcional" class="level2" data-number="18.5"><h2 data-number="18.5" class="anchored" data-anchor-id="programación-funcional">
 <span class="header-section-number">18.5</span> Programación funcional</h2>
 <p>Dado que los objetos ggplot2 son simplemente objetos R normales, puedes ponerlos en una lista. Esto significa que puede aplicar todas las excelentes herramientas de programación funcional de R. Por ejemplo, si quisieras agregar diferentes geoms al mismo gráfico base, podrías ponerlas en una lista y usar <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code>. </p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geoms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geoms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="fu">cut_width</span><span class="op">(</span><span class="va">displ</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span>, <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -722,7 +725,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -743,17 +746,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <p>¿Cómo podrías agregar una capa <code>geom_point()</code> a cada elemento de la siguiente lista?</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">carat</span>, <span class="va">price</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span>, size <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </li>
 <li>
 <p>¿Qué hace la siguiente función? ¿Cuál es un mejor nombre para ello?</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mystery</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mystery</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Reduce</a></span><span class="op">(</span><span class="va">`+`</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>, accumulate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
@@ -762,13 +765,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span>, </span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, </span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </li>
 </ol>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -819,13 +891,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

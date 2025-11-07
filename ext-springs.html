@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>21&nbsp; Un caso de estudio – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -85,14 +85,15 @@ div.csl-indent {
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -106,7 +107,7 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -136,7 +137,9 @@ div.csl-indent {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -149,7 +152,7 @@ div.csl-indent {
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -475,7 +478,7 @@ div.csl-indent {
 <span class="header-section-number">21.1</span> ¿Qué es un resorte?</h2>
 <p>El desarrollo de una extensión generalmente comienza con una idea de lo que quieres dibujar. En este caso, queremos dibujar un resorte entre dos puntos, por lo que necesitamos algún código que dibuje un resorte que parezca plausible. Probablemente haya muchas formas de hacer esto, pero una sencilla es dibujar un círculo mientras se mueve el “bolígrafo” en una dirección. Aquí hay un conjunto de datos que define un círculo usando 100 puntos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">circle</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">circle</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
 <span>  radians <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span>, length.out <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>,</span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">radians</span><span class="op">)</span>,</span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">radians</span><span class="op">)</span>,</span>
@@ -485,7 +488,7 @@ div.csl-indent {
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">circle</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, alpha <span class="op">=</span> <span class="op">-</span><span class="va">index</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_path</span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -495,7 +498,7 @@ div.csl-indent {
 </div>
 <p>Para transformar este círculo en un resorte que se extiende a lo largo del eje x usando dplyr, podríamos hacer algo como esto:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spring</span> <span class="op">&lt;-</span> <span class="va">circle</span> <span class="op">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spring</span> <span class="op">&lt;-</span> <span class="va">circle</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">mutate</span><span class="op">(</span></span>
 <span>    motion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>,</span>
 <span>    x <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">motion</span>,</span>
@@ -504,7 +507,7 @@ div.csl-indent {
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">spring</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, alpha <span class="op">=</span> <span class="op">-</span><span class="va">index</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_path</span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -544,7 +547,7 @@ div.csl-indent {
 </ul>
 <p>Ahora podemos escribir código para nuestra función <code>create_spring()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">create_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">create_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, </span>
 <span>                          <span class="va">y</span>, </span>
 <span>                          <span class="va">xend</span>, </span>
 <span>                          <span class="va">yend</span>, </span>
@@ -580,7 +583,7 @@ div.csl-indent {
 <span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">radians</span><span class="op">)</span> <span class="op">*</span> <span class="va">diameter</span><span class="op">/</span><span class="fl">2</span> <span class="op">+</span> <span class="va">x</span>,</span>
 <span>    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">radians</span><span class="op">)</span> <span class="op">*</span> <span class="va">diameter</span><span class="op">/</span><span class="fl">2</span> <span class="op">+</span> <span class="va">y</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Esta función conserva la lógica del código Spring que escribimos en <a href="#sec-intuitive-spring" class="quarto-xref"><span>Sección 21.1</span></a>, pero hace algunas cosas nuevas que son muy importantes al escribir extensiones:</p>
 <ul>
@@ -591,14 +594,14 @@ div.csl-indent {
 </ul>
 <p>Lo bueno de escribir <code>create_spring()</code> como función es que podemos probarla<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> para convencernos de que la lógica funciona:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spring</span> <span class="op">&lt;-</span> <span class="fu">create_spring</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">spring</span> <span class="op">&lt;-</span> <span class="fu">create_spring</span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fl">4</span>, y <span class="op">=</span> <span class="fl">2</span>, xend <span class="op">=</span> <span class="fl">10</span>, yend <span class="op">=</span> <span class="fl">6</span>,</span>
 <span>  diameter <span class="op">=</span> <span class="fl">2</span>, tension <span class="op">=</span> <span class="fl">0.6</span>, n <span class="op">=</span> <span class="fl">50</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">spring</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_path</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -610,11 +613,11 @@ div.csl-indent {
 <span class="header-section-number">21.2.2</span> Creando la estadística</h3>
 <p>Ahora que tenemos nuestra función de transformación, nuestra siguiente tarea es encapsularla en una <code>Stat</code>. Para hacer esto, tomaremos lo que aprendimos sobre la creación de objetos <code>Stat</code> en <a href="extensions.html#sec-new-stats" class="quarto-xref"><span>Sección 20.2</span></a> y lo ampliaremos un poco. Nuestro primer paso es escribir un código que cree una subclase de <code>Stat</code> a la que llamaremos <code>StatSpring</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatSpring"</span>, <span class="va">Stat</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatSpring"</span>, <span class="va">Stat</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Esto crea una nueva subclase <code>Stat</code> llamada <code>StatSpring</code>. Esta clase no hace nada interesante en este momento: lo único que hace este código hasta ahora es darle un nombre a la clase.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Para que esto sea útil, necesitaremos especificar los métodos que incorporar la funcionalidad que deseamos. En <a href="extensions.html#sec-new-stats" class="quarto-xref"><span>Sección 20.2</span></a> creamos una <code>Stat</code> anulando el método predeterminado <code>compute_group()</code> y el campo predeterminado para <code>required_aes</code>,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> pero los objetos <code>Stat</code> tienen muchas propiedades que puedes modificar. Si imprimimos el objeto <code>Stat</code>, podemos ver una lista de esas propiedades:</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Stat</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Stat</span></span>
 <span><span class="co">#&gt; &lt;ggproto object: Class Stat, gg&gt;</span></span>
 <span><span class="co">#&gt;     aesthetics: function</span></span>
 <span><span class="co">#&gt;     compute_group: function</span></span>
@@ -630,12 +633,12 @@ div.csl-indent {
 <span><span class="co">#&gt;     required_aes: </span></span>
 <span><span class="co">#&gt;     retransform: TRUE</span></span>
 <span><span class="co">#&gt;     setup_data: function</span></span>
-<span><span class="co">#&gt;     setup_params: function</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt;     setup_params: function</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Puedes modificar casi cualquiera de estos: los únicos que no debes tocar son <code>aesthetics</code> y <code>parameters</code>, que están destinados únicamente para uso interno.</p>
 <p>Para nuestro ejemplo de <code>StatSpring</code>, los tres métodos/campos que necesitaremos especificar son <code>setup_data()</code>, <code>compute_panel()</code> y <code>required_aes</code>. Analizaremos esto con más detalle en la siguiente sección, pero para ayudarlo a ver a qué apuntamos, aquí está el código completo de nuestra estadística:</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatSpring"</span>, <span class="va">Stat</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatSpring"</span>, <span class="va">Stat</span>, </span>
 <span>  </span>
 <span>  <span class="co"># Edite los datos de entrada para garantizar que los identificadores de grupo sean únicos</span></span>
 <span>  setup_data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
@@ -672,7 +675,7 @@ div.csl-indent {
 <span>  </span>
 <span>  <span class="co"># Especificar qué estética se requiere entrada</span></span>
 <span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>WPodemos imprimir cualquiera de estos métodos con un comando como <code>StatSpring$compute_panel</code> o <code>StatSpring$setup_data</code>.</p>
 </section><section id="métodos" class="level3" data-number="21.2.3"><h3 data-number="21.2.3" class="anchored" data-anchor-id="métodos">
@@ -680,7 +683,7 @@ div.csl-indent {
 <p>Echemos un vistazo más de cerca a los métodos definidos para nuestro <code>StatSpring</code>. Como se analiza en <a href="extensions.html#sec-new-stats" class="quarto-xref"><span>Sección 20.2</span></a>, los métodos más importantes para una estadística son los tres métodos <code>compute_*</code>. Siempre se debe definir uno de estos, generalmente <code>compute_group()</code> o <code>compute_panel()</code>. Como regla general, si la estadística opera en varias filas, comenzamos implementando un método <code>compute_group()</code>, y si la estadística opera en filas individuales, implementamos un método <code>compute_panel()</code>. Nuestra estadística de resorte es del último tipo: cada resorte está definido por una sola fila de datos originales, por lo que usaremos el método <code>compute_panel()</code> que recibe todos los datos de un solo panel.</p>
 <p>Como puedes ver al mirar el código fuente de nuestro método <code>compute_panel()</code>, estamos haciendo un poco más que simplemente llamar a nuestra función <code>create_spring()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">scales</span>, <span class="va">diameter</span> <span class="op">=</span> <span class="fl">1</span>, <span class="va">tension</span> <span class="op">=</span> <span class="fl">0.75</span>, <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">scales</span>, <span class="va">diameter</span> <span class="op">=</span> <span class="fl">1</span>, <span class="va">tension</span> <span class="op">=</span> <span class="fl">0.75</span>, <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">cols_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">springs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>, </span>
@@ -698,18 +701,18 @@ div.csl-indent {
 <span>    <span class="op">}</span></span>
 <span>  <span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">springs</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Usamos <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> para recorrer cada fila de datos y crear los puntos necesarios para dibujar el resorte correspondiente. Para cada uno de estos resortes, usamos <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code> para combinar los datos del resorte con todas las columnas que no son de posición de la fila de entrada. Esto es muy importante, ya que de lo contrario las asignaciones estéticas a p.e. El color y el tamaño se perderían. Finalmente, debido a que la salida de <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> es una lista de marcos de datos (uno por primavera), usamos <code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code> para combinarlos en un único marco de datos que se devuelve.</p>
 <p>Al definir una nueva estadística, es muy común especificar uno o ambos métodos <code>setup_data()</code> y <code>setup_params()</code>. Estos métodos se invocan al principio del proceso de construcción de la gráfica, por lo que puede utilizarlos para realizar comprobaciones y modificaciones tempranas de los parámetros y datos.</p>
 <p>Para nuestro ejemplo <code>StatSpring</code>, utilizamos el método <code>setup_data()</code> para garantizar que cada fila de entrada tenga una estética de grupo única. Esto es importante porque vamos a dibujar nuestros resortes con <code>GeomPath</code> y debemos asegurarnos de que el marco de datos generado por la estadística tenga un identificador único para cada resorte. Al hacerlo, se garantiza que la geom dibuje cada resorte como un camino distinto y no dibuje ninguna línea de conexión entre diferentes resortes. Nuevamente, hay algunos detalles sutiles sobre los que llamar la atención en la implementación:</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">anyDuplicated</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">data</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">group</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span>  <span class="va">data</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Tenga en cuenta que esta implementación conserva el valor original de <code>data$group</code> y agrega una identificación única si es necesario. Esto es importante porque la estética del grupo a veces se utiliza para transportar metadatos y no queremos perder esa información.</p>
 <p>La parte final de nuestra nueva clase es el campo <code>required_aes</code>. Este es un vector de caracteres que proporciona los nombres de la estética que el usuario <em>debe</em> proporcionar a la estadística. En este caso, debemos asegurarnos de que el usuario especifique cuatro posiciones estéticas: x e y definen dónde comienza el resorte, mientras que xend y yend definen dónde termina. El campo <code>required_aes</code>, junto con <code>default_aes</code> y <code>non_missing_aes</code>, también define la estética que comprende esta estadística. Cualquier estética que no aparezca en estos campos (o en los campos del geom correspondiente) generará una advertencia y el mapeo será ignorado.</p>
@@ -718,7 +721,7 @@ div.csl-indent {
 <p>Ahora que tenemos nuestro objeto ggproto <code>StatSpring</code>, es hora de escribir funciones constructoras con las que el usuario interactuará. Estrictamente hablando, no necesitamos hacer esto, porque <code>geom_path(stat = "spring")</code> ya funcionará, pero es una buena práctica escribir funciones constructoras para comodidad de los usuarios. Además, la función constructora proporciona un buen lugar para documentar la nueva funcionalidad.</p>
 <p>Quizás sea sorprendente que los objetos de estadísticas casi siempre estén emparejados con un constructor <code>geom_*()</code> porque la mayoría de los usuarios de ggplot2 están acostumbrados a agregar geoms, no estadísticas, cuando construyen una gráfica. El constructor en sí es principalmente código repetitivo que envuelve una llamada a <code>layer()</code>; solo tenga cuidado de hacer coincidir el orden de los argumentos y los nombres utilizados en los constructores de ggplot2 para no sorprender a sus usuarios.</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>                        <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                        <span class="va">stat</span> <span class="op">=</span> <span class="st">"spring"</span>,</span>
 <span>                        <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
@@ -752,11 +755,11 @@ div.csl-indent {
 <span>      <span class="va">...</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Para que esté completo, también debes crear una función constructora <code>stat_*()</code>. No hay sorpresas aquí: <code>stat_spring()</code> es muy similar a <code>geom_spring()</code> excepto que proporciona una geom predeterminada en lugar de una estadística predeterminada.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stat_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stat_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                        <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                        <span class="va">geom</span> <span class="op">=</span> <span class="st">"path"</span>, </span>
 <span>                        <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
@@ -783,13 +786,13 @@ div.csl-indent {
 <span>      <span class="va">...</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="probando-la-estadística" class="level3" data-number="21.2.5"><h3 data-number="21.2.5" class="anchored" data-anchor-id="probando-la-estadística">
 <span class="header-section-number">21.2.5</span> Probando la estadística</h3>
 <p>Ahora que todo está en su lugar, podemos probar nuestra nueva capa:</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">5</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">5</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>  xend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">5</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
@@ -799,7 +802,7 @@ div.csl-indent {
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -809,13 +812,13 @@ div.csl-indent {
 </div>
 <p>Esto se ve bastante bien. Los usuarios pueden llamar a nuestra función constructora <code>geom_spring()</code> y obtener resultados sensatos. Mejor aún, debido a que hemos escrito una nueva estadística, obtenemos una serie de funciones de forma gratuita, como escalado y facetado:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span></span>
 <span>    <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span>, colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span>,</span>
 <span>    linewidth <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">class</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">class</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="2400"></p>
@@ -825,14 +828,14 @@ div.csl-indent {
 </div>
 <p>Los usuarios también tienen la opción de llamar al constructor <code>stat_spring()</code>, lo que puede ser útil si por alguna razón quieren dibujar los resortes con puntos en lugar de rutas:</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">stat_spring</span><span class="op">(</span></span>
 <span>    <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span>, colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span>,</span>
 <span>    geom <span class="op">=</span> <span class="st">"point"</span>, </span>
 <span>    n <span class="op">=</span> <span class="fl">15</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">class</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">class</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="2400"></p>
@@ -848,7 +851,7 @@ div.csl-indent {
 <span class="header-section-number">21.3</span> Part 2: Añadiendo estética</h2>
 <p>La estadística que creamos en la última sección trata el <code>diameter</code> y la <code>tension</code> como argumentos constantes: no son estéticos y el usuario no puede asignarlos a una variable en los datos. Podemos solucionar este problema realizando algunos pequeños cambios en el código <code>StatSpring</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatSpring"</span>, <span class="va">Stat</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatSpring"</span>, <span class="va">Stat</span>,</span>
 <span>                      </span>
 <span>  setup_data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">anyDuplicated</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -876,11 +879,11 @@ div.csl-indent {
 <span>  </span>
 <span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span>,</span>
 <span>  optional_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"diameter"</span>, <span class="st">"tension"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La principal diferencia con nuestro intento anterior es que los argumentos <code>diameter</code> y <code>tension</code> de <code>compute_panel()</code> han desaparecido y ahora se toman de los datos (al igual que <code>x</code>, <code>y</code>, etc.) . Esto tiene un inconveniente que solucionaremos en <a href="#sec-spring3" class="quarto-xref"><span>Sección 21.4</span></a>: ya no podemos establecer una estética fija. Debido a esto, necesitaremos eliminar esos argumentos de la función constructora:</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                        <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                        <span class="va">stat</span> <span class="op">=</span> <span class="st">"spring"</span>, </span>
 <span>                        <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
@@ -909,12 +912,12 @@ div.csl-indent {
 <span>      <span class="va">...</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El constructor <code>stat_spring()</code> requeriría el mismo tipo de cambio.</p>
 <p>Todo lo que queda es probar nuestra nueva implementación:</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">5</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">5</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>  xend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">5</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
@@ -925,7 +928,7 @@ div.csl-indent {
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>tension <span class="op">=</span> <span class="va">tension</span>, diameter <span class="op">=</span> <span class="va">diameter</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>tension <span class="op">=</span> <span class="va">tension</span>, diameter <span class="op">=</span> <span class="va">diameter</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -935,12 +938,12 @@ div.csl-indent {
 </div>
 <p>Parece funcionar. Sin embargo, como esperábamos, ya no es posible establecer <code>diameter</code> y <code>tension</code> como parámetros:</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span>diameter <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in geom_spring(diameter = 0.5): Ignoring unknown parameters: `diameter`</span></span>
 <span><span class="co">#&gt; Warning: Computation failed in `stat_spring()`.</span></span>
 <span><span class="co">#&gt; Caused by error in `if (tension &lt;= 0) ...`:</span></span>
-<span><span class="co">#&gt; ! argument is of length zero</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; ! argument is of length zero</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -959,7 +962,7 @@ div.csl-indent {
 <p>Como se analizó en <a href="extensions.html" class="quarto-xref"><span>Capítulo 20</span></a>, existen muchas similitudes entre las extensiones <code>Stat</code> y <code>Geom</code>. La mayor diferencia es que las extensiones <code>Stat</code> devuelven una versión modificada de los datos de entrada, mientras que las extensiones <code>Geom</code> devuelven objetos gráficos. En algunos casos, crear una nueva geom requiere que uses el paquete grid (cubriremos esto en <a href="#sec-spring4" class="quarto-xref"><span>Sección 21.6</span></a>), pero a menudo no es necesario.</p>
 <p>Al igual que los objetos de estadísticas, los objetos geom en ggproto tienen varios métodos y campos que puedes modificar. Puedes ver la lista imprimiendo el objeto:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Geom</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Geom</span></span>
 <span><span class="co">#&gt; &lt;ggproto object: Class Geom, gg&gt;</span></span>
 <span><span class="co">#&gt;     aesthetics: function</span></span>
 <span><span class="co">#&gt;     default_aes: uneval</span></span>
@@ -976,13 +979,13 @@ div.csl-indent {
 <span><span class="co">#&gt;     required_aes: </span></span>
 <span><span class="co">#&gt;     setup_data: function</span></span>
 <span><span class="co">#&gt;     setup_params: function</span></span>
-<span><span class="co">#&gt;     use_defaults: function</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt;     use_defaults: function</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="creando-la-geom" class="level3" data-number="21.4.2"><h3 data-number="21.4.2" class="anchored" data-anchor-id="creando-la-geom">
 <span class="header-section-number">21.4.2</span> Creando la geom</h3>
 <p>De la misma manera que una estadística usa los métodos <code>compute_layer()</code>, <code>compute_panel()</code> y <code>compute_group()</code> para transformar los datos, una geom usa <code>draw_layer()</code>, <code>draw_panel()</code> y <code>draw_group()</code> para crear representaciones gráficas de los datos. De la misma manera que creamos <code>StatSpring</code> escribiendo un método <code>compute_panel()</code> para hacer el trabajo pesado, crearemos <code>GeomSpring</code> escribiendo un método <code>draw_panel()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomSpring"</span>, <span class="va">Geom</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomSpring"</span>, <span class="va">Geom</span>,</span>
 <span>  </span>
 <span>  <span class="co"># Asegúrese de que cada fila tenga una identificación de grupo única</span></span>
 <span>  setup_data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
@@ -1045,7 +1048,7 @@ div.csl-indent {
 <span>    diameter <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>    tension <span class="op">=</span> <span class="fl">0.75</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>A pesar de la extensión de este código, la mayor parte resulta familiar:</p>
 <ul>
@@ -1058,7 +1061,7 @@ div.csl-indent {
 <span class="header-section-number">21.4.3</span> un constructor</h3>
 <p>Al igual que en nuestros intentos anteriores, el paso final es escribir una función constructora <code>geom_spring()</code>. El código no es muy diferente a las versiones anteriores: usamos <code>GeomSpring</code> en lugar de <code>GeomPath</code>, y usamos la estadística de identidad en lugar de <code>StatSpring</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                        <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                        <span class="va">stat</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
 <span>                        <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
@@ -1087,15 +1090,15 @@ div.csl-indent {
 <span>      <span class="va">...</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="probando-la-geom" class="level3" data-number="21.4.4"><h3 data-number="21.4.4" class="anchored" data-anchor-id="probando-la-geom">
 <span class="header-section-number">21.4.4</span> Probando la geom</h3>
 <p>Ahora tenemos una geom adecuada con una estética predeterminada funcional y la capacidad de establecer la estética como parámetros:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>tension <span class="op">=</span> <span class="va">tension</span>, diameter <span class="op">=</span> <span class="va">diameter</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_spring</span><span class="op">(</span>diameter <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_spring</span><span class="op">(</span>diameter <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1108,8 +1111,8 @@ div.csl-indent {
 </div>
 <p>Todavía tiene algunas limitaciones, porque las unidades de <code>diameter</code> y <code>tension</code> se expresan en relación con la escala de los datos sin procesar. El diámetro real de un resorte con <code>diameter = 0.5</code> será diferente dependiendo de los límites del eje, y si los ejes x e y no están en la misma escala, la forma del resorte se distorsionará. Puedes ver esto en el siguiente ejemplo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, xend <span class="op">=</span> <span class="fl">3</span>, yend <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, xend <span class="op">=</span> <span class="fl">3</span>, yend <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1119,8 +1122,8 @@ div.csl-indent {
 </div>
 <p>El mismo problema subyacente significa que el diámetro del resorte se expresa en el espacio de coordenadas. Esto hace que sea difícil definir un valor predeterminado significativo porque el tamaño absoluto del diámetro del resorte cambia cuando cambia la escala de los datos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, xend <span class="op">=</span> <span class="fl">100</span>, yend <span class="op">=</span> <span class="fl">80</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, xend <span class="op">=</span> <span class="fl">100</span>, yend <span class="op">=</span> <span class="fl">80</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1147,19 +1150,19 @@ div.csl-indent {
 <span class="header-section-number">21.5.1</span> Grobs</h3>
 <p>Para entender cómo funciona grid, lo primero que debemos hablar son <strong>grobs</strong>. Grobs (<strong>objetos</strong>gr**aficos) son representaciones atómicas de elementos gráficos en una cuadrícula e incluyen tipos como puntos, líneas, círculos, rectángulos y texto. El paquete grid proporciona funciones como <code><a href="https://rdrr.io/r/grid/grid.points.html">pointsGrob()</a></code>, <code><a href="https://rdrr.io/r/grid/grid.lines.html">linesGrob()</a></code>, <code><a href="https://rdrr.io/r/grid/grid.circle.html">circleGrob()</a></code>, <code><a href="https://rdrr.io/r/grid/grid.rect.html">rectGrob()</a></code> y <code><a href="https://rdrr.io/r/grid/grid.text.html">textGrob()</a></code> que crean objetos gráficos sin dibujar nada en el dispositivo gráfico. Estas funciones están vectorizadas, lo que permite que un solo punto represente múltiples puntos, por ejemplo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
 <span><span class="va">circles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.circle.html">circleGrob</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.7</span><span class="op">)</span>, </span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span><span class="op">)</span>,</span>
 <span>  r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">circles</span></span>
-<span><span class="co">#&gt; circle[GRID.circle.582]</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; circle[GRID.circle.582]</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Tenga en cuenta que este código no dibuja nada: es sólo una descripción de un conjunto de círculos. Para dibujarlo, primero llamamos a <code><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage()</a></code> para borrar el dispositivo gráfico actual y luego <code><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw()</a></code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">circles</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">circles</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1169,7 +1172,7 @@ div.csl-indent {
 </div>
 <p>grid también proporciona <code><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree()</a></code>, que construye objetos compuestos a partir de múltiples grobs atómicos. Aquí hay una ilustración:</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.text.html">textGrob</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.text.html">textGrob</a></span><span class="op">(</span></span>
 <span>  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span><span class="op">)</span>,</span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.7</span><span class="op">)</span>, </span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span><span class="op">)</span>,</span>
@@ -1177,7 +1180,7 @@ div.csl-indent {
 <span></span>
 <span><span class="va">composite</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="va">circles</span>, <span class="va">labels</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">composite</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">composite</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1190,19 +1193,19 @@ div.csl-indent {
 <span class="header-section-number">21.5.2</span> Ventanas gráficas</h3>
 <p>El segundo concepto clave en grid es la idea de una <strong>ventana gráfica</strong>. Una ventana gráfica es una región de trazado rectangular que proporciona su propio sistema de coordenadas para los objetos que se dibujan dentro de ella y también puede proporcionar una cuadrícula tabular en la que se pueden anidar otras ventanas gráficas. Un grob individual puede tener su propia ventana gráfica o, si no se proporciona ninguna, heredará una. Si bien no necesitaremos considerar las ventanas gráficas al construir el grob para nuestros resortes, son un concepto importante que impulsa gran parte del diseño de alto nivel de los gráficos ggplot2, por lo que los presentaremos aquí muy brevemente. En el siguiente ejemplo usamos <code><a href="https://rdrr.io/r/grid/viewport.html">viewport()</a></code> para definir dos ventanas gráficas diferentes, una con parámetros predeterminados y la segunda que gira alrededor del punto medio 15 grados:</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vp_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/viewport.html">viewport</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">vp_rotated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/viewport.html">viewport</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vp_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/viewport.html">viewport</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">vp_rotated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/viewport.html">viewport</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Esta vez, cuando creemos nuestros grobs compuestos, los asignaremos explícitamente a ventanas gráficas específicas estableciendo el argumento <code>vp</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">composite_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="va">circles</span>, <span class="va">labels</span>, vp <span class="op">=</span> <span class="va">vp_default</span><span class="op">)</span></span>
-<span><span class="va">composite_rotated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="va">circles</span>, <span class="va">labels</span>, vp <span class="op">=</span> <span class="va">vp_rotated</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">composite_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="va">circles</span>, <span class="va">labels</span>, vp <span class="op">=</span> <span class="va">vp_default</span><span class="op">)</span></span>
+<span><span class="va">composite_rotated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="va">circles</span>, <span class="va">labels</span>, vp <span class="op">=</span> <span class="va">vp_rotated</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Cuando trazamos estos dos grobs, podemos ver el efecto de la ventana gráfica: aunque <code>composite_default</code> y <code>composite_rotated</code> se componen de los mismos dos grobs primitivos (es decir, <code>circles</code> y <code>labels</code>), pertenecen a ventanas gráficas diferentes, por lo que se ven diferentes cuando se dibuja la gráfica:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">composite_default</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">composite_rotated</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">composite_rotated</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1215,19 +1218,19 @@ div.csl-indent {
 <span class="header-section-number">21.5.3</span> Parámetros gráficos</h3>
 <p>El siguiente concepto que debemos comprender es la idea de <strong>parámetros gráficos</strong>. Cuando definimos los grobs <code>circles</code> y <code>labels</code>, solo especificamos algunas de sus propiedades. Por ejemplo, no dijimos nada sobre el color o la transparencia, por lo que todas estas propiedades están configuradas en sus valores predeterminados. La función <code><a href="https://rdrr.io/r/grid/gpar.html">gpar()</a></code> en grid le permite especificar parámetros gráficos como objetos distintos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gp_blue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
-<span><span class="va">gp_orange</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"orange"</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gp_blue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span><span class="va">gp_orange</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"orange"</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Los objetos <code>gp_blue</code> y <code>gp_orange</code> proporcionan listas de configuraciones gráficas que ahora se pueden aplicar a cualquier grob que queramos usando el argumento <code>gp</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">grob1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="va">circles</span>, <span class="va">labels</span>, vp <span class="op">=</span> <span class="va">vp_default</span>, gp <span class="op">=</span> <span class="va">gp_blue</span><span class="op">)</span></span>
-<span><span class="va">grob2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="va">circles</span>, <span class="va">labels</span>, vp <span class="op">=</span> <span class="va">vp_rotated</span>, gp <span class="op">=</span> <span class="va">gp_orange</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">grob1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="va">circles</span>, <span class="va">labels</span>, vp <span class="op">=</span> <span class="va">vp_default</span>, gp <span class="op">=</span> <span class="va">gp_blue</span><span class="op">)</span></span>
+<span><span class="va">grob2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">grobTree</a></span><span class="op">(</span><span class="va">circles</span>, <span class="va">labels</span>, vp <span class="op">=</span> <span class="va">vp_rotated</span>, gp <span class="op">=</span> <span class="va">gp_orange</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Cuando trazamos estos dos grobs, heredan la configuración proporcionada por los parámetros gráficos así como las ventanas gráficas a las que están asignados:</p>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">grob1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">grob2</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">grob2</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1248,7 +1251,7 @@ div.csl-indent {
 <span class="header-section-number">21.5.5</span> Construyendo clases grob</h3>
 <p>Ahora que tenemos una comprensión básica de la cuadrícula, intentemos crear nuestra propia clase grob “sorpresa”: objetos que son círculos si miden menos de 3 cm, pero se transforman en cuadrados cuando miden más de 3 cm. Este no es el tipo de objeto gráfico más útil, pero es útil para ilustrar la flexibilidad del sistema de cuadrícula. El primer paso es escribir nuestra propia función constructora usando <code><a href="https://rdrr.io/r/grid/grid.grob.html">grob()</a></code> o <code><a href="https://rdrr.io/r/grid/grid.grob.html">gTree()</a></code>, dependiendo de si estamos creando un objeto primitivo o compuesto. Comenzamos creando una función constructora “delgada”:</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">surpriseGrob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">surpriseGrob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, </span>
 <span>                         <span class="va">y</span>, </span>
 <span>                         <span class="va">size</span>, </span>
 <span>                         <span class="va">default.units</span> <span class="op">=</span> <span class="st">"npc"</span>, </span>
@@ -1271,7 +1274,7 @@ div.csl-indent {
 <span>    vp <span class="op">=</span> <span class="va">vp</span>, </span>
 <span>    cl <span class="op">=</span> <span class="st">"surprise"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Esta función no hace mucho. Todo lo que hace es garantizar que los argumentos <code>x</code>, <code>y</code> y <code>size</code> sean unidades de cuadrícula y establece que el nombre de la clase sea “sorpresa”. Para definir el comportamiento de nuestro grob, necesitamos especificar métodos para una o ambas funciones genéricas <code><a href="https://rdrr.io/r/grid/makeContent.html">makeContext()</a></code> y <code><a href="https://rdrr.io/r/grid/makeContent.html">makeContent()</a></code>:</p>
 <ul>
@@ -1280,7 +1283,7 @@ div.csl-indent {
 </ul>
 <p>Debido a que estas funciones genéricas utilizan el sistema de programación orientada a objetos S3, podemos definir nuestro método simplemente agregando el nombre de la clase al final del nombre de la función. Es decir, el método <code><a href="https://rdrr.io/r/grid/makeContent.html">makeContent()</a></code> para nuestro grob sorpresa se define creando una función llamada <code>makeContent.surprise()</code> que toma un grob como entrada y devuelve un grob modificado como salida:</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">makeContent.surprise</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">makeContent.surprise</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x_pos</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">x</span></span>
 <span>  <span class="va">y_pos</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">y</span></span>
 <span>  <span class="va">size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertWidth</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">size</span>, unitTo <span class="op">=</span> <span class="st">"cm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -1313,7 +1316,7 @@ div.csl-indent {
 <span>  </span>
 <span>  <span class="co"># Agregue el círculo y rectifique grob como hijos de nuestro grob de entrada</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/grid/grid.add.html">setChildren</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">gList</a></span><span class="op">(</span><span class="va">circle_grob</span>, <span class="va">square_grob</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Algunas de las funciones que hemos llamado aquí son nuevas, pero todas reutilizan los conceptos centrales que analizamos anteriormente. Específicamente:</p>
 <ul>
@@ -1326,16 +1329,16 @@ div.csl-indent {
 </ul>
 <p>El efecto de esta función es garantizar que cada vez que se renderiza el grob se recalcule el tamaño absoluto de cada forma. Todas las formas menores de 3 cm se convierten en círculos y todas las formas mayores de 3 cm se convierten en cuadrados. Para ver cómo se desarrolla esto, llamemos a nuestra nueva función:</p>
 <div class="cell">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">surprises</span> <span class="op">&lt;-</span> <span class="fu">surpriseGrob</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">surprises</span> <span class="op">&lt;-</span> <span class="fu">surpriseGrob</span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">0.45</span>, <span class="fl">0.75</span><span class="op">)</span>, </span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>, </span>
 <span>  size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.15</span>, <span class="fl">0.25</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El grob <code>surprises</code> contiene tres formas cuyas ubicaciones y tamaños se han especificado en relación con el tamaño de la ventana gráfica. En este momento no tenemos idea de cuáles de estas formas serán círculos y cuáles serán cuadrados: eso depende del tamaño de la ventana gráfica en la que se dibujará el grob <code>surprises</code>. Ahora podemos dibujar el grob de la forma habitual:</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">surprises</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">surprises</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1349,7 +1352,7 @@ div.csl-indent {
 <p>El último aspecto de grid que discutiremos aquí es el motor de diseño proporcionado por el paquete gtable. No es necesario saber acerca de gtable para construir nuestro spring grob, pero hay otros tipos de extensiones ggplot2 que sí requieren este conocimiento, por lo que brindaremos una breve descripción aquí.</p>
 <p>Como se discutió en <a href="internals.html#sec-ggplotgtable" class="quarto-xref"><span>Sección 19.3</span></a>, cuando ggplot2 pasa el gráfico a la cuadrícula para renderizarlo, lo hace creando un objeto gtable con <code>ggplot_gtable()</code>. Podemos extraer este objeto usando la función <code>ggplotGrob()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">grob_table</span> <span class="op">&lt;-</span> <span class="fu">ggplotGrob</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
 <span><span class="va">grob_table</span></span>
 <span><span class="co">#&gt; TableGrob (16 x 13) "layout": 22 grobs</span></span>
@@ -1398,12 +1401,12 @@ div.csl-indent {
 <span><span class="co">#&gt; 19                                zeroGrob[NULL]</span></span>
 <span><span class="co">#&gt; 20         zeroGrob[plot.subtitle..zeroGrob.626]</span></span>
 <span><span class="co">#&gt; 21            zeroGrob[plot.title..zeroGrob.625]</span></span>
-<span><span class="co">#&gt; 22          zeroGrob[plot.caption..zeroGrob.627]</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; 22          zeroGrob[plot.caption..zeroGrob.627]</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El resultado ilustra cómo está estructurado el diseño de ggplot2. La gráfica se compone de 18 grobs distintos que están organizados en un <code>TableGrob</code> que especifica una cuadrícula de 12 x 9, que a su vez proporciona una colección de ventanas gráficas dentro de las cuales se pueden dibujar grobs individuales. Este <code>TableGrob</code> es en sí mismo un grobtree y se puede representar con grid llamando <code><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw()</a></code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">grob_table</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">grob_table</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1413,7 +1416,7 @@ div.csl-indent {
 </div>
 <p>Para ilustrar cómo funciona <code>TableGrob</code>, crearemos una versión simplificada de este resultado sin usar ggplot2. Nuestro primer paso es definir los grobs constituyentes que componen nuestra gráfica:</p>
 <div class="cell">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">xtick</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">8</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">xtick</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">8</span></span>
 <span><span class="va">ytick</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.points.html">pointsGrob</a></span><span class="op">(</span></span>
@@ -1431,12 +1434,12 @@ div.csl-indent {
 <span><span class="va">yaxis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.yaxis.html">yaxisGrob</a></span><span class="op">(</span></span>
 <span>  at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">ytick</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>  label <span class="op">=</span> <span class="va">ytick</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El grob <code>points</code> contiene los datos que se van a trazar, mientras que <code>xaxis</code> y <code>yaxis</code> son grobs que dibujan ejes etiquetados. Cuando dibujamos el grob de <code>points</code>, obtenemos el núcleo de un diagrama de dispersión:</p>
 <div class="cell">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">points</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">points</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1446,16 +1449,16 @@ div.csl-indent {
 </div>
 <p>Sin embargo, si queremos agregar ejes a este gráfico, necesitamos un conjunto de ventanas gráficas dispuestas en formato tabular para que podamos colocar el <code>xaxis</code> inmediatamente debajo de los <code>points</code> y el <code>yaxis</code> a la izquierda de los <code>points</code>. En ggplot2, esto lo maneja el motor de diseño gtable. Primero, usamos <code><a href="https://gtable.r-lib.org/reference/gtable.html">gtable()</a></code> para definir la estructura:</p>
 <div class="cell">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gtable.r-lib.org">gtable</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gtable.r-lib.org">gtable</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot_layout</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gtable.r-lib.org/reference/gtable.html">gtable</a></span><span class="op">(</span></span>
 <span>  widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'cm'</span>, <span class="st">'cm'</span>, <span class="st">'null'</span>, <span class="st">'cm'</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1.5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'cm'</span>, <span class="st">'null'</span>, <span class="st">'cm'</span>, <span class="st">'cm'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El objeto <code>plot_layout</code> es un <code>TableGrob</code> de 4 x 4 que define ventanas gráficas con tamaños que coinciden con las alturas de filas y los anchos de columna que pasamos a <code><a href="https://gtable.r-lib.org/reference/gtable.html">gtable()</a></code>. La función <code><a href="https://gtable.r-lib.org/reference/gtable_show_layout.html">gtable_show_layout()</a></code> proporciona una manera conveniente de visualizar este diseño:</p>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://gtable.r-lib.org/reference/gtable_show_layout.html">gtable_show_layout</a></span><span class="op">(</span><span class="va">plot_layout</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://gtable.r-lib.org/reference/gtable_show_layout.html">gtable_show_layout</a></span><span class="op">(</span><span class="va">plot_layout</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1466,27 +1469,27 @@ div.csl-indent {
 <p>Observe que este diseño tiene una fila con altura cero y una columna con ancho cero. Colocaremos los grobs <code>xaxis</code> y <code>yaxis</code> en estas filas y les permitiremos “desbordarse” en las filas y columnas adyacentes que especifican los márgenes del gráfico.</p>
 <p>Para colocar los grobs en la mesa, usamos la función <code><a href="https://gtable.r-lib.org/reference/gtable_add_grob.html">gtable_add_grob()</a></code>. Un diseño <code>TableGrob</code> permite que un grob individual abarque varias celdas usando los argumentos <code>t</code>, <code>l</code>, <code>b</code> y <code>r</code> para especificar índices de celda para las celdas que están más arriba, más a la izquierda, más al fondo y más a la derecha abarcadas por el grob. Sin embargo, el valor predeterminado es asumir que cada grob pertenece exactamente a una celda, en cuyo caso solo es necesario especificar los argumentos <code>t</code> y <code>l</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot_layout</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gtable.r-lib.org/reference/gtable_add_grob.html">gtable_add_grob</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot_layout</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gtable.r-lib.org/reference/gtable_add_grob.html">gtable_add_grob</a></span><span class="op">(</span></span>
 <span>  <span class="va">plot_layout</span>,</span>
 <span>  grobs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">points</span>, <span class="va">xaxis</span>, <span class="va">yaxis</span><span class="op">)</span>,</span>
 <span>  t <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span>, <span class="co"># la fila que define la extensión superior de cada grob</span></span>
 <span>  l <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span>, <span class="co"># la columna que define la extensión izquierda de cada grob</span></span>
 <span>  clip <span class="op">=</span> <span class="st">'off'</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Si inspeccionamos nuestro objeto <code>plot_layout</code>, vemos algo que tiene la misma estructura que el <code>TableGrob</code> producido por el código ggplot2 anterior:</p>
 <div class="cell">
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot_layout</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot_layout</span></span>
 <span><span class="co">#&gt; TableGrob (4 x 4) "layout": 3 grobs</span></span>
 <span><span class="co">#&gt;   z     cells   name                    grob</span></span>
 <span><span class="co">#&gt; 1 1 (2-2,3-3) layout points[GRID.points.630]</span></span>
 <span><span class="co">#&gt; 2 2 (3-3,3-3) layout   xaxis[GRID.xaxis.631]</span></span>
-<span><span class="co">#&gt; 3 3 (2-2,2-2) layout   yaxis[GRID.yaxis.632]</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; 3 3 (2-2,2-2) layout   yaxis[GRID.yaxis.632]</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora podemos dibujar nuestra gráfica usando <code><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw()</a></code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">plot_layout</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">plot_layout</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1503,7 +1506,7 @@ div.csl-indent {
 <p>Comencemos definiendo la función <code>springGrob()</code>. Nuestra idea clave es que podemos escribir el código grob de una manera que impulse la acción de extracción del resorte hasta el nivel de la función <code><a href="https://rdrr.io/r/grid/makeContent.html">makeContent()</a></code>. Al hacer esto, podemos asegurarnos de que el diámetro se calcule en el momento del dibujo utilizando unidades absolutas en lugar de definir el diámetro en relación con las coordenadas del trazado.</p>
 <p>Comenzaremos creando nuestra función constructora. Los argumentos de esta función se basan en <code><a href="https://rdrr.io/r/grid/grid.segments.html">segmentsGrob()</a></code> ya que, en esencia, estamos dibujando segmentos modificados:</p>
 <div class="cell">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">springGrob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"npc"</span><span class="op">)</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">springGrob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"npc"</span><span class="op">)</span>, </span>
 <span>                       <span class="va">y0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"npc"</span><span class="op">)</span>, </span>
 <span>                       <span class="va">x1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>, </span>
 <span>                       <span class="va">y1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>, </span>
@@ -1536,11 +1539,11 @@ div.csl-indent {
 <span>    vp <span class="op">=</span> <span class="va">vp</span>, </span>
 <span>    cl <span class="op">=</span> <span class="st">"spring"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Vemos que una vez más nuestro constructor es una envoltura muy delgada alrededor de <code><a href="https://rdrr.io/r/grid/grid.grob.html">gTree()</a></code>. No introduce ningún concepto nuevo: todo lo que hace es garantizar que los argumentos se conviertan a unidades si es necesario y luego devuelve un grob compuesto con clase “spring”. El trabajo de dibujar nuestro resorte ocurre en el método <code><a href="https://rdrr.io/r/grid/makeContent.html">makeContent()</a></code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">makeContent.spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">makeContent.spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="co"># Convertir valores de posición y diámetro en unidades absolutas</span></span>
 <span>  <span class="va">x0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertX</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">x0</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -1579,12 +1582,12 @@ div.csl-indent {
 <span>    gp <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">gp</span></span>
 <span>  <span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/grid/grid.add.html">setChildren</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">gList</a></span><span class="op">(</span><span class="va">spring_paths</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Nuevamente hay un par de nuevas funciones de cuadrícula aquí, pero esperamos que no sea demasiado difícil descubrir qué hacen. La verdad es que aquí no pasa nada especial. Cada vez que se cambia el tamaño del gráfico, tomamos las coordenadas y la configuración del diámetro del resorte y los convertimos todos a milímetros. Sólo después de convertir las cantidades importantes a unidades absolutas construimos las rutas de resorte usando la función <code>create_spring()</code> que escribimos al principio: al llevar la llamada a <code>create_spring()</code> a este nivel, podemos asegurarnos de que la ruta sea definido usando unidades absolutas y luego devuelve el resultado como un grob de polilínea.</p>
 <p>Ahora tenemos un spring grob adecuado para usar en ggplot2. En la siguiente sección construiremos una geom a su alrededor, pero antes de hacerlo, verifiquemos que nuestro código se comporte como se esperaba:</p>
 <div class="cell">
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">springs</span> <span class="op">&lt;-</span> <span class="fu">springGrob</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">springs</span> <span class="op">&lt;-</span> <span class="fu">springGrob</span><span class="op">(</span></span>
 <span>  x0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  y0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
 <span>  x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -1593,7 +1596,7 @@ div.csl-indent {
 <span>  tension <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.7</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">springs</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">springs</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1606,7 +1609,7 @@ div.csl-indent {
 <span class="header-section-number">21.6.2</span> El último GeomSpring</h3>
 <p>Ahora que tenemos un grob personalizado que dibuja resortes, podemos crear un objeto ggproto <code>GeomSpring</code> que lo use. Aquí está el código completo para esa geom:</p>
 <div class="cell">
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomSpring"</span>, <span class="va">Geom</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpring</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomSpring"</span>, <span class="va">Geom</span>,</span>
 <span>  </span>
 <span>  <span class="co"># Compruebe que el usuario haya especificado parámetros sensibles                    </span></span>
 <span>  setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
@@ -1672,7 +1675,7 @@ div.csl-indent {
 <span>    diameter <span class="op">=</span> <span class="fl">0.35</span>, </span>
 <span>    tension <span class="op">=</span> <span class="fl">0.75</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Hay algunas cosas a tener en cuenta aquí. Como era de esperar, los principales cambios con respecto a la última versión se encuentran en el método <code>draw_panel()</code> (ver más abajo). Pero hay un par de cambios más.</p>
 <ul>
@@ -1688,7 +1691,7 @@ div.csl-indent {
 </ul>
 <p>Ahora que <code>GeomSpring</code> está definido, todo lo que queda es crear una función constructora que el usuario pueda llamar:</p>
 <div class="cell">
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                        <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                        <span class="va">stat</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
 <span>                        <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
@@ -1713,11 +1716,11 @@ div.csl-indent {
 <span>      <span class="va">...</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Por fin podemos darle un buen uso a nuestra nueva función <code>geom_spring()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">100</span>, </span>
 <span>    y <span class="op">=</span> <span class="va">y</span>, </span>
@@ -1725,7 +1728,7 @@ div.csl-indent {
 <span>    yend <span class="op">=</span> <span class="va">yend</span>, </span>
 <span>    diameter <span class="op">=</span> <span class="va">diameter</span>, </span>
 <span>    tension <span class="op">=</span> <span class="va">tension</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1745,30 +1748,30 @@ div.csl-indent {
 <span class="header-section-number">21.7.1</span> Escalada</h3>
 <p>Afortunadamente, en comparación con el trabajo que hemos realizado hasta ahora, crear nuevas escalas no es una tarea enorme. Discutimos las ideas básicas en <a href="extensions.html#sec-new-scales" class="quarto-xref"><span>Sección 20.5</span></a> y podemos aplicar esos conceptos aquí sin demasiado dolor. Nuestra tarea principal es crear una función con el nombre apropiado que genere un objeto <code>Scale</code>. La mayoría de las funciones de escala son simples envoltorios alrededor de una de las tres funciones constructoras de escala fundamentales, <code>continuous_scale()</code>, <code>discrete_scale()</code> y <code>binned_scale()</code>. Así es como lo hacemos para la estética de la tensión:</p>
 <div class="cell">
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_tension_continuous</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_tension_continuous</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">continuous_scale</span><span class="op">(</span></span>
 <span>    aesthetics <span class="op">=</span> <span class="st">"tension"</span>, </span>
 <span>    scale_name <span class="op">=</span> <span class="st">"tension_c"</span>, </span>
 <span>    palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_rescale.html">rescale_pal</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>, </span>
 <span>    <span class="va">...</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Esta función <code>scale_tension_continuous()</code> indica a qué <code>aesthetics</code> se aplica, proporciona un <code>scale_name</code> explícito y proporciona una función <code>palette</code> que transforma el dominio de entrada al rango de salida. Todos los demás argumentos que normalmente esperaría ver en una función de escala, como <code>name</code>, <code>breaks</code>, <code>limits</code>, se pasan a <code>continuous_scale()</code> con los puntos <code>...</code>.<br>
 Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a escalas continuas, por lo que es conveniente definir <code>scale_tension()</code> como un alias para <code>scale_tension_continuous()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_tension</span> <span class="op">&lt;-</span> <span class="va">scale_tension_continuous</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_tension</span> <span class="op">&lt;-</span> <span class="va">scale_tension_continuous</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finalmente, como no queremos que la gente intente mapear la estética de la tensión en datos discretos, también definiremos una función <code>scale_tension_discrete()</code> que siempre arroja un error:</p>
 <div class="cell">
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_tension_discrete</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_tension_discrete</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Tension cannot be used with discrete data"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La razón por la que esto funciona es que ggplot2 asigna la escala predeterminada para la estética buscando una función llamada <code>scale_&lt;aesthetic-name&gt;_&lt;data-type&gt;</code>, por lo que cada vez que el usuario asigna la tensión estética a una variable discreta, ggplot2 encontrará la función <code>scale_tension_discrete()</code> y arroja el error. Esta es también la razón por la que es importante incluir <code>scale_tension_continuous()</code> incluso cuando esperamos que la mayoría de los usuarios utilicen el alias <code>scale_tension()</code>.</p>
 <p>Las funciones de escala para la estética del diámetro son sólo un poco más complicadas:</p>
 <div class="cell">
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_diameter_continuous</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_diameter_continuous</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, </span>
 <span>                                      <span class="va">range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">0.7</span><span class="op">)</span>, </span>
 <span>                                      <span class="va">unit</span> <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">range</span> <span class="op">&lt;-</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertWidth</a></span><span class="op">(</span></span>
@@ -1786,12 +1789,12 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 <span><span class="va">scale_diameter</span> <span class="op">&lt;-</span> <span class="va">scale_diameter_continuous</span></span>
 <span><span class="va">scale_tension_discrete</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Diameter cannot be used with discrete data"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El único cambio que hicimos con respecto a las escalas de <code>tension</code> es que permitimos al usuario definir en qué unidad se debe medir el rango de diámetro. Dado que el geom espera centímetros, convertiremos el rango a eso antes de pasarlo al constructor de escalas. De esa manera, el usuario es libre de utilizar cualquier unidad absoluta que le parezca natural.</p>
 <p>Con nuestras escalas definidas, echemos un vistazo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="va">x</span>, </span>
 <span>    y <span class="op">=</span> <span class="va">y</span>, </span>
@@ -1802,7 +1805,7 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 <span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_tension</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; Warning: The `scale_name` argument of `continuous_scale()` is deprecated as of ggplot2</span></span>
-<span><span class="co">#&gt; 3.5.0.</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; 3.5.0.</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1816,7 +1819,7 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 <span class="header-section-number">21.7.2</span> draw_key_spring</h3>
 <p>Echemos un vistazo a cómo se escribe un constructor de claves, inspeccionando el código fuente para <code>draw_key_point()</code>. Afortunadamente, estas son funciones bastante simples que toman un marco de datos de valores estéticos y devuelven un grob apropiado que proporciona las representaciones que se muestran en la clave de leyenda:</p>
 <div class="cell">
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">draw_key_point</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">draw_key_point</span></span>
 <span><span class="co">#&gt; function(data, params, size) {</span></span>
 <span><span class="co">#&gt;   if (is.null(data$shape)) {</span></span>
 <span><span class="co">#&gt;     data$shape &lt;- 19</span></span>
@@ -1838,18 +1841,18 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 <span><span class="co">#&gt;     )</span></span>
 <span><span class="co">#&gt;   )</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55b33a8e4c10&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; &lt;bytecode: 0x55ff603a7cd0&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: namespace:ggplot2&gt;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En este código, <code>data</code> es un marco de datos con una sola fila que proporciona los valores estéticos que se utilizarán para la clave, <code>params</code> son los parámetros geográficos de la capa y <code>size</code> es el tamaño del área clave en centímetros. El operador <code>%||%</code>, que se ve a menudo en el código fuente de tidyverse, se usa para proporcionar valores predeterminados siempre que una variable tiene un valor nulo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">`%||%`</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">`%||%`</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="va">y</span> <span class="kw">else</span> <span class="va">x</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Para definir nuestra función <code>draw_key_spring()</code>, necesitamos crear una función análoga que use <code>springGrob()</code> para dibujar la clave:</p>
 <div class="cell">
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">draw_key_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span>, <span class="va">size</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">draw_key_spring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span>, <span class="va">size</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">springGrob</span><span class="op">(</span></span>
 <span>    x0 <span class="op">=</span> <span class="fl">0</span>, </span>
 <span>    y0 <span class="op">=</span> <span class="fl">0</span>, </span>
@@ -1864,16 +1867,16 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 <span>    <span class="op">)</span>,</span>
 <span>    vp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/viewport.html">viewport</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"on"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La única parte de este código que puede resultar desconocida es la pequeña floritura (no estrictamente necesaria) que define una ventana gráfica de recorte para nuestro grob usando el argumento <code>vp</code>. La razón por la que agregamos esto es para garantizar que los resortes dibujados en las claves de leyenda estén estrictamente contenidos dentro de sus cajas y no se extiendan a las áreas clave vecinas.</p>
 <p>Ahora que tenemos esta función, todo lo que tenemos que hacer es decirle a <code>GeomSpring</code> que la use al dibujar la clave de leyenda. Eso es bastante sencillo: todo lo que tenemos que hacer es cambiar el método <code>draw_key()</code> de nuestro Geom existente:</p>
 <div class="cell">
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpring</span><span class="op">$</span><span class="va">draw_key</span> <span class="op">&lt;-</span> <span class="va">draw_key_spring</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpring</span><span class="op">$</span><span class="va">draw_key</span> <span class="op">&lt;-</span> <span class="va">draw_key_spring</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Con ese cambio final nuestra leyenda empieza a tener sentido:</p>
 <div class="cell">
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="va">x</span>, </span>
 <span>    y <span class="op">=</span> <span class="va">y</span>, </span>
@@ -1882,7 +1885,7 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 <span>    tension <span class="op">=</span> <span class="va">tension</span>, </span>
 <span>    diameter <span class="op">=</span> <span class="va">diameter</span></span>
 <span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_tension</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_tension</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1892,7 +1895,7 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 </div>
 <p>El tamaño de clave predeterminado es un poco estrecho para nuestra clave, pero eso es algo que el usuario deberá hacer: ggplot2 no conoce la estética del <code>diameter</code> y no puede escalar el tamaño de la clave tan inteligentemente como lo hace con la estético <code>size</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="va">x</span>, </span>
 <span>    y <span class="op">=</span> <span class="va">y</span>, </span>
@@ -1902,7 +1905,7 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 <span>    diameter <span class="op">=</span> <span class="va">diameter</span></span>
 <span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_tension</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1912,7 +1915,7 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 </div>
 <p>Convenientemente, nuestra nueva clave de leyenda se utilizará para todas las estéticas escaladas, no solo para <code>diameter</code> y <code>tension</code>, asegurando así que el estilo de la clave siempre coincidirá con el estilo de la capa:</p>
 <div class="cell">
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_spring</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="va">x</span>, </span>
 <span>    y <span class="op">=</span> <span class="va">y</span>, </span>
@@ -1920,7 +1923,7 @@ Para la estética de la tensión, esperamos que los usuarios la apliquen sólo a
 <span>    yend <span class="op">=</span> <span class="va">yend</span>, </span>
 <span>    colour <span class="op">=</span> <span class="va">class</span></span>
 <span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ext-springs_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1945,7 +1948,76 @@ Murrell, Paul. 2018. <em>R Graphics</em>. Third. Chapman &amp; Hall/CRC. <a href
 <li id="fn3"><p>Si planeáramos agrupar este código como un paquete R, podríamos ampliarlo y escribir pruebas unitarias formales para <code>create_spring()</code> usando el paquete testthat.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Por convención, las clases de ggproto siempre usan CamelCase para nombrar y la nueva clase siempre se guarda en una variable con el mismo nombre.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>Como mencionamos anteriormente, ggproto no hace una fuerte distinción entre métodos y campos. Los objetos <code>Stat</code> esperan que <code>compute_group()</code> sea una función, por lo que nos referimos a <code>compute_group()</code> como método porque esa es la terminología estándar en la programación orientada a objetos. Por el contrario, <code>Stat</code> espera que <code>required_aes</code> sea una variable, por eso lo llamamos campo.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</ol></section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1996,13 +2068,14 @@ Murrell, Paul. 2018. <em>R Graphics</em>. Third. Chapman &amp; Hall/CRC. <a href
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

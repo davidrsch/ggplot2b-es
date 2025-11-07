@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>11&nbsp; Escalas de colores y leyendas. – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -86,14 +86,15 @@ div.csl-indent {
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,7 +108,7 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -137,7 +138,9 @@ div.csl-indent {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -150,7 +153,7 @@ div.csl-indent {
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -472,7 +475,7 @@ div.csl-indent {
 <span class="header-section-number">11.1.1</span> Daltonismo</h3>
 <p>Una complicación adicional es que una minoría considerable de personas no posee el complemento habitual de receptores de color y, por tanto, puede distinguir menos colores que otros. Debido a esto, es importante considerar cómo se verá una paleta de colores para las personas con formas comunes de daltonismo. Una heurística simple es evitar los contrastes rojo-verde y verificar sus gráficos con sistemas que simulen el daltonismo. Además de las muchas herramientas en línea que pueden ayudar con esto (por ejemplo, <a href="https://www.vischeck.com/" class="uri">https://www.vischeck.com/</a>), existen varios paquetes de R que proporcionan herramientas que pueden resultarle útiles. El paquete dicromático <span class="citation" data-cites="dichroma">(<a href="#ref-dichroma" role="doc-biblioref"><strong>dichroma?</strong></a>)</span> proporciona herramientas para simular el daltonismo y un conjunto de combinaciones de colores que se sabe que funcionan bien para las personas daltónicas. Otra herramienta útil es el paquete colorBlindness <span class="citation" data-cites="colorBlindness">(<a href="#ref-colorBlindness" role="doc-biblioref">Ou 2021</a>)</span> que proporciona una función <code>displayAllColors()</code> que le ayuda a aproximar la apariencia de un conjunto determinado de colores bajo diferentes formas de daltonismo. A modo de ilustración, revela rápidamente que los colores proporcionados por la paleta <code><a href="https://rdrr.io/r/grDevices/palettes.html">rainbow()</a></code> no son apropiados si estás tratando de crear gráficos que sean legibles para personas daltónicas, ni se reproducen bien en escala de grises:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">colorBlindness</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/colorBlindness/man/displayColors.html">displayAllColors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">rainbow</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">colorBlindness</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/colorBlindness/man/displayColors.html">displayAllColors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">rainbow</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-colour_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -482,7 +485,7 @@ div.csl-indent {
 </div>
 <p>A modo de contraste, los colores proporcionados por <code><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">viridis::viridis()</a></code> son discriminables bajo las formas más comunes de daltonismo y se reproducen bien en escala de grises:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">colorBlindness</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/colorBlindness/man/displayColors.html">displayAllColors</a></span><span class="op">(</span><span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">viridis</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">colorBlindness</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/colorBlindness/man/displayColors.html">displayAllColors</a></span><span class="op">(</span><span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">viridis</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-colour_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -495,18 +498,18 @@ div.csl-indent {
 <span class="header-section-number">11.2</span> Escalas de color continuas</h2>
 <p>Los degradados de color se utilizan a menudo para mostrar la altura de una superficie 2D. Los gráficos de esta sección utilizan la superficie de una estimación de densidad 2D del conjunto de datos <code>faithful</code> <span class="citation" data-cites="azzalini:1990">(<a href="#ref-azzalini:1990" role="doc-biblioref">Azzalini y Bowman 1990</a>)</span>, que registra el tiempo de espera entre erupciones y durante cada erupción del géiser Old Faithful en el Parque Yellowstone. Ocultamos las leyendas y configuramos <code>expand</code> en 0, para centrarnos en la apariencia de los datos. Recuerde: aunque usamos la gráfica <code>erupt</code> para ilustrar conceptos usando una estética de relleno, las mismas ideas se aplican a las escalas de color. Cada vez que hacemos referencia a <code>scale_fill_*()</code> en esta sección, hay un <code>scale_color_*()</code> correspondiente para la estética del color (o <code>scale_color_*()</code> si prefiere la ortografía estadounidense). </p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span>, fill <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span>, fill <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_raster</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span><span class="cn">NULL</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="cn">NULL</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="sec-particular-palettes" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="sec-particular-palettes">
 <span class="header-section-number">11.2.1</span> Paletas particulares</h3>
 <p>Hay varias formas de especificar escalas de color continuas. Más adelante hablaremos sobre herramientas de uso general que puede utilizar para construir su propia paleta, pero esto suele ser innecesario ya que hay muchas paletas “seleccionadas a mano” disponibles. Por ejemplo, ggplot2 proporciona dos funciones de escala que agrupan paletas preespecificadas, <code>scale_fill_viridis_c()</code> y <code>scale_fill_distiller()</code>. Las escalas viridis <span class="citation" data-cites="viridis">(<a href="#ref-viridis" role="doc-biblioref">Garnier 2018</a>)</span> están diseñadas para ser perceptualmente uniformes tanto en color como cuando se reducen a blanco y negro, y para ser perceptibles para personas con diversas formas de daltonismo.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_viridis_c</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_viridis_c</span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_viridis_c</span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -521,9 +524,9 @@ div.csl-indent {
 </div>
 </div>
 <p>Para la mayoría de los casos de uso, las escalas viridis funcionarán mejor que otras escalas continuas integradas en ggplot2, pero existen otras opciones que son útiles en algunas situaciones. Un segundo grupo de escalas de color continuas integradas en ggplot2 se derivan de las escalas de ColorBrewer: <code>scale_fill_brewer()</code> proporciona estos colores como paletas discretas, mientras que <code>scale_fill_distiller()</code> y <code>scale_fill_fermenter()</code> son los análogos continuos y agrupados. Analizamos estas escalas en <span class="quarto-unresolved-ref">?sec-color-discrete</span>, pero con fines ilustrativos incluimos algunos ejemplos aquí:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_distiller</span><span class="op">(</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_distiller</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_distiller</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdPu"</span><span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_distiller</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"YlOrBr"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_distiller</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"YlOrBr"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -538,9 +541,9 @@ div.csl-indent {
 </div>
 </div>
 <p>Hay muchos otros paquetes que proporcionan paletas de colores útiles. Por ejemplo, scico <span class="citation" data-cites="scico">(<a href="#ref-scico" role="doc-biblioref">Pedersen y Crameri 2020</a>)</span> proporciona más paletas que son perceptualmente uniformes y adecuadas para la visualización científica:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scico</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scico/man/ggplot2-scales.html">scale_fill_scico</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"bilbao"</span><span class="op">)</span> <span class="co"># por defecto</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scico</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scico/man/ggplot2-scales.html">scale_fill_scico</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"bilbao"</span><span class="op">)</span> <span class="co"># por defecto</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scico</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scico/man/ggplot2-scales.html">scale_fill_scico</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"vik"</span><span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scico</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scico/man/ggplot2-scales.html">scale_fill_scico</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"lajolla"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scico</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scico/man/ggplot2-scales.html">scale_fill_scico</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"lajolla"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -555,8 +558,8 @@ div.csl-indent {
 </div>
 </div>
 <p>Sin embargo, como hay muchos paquetes de paletas en R, un paquete particularmente útil es Paletteer <span class="citation" data-cites="paletteer">(<a href="#ref-paletteer" role="doc-biblioref">Hvitfeldt 2020</a>)</span>, cuyo objetivo es proporcionar una interfaz común:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-continuous.html">scale_fill_paletteer_c</a></span><span class="op">(</span><span class="st">"viridis::plasma"</span><span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-continuous.html">scale_fill_paletteer_c</a></span><span class="op">(</span><span class="st">"scico::tokyo"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-continuous.html">scale_fill_paletteer_c</a></span><span class="op">(</span><span class="st">"viridis::plasma"</span><span class="op">)</span></span>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-continuous.html">scale_fill_paletteer_c</a></span><span class="op">(</span><span class="st">"scico::tokyo"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -570,9 +573,9 @@ div.csl-indent {
 </section><section id="sec-robust-recipes" class="level3" data-number="11.2.2"><h3 data-number="11.2.2" class="anchored" data-anchor-id="sec-robust-recipes">
 <span class="header-section-number">11.2.2</span> Recetas robustas</h3>
 <p>La escala predeterminada para escalas de relleno continuo es <code>scale_fill_continuous()</code> que a su vez por defecto es <code>scale_fill_gradient()</code>. Como consecuencia, estos tres comandos producen el mismo gráfico usando una escala de gradiente:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_continuous</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -597,7 +600,7 @@ div.csl-indent {
 </ul>
 <p>The use of gradient scales is illustrated below. The first plot uses a scale that linearly interpolates from grey (hex code: <code>"#bebebe"</code>) at the <code>low</code> end of the scale limits to brown (<code>"#a52a2a"</code>) at the <code>high</code> end. The second plot has the same endpoints but uses <code>scale_fill_gradient2()</code> to interpolate first from grey to white (<code>#ffffff</code>) and then from white to brown. Note that the <code>mid</code> argument specifies the colour to be shown at the intermediate point, and <code>midpoint</code> is the value in the data at which this colour is used (the default is <code>midpoint = 0</code>). The third method is to use <code>scale_fill_gradientn()</code> which takes a vector of reference <code>colours</code> as its argument, and constructs a scale that linearly interpolates between the specified values. By default, the <code>colours</code> are presumed to be equally spaced along the scale, but if you prefer you can specify a vector of <code>values</code> that correspond to each of the reference colours.</p>
 <p>El uso de escalas de gradiente se ilustra a continuación. El primer gráfico utiliza una escala que interpola linealmente desde el gris (código hexadecimal: <code>"#bebebe"</code>) en el extremo inferior <code>low</code> de los límites de la escala hasta el marrón (<code>"#a52a2a"</code>) en el extremo alto <code>high</code>. El segundo gráfico tiene los mismos puntos finales pero usa <code>scale_fill_gradient2()</code> para interpolar primero de gris a blanco (<code>#ffffff</code>) y luego de blanco a marrón. Tenga en cuenta que el argumento <code>mid</code> especifica el color que se mostrará en el punto intermedio, y <code>midpoint</code> es el valor de los datos en el que se utiliza este color (el valor predeterminado es <code>midpoint = 0</code>). El tercer método es utilizar <code>scale_fill_gradientn()</code> que toma un vector de <code>colores</code> de referencia como argumento y construye una escala que interpola linealmente entre los valores especificados. De forma predeterminada, se supone que los “colores” están igualmente espaciados a lo largo de la escala, pero si lo prefiere, puede especificar un vector de <code>values</code> que corresponda a cada uno de los colores de referencia.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"grey"</span>, high <span class="op">=</span> <span class="st">"brown"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"grey"</span>, high <span class="op">=</span> <span class="st">"brown"</span><span class="op">)</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_fill_gradient2</span><span class="op">(</span></span>
 <span>    low <span class="op">=</span> <span class="st">"grey"</span>, </span>
@@ -605,7 +608,7 @@ div.csl-indent {
 <span>    high <span class="op">=</span> <span class="st">"brown"</span>, </span>
 <span>    midpoint <span class="op">=</span> <span class="fl">.02</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradientn</span><span class="op">(</span>colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">terrain.colors</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradientn</span><span class="op">(</span>colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">terrain.colors</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -620,7 +623,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Crear buenas paletas de colores requiere cierto cuidado. Generalmente, para una escala de gradiente de dos puntos desea transmitir la impresión perceptiva de que los valores están ordenados secuencialmente, por lo que desea mantener el tono constante y variar el croma y la luminancia. El sistema de color Munsell es útil para esto, ya que proporciona una forma sencilla de especificar colores en función de su tono, croma y luminancia. El paquete munsell <span class="citation" data-cites="munsell">(<a href="#ref-munsell" role="doc-biblioref">Wickham 2018</a>)</span> proporciona fácil acceso a los colores Munsell, que luego se pueden usar para especificar una escala de gradiente:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">munsell</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/munsell/man/hue_slice.html">hue_slice</a></span><span class="op">(</span><span class="st">"5P"</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># Generar un ggplot con hue_slice()</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">munsell</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/munsell/man/hue_slice.html">hue_slice</a></span><span class="op">(</span><span class="st">"5P"</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># Generar un ggplot con hue_slice()</span></span>
 <span>  <span class="fu">annotate</span><span class="op">(</span>                 <span class="co"># Agregar flechas para anotaciones</span></span>
 <span>    geom <span class="op">=</span> <span class="st">"segment"</span>, </span>
 <span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">7</span><span class="op">)</span>, </span>
@@ -636,7 +639,7 @@ div.csl-indent {
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span></span>
 <span>  low <span class="op">=</span> <span class="fu">munsell</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/munsell/man/mnsl.html">mnsl</a></span><span class="op">(</span><span class="st">"5P 2/12"</span><span class="op">)</span>, </span>
 <span>  high <span class="op">=</span> <span class="fu">munsell</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/munsell/man/mnsl.html">mnsl</a></span><span class="op">(</span><span class="st">"5P 7/12"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -650,7 +653,7 @@ div.csl-indent {
 <p>Las etiquetas en el gráfico de la izquierda son un poco difíciles de leer en esta escala, por lo que hemos usado <code>annotate()</code> para agregar flechas que resaltan la columna utilizada para construir la escala de la derecha. Para obtener más información sobre el paquete munsell, consulte <a href="https://github.com/cwickham/munsell/" class="uri">https://github.com/cwickham/munsell/</a>.</p>
 <p>Las escalas de gradiente de tres puntos tienen criterios de diseño ligeramente diferentes. Normalmente, el objetivo de una escala de este tipo es transmitir la impresión perceptiva de que existe un punto medio natural (a menudo un valor cero) del cual divergen los demás valores. El gráfico de la izquierda a continuación muestra cómo crear una escala divergente “amarillo/azul”, aunque es un poco artificial en este ejemplo.</p>
 <p>Finalmente, si tiene colores que son significativos para sus datos (por ejemplo, colores de carrocería negros o colores de terreno estándar), o desea utilizar una paleta producida por otro paquete, es posible que desee utilizar un degradado de n puntos. A modo de ilustración, los gráficos del centro y de la derecha a continuación utilizan el paquete <strong>colorspace</strong> <span class="citation" data-cites="zeileis:2008">(<a href="#ref-zeileis:2008" role="doc-biblioref">Zeileis, Hornik, y Murrell 2008</a>)</span>. Para obtener más información sobre el paquete de espacio de color, consulte <a href="https://colorspace.r-forge.r-project.org/" class="uri">https://colorspace.r-forge.r-project.org/</a>. </p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># ejemplo de munsell</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># ejemplo de munsell</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradient2</span><span class="op">(</span></span>
 <span>  low <span class="op">=</span> <span class="fu">munsell</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/munsell/man/mnsl.html">mnsl</a></span><span class="op">(</span><span class="st">"5B 7/8"</span><span class="op">)</span>,</span>
 <span>  high <span class="op">=</span> <span class="fu">munsell</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/munsell/man/mnsl.html">mnsl</a></span><span class="op">(</span><span class="st">"5Y 7/8"</span><span class="op">)</span>,</span>
@@ -660,7 +663,7 @@ div.csl-indent {
 <span></span>
 <span><span class="co"># ejemplos de espacio de color</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradientn</span><span class="op">(</span>colours <span class="op">=</span> <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/rainbow_hcl.html">heat_hcl</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradientn</span><span class="op">(</span>colours <span class="op">=</span> <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/hcl_palettes.html">diverge_hcl</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_gradientn</span><span class="op">(</span>colours <span class="op">=</span> <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/hcl_palettes.html">diverge_hcl</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -677,7 +680,7 @@ div.csl-indent {
 </section><section id="valores-faltantes" class="level3" data-number="11.2.3"><h3 data-number="11.2.3" class="anchored" data-anchor-id="valores-faltantes">
 <span class="header-section-number">11.2.3</span> Valores faltantes</h3>
 <p>Todas las escalas de colores continuos tienen un parámetro <code>na.value</code> que controla qué color se utiliza para los valores faltantes (incluidos los valores fuera del rango de los límites de la escala). Por defecto está configurado en gris, que resaltará cuando uses una escala de colores. Si usa una escala de blanco y negro, es posible que desee configurarla en otra cosa para que sea más obvia. Puedes configurar <code>na.value = NA</code> para hacer invisibles los valores faltantes, o elegir un color específico si lo prefieres: </p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_tile</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">z</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
@@ -685,7 +688,7 @@ div.csl-indent {
 <span></span>
 <span><span class="va">base</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span>na.value <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span>na.value <span class="op">=</span> <span class="st">"yellow"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_gradient</span><span class="op">(</span>na.value <span class="op">=</span> <span class="st">"yellow"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -702,12 +705,12 @@ div.csl-indent {
 </section><section id="sec-colour-continuous-limits" class="level3" data-number="11.2.4"><h3 data-number="11.2.4" class="anchored" data-anchor-id="sec-colour-continuous-limits">
 <span class="header-section-number">11.2.4</span> Límites, rupturas y etiquetas</h3>
 <p>En el capítulo anterior discutimos cómo se puede controlar la apariencia de los ejes estableciendo los límites, <code>limites</code> (<a href="scales-position.html#sec-position-continuous-limits" class="quarto-xref"><span>Sección 10.1.1</span></a>), rupturas, <code>breaks</code> (<a href="scales-position.html#sec-position-continuous-breaks" class="quarto-xref"><span>Sección 10.1.4</span></a>) y etiquetas, <code>labels</code> (@ argumento sec-position-continuous-labels) para la función de escala. El comportamiento de las escalas de color se puede controlar de forma análoga:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">up</span>, <span class="va">up</span>, fill <span class="op">=</span> <span class="va">big</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">up</span>, <span class="va">up</span>, fill <span class="op">=</span> <span class="va">big</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_tile</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">base</span> </span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10000</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -718,8 +721,8 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">2000</span>, <span class="fl">4000</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_continuous</span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html">label_dollar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">2000</span>, <span class="fl">4000</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_fill_continuous</span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html">label_dollar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -736,10 +739,10 @@ div.csl-indent {
 <p> </p>
 <p>Cada escala está asociada a una guía que muestra la relación entre la estética y los datos. En las escalas de posición, los ejes cumplen esta función. En el caso de las escalas de colores, este papel lo desempeña la leyenda, que se puede personalizar con la ayuda de una función de guía. Para escalas de colores continuas, la leyenda predeterminada toma la forma de una “barra de colores” que muestra un degradado continuo de colores:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">cyl</span>, <span class="va">displ</span>, colour <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">cyl</span>, <span class="va">displ</span>, colour <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">base</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-colour_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -754,9 +757,9 @@ div.csl-indent {
 <li><p><code>direction</code> especifica la dirección de la guía, <code>"horizontal"</code> o <code>"vertical"</code>.</p></li>
 </ul>
 <p>En <a href="scales-position.html#sec-guide-axis" class="quarto-xref"><span>Sección 10.3.2</span></a> introdujimos la función <code>guides()</code> que se utiliza para configurar leyendas y ejes personalizados. Cuando se aplica a escalas de colores, le permite crear leyendas personalizadas como estas:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_colourbar</span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_colourbar</span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_colourbar</span><span class="op">(</span>barheight <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">2</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_colourbar</span><span class="op">(</span>direction <span class="op">=</span> <span class="st">"horizontal"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_colourbar</span><span class="op">(</span>direction <span class="op">=</span> <span class="st">"horizontal"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -771,8 +774,8 @@ div.csl-indent {
 </div>
 </div>
 <p>Una forma alternativa de lograr el mismo objetivo es especificar el argumento <code>guide</code> para la función de escala. Estas dos especificaciones de la gráfica son idénticas:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_colourbar</span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_colour_continuous</span><span class="op">(</span>guide <span class="op">=</span> <span class="fu">guide_colourbar</span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_colourbar</span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_colour_continuous</span><span class="op">(</span>guide <span class="op">=</span> <span class="fu">guide_colourbar</span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -788,16 +791,16 @@ div.csl-indent {
 <span class="header-section-number">11.3</span> Escalas de colores discretas</h2>
 <p>En muchas situaciones se producen escalas de color y relleno discretas. Un ejemplo típico es un gráfico de barras que codifica tanto la posición como el relleno en la misma variable. Muchos conceptos de <span class="quarto-unresolved-ref">?sec-color-continuous</span> se aplican a escalas discretas, que ilustraremos usando este gráfico de barras como ejemplo: </p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">bars</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, fill <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La escala predeterminada para colores discretos es <code>scale_fill_discrete()</code> que a su vez por defecto es <code>scale_fill_hue()</code> entonces estas son gráficas idénticas:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span></span>
 <span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_discrete</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_hue</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_hue</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -816,7 +819,7 @@ div.csl-indent {
 <span class="header-section-number">11.3.1</span> Básculas de cerveza</h3>
 <p><code>scale_colour_brewer()</code> es una escala de color discreta que, junto con la escala analógica continua <code>scale_colour_distiller()</code> y analógico agrupado <code>scale_colour_fermenter()</code>—utiliza colores “ColorBrewer” cuidadosamente seleccionados tomados de <a href="https://colorbrewer2.org/" class="uri">https://colorbrewer2.org/</a>. Estos colores han sido diseñados para funcionar bien en una amplia variedad de situaciones, aunque la atención se centra en los mapas, por lo que los colores tienden a funcionar mejor cuando se muestran en áreas grandes. Hay muchas opciones diferentes:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">RColorBrewer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">display.brewer.all</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">RColorBrewer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">display.brewer.all</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-colour_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -825,9 +828,9 @@ div.csl-indent {
 </div>
 </div>
 <p>El primer grupo de paletas son escalas secuenciales que son útiles cuando la escala discreta está ordenada (por ejemplo, clasificar datos) y están disponibles para datos continuos usando <code>scale_colour_distiller()</code>. Para datos categóricos desordenados, las paletas de mayor interés son las del segundo grupo. ‘Set1’ y ‘Dark2’ son particularmente buenos para los puntos, y ‘Set2’, ‘Pastel1’, ‘Pastel2’ y ‘Accent’ funciona bien para áreas. </p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span></span>
 <span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span></span>
-<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Accent"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Accent"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -842,7 +845,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Tenga en cuenta que ninguna paleta es uniformemente buena para todos los propósitos. Los diagramas de dispersión suelen utilizar marcadores de diagrama pequeños y los colores brillantes tienden a funcionar mejor que los sutiles:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># gráfico de dispersión</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># gráfico de dispersión</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span>, </span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span>, </span>
@@ -856,7 +859,7 @@ div.csl-indent {
 <span><span class="co"># tres paletas</span></span>
 <span><span class="va">point</span> <span class="op">+</span> <span class="fu">scale_colour_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span></span>
 <span><span class="va">point</span> <span class="op">+</span> <span class="fu">scale_colour_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span>  </span>
-<span><span class="va">point</span> <span class="op">+</span> <span class="fu">scale_colour_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Pastel1"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">point</span> <span class="op">+</span> <span class="fu">scale_colour_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Pastel1"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -871,7 +874,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Los gráficos de barras suelen contener grandes manchas de color y los colores brillantes pueden resultar abrumadores. Los colores sutiles tienden a funcionar mejor en esta situación:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># diagrama de barras</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># diagrama de barras</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">1</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">area</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">z</span><span class="op">)</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -881,7 +884,7 @@ div.csl-indent {
 <span><span class="co"># tres paletas</span></span>
 <span><span class="va">area</span> <span class="op">+</span> <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span></span>
 <span><span class="va">area</span> <span class="op">+</span> <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span></span>
-<span><span class="va">area</span> <span class="op">+</span> <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Pastel1"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">area</span> <span class="op">+</span> <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Pastel1"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -898,9 +901,9 @@ div.csl-indent {
 </section><section id="tono-y-escalas-de-grises" class="level3" data-number="11.3.2"><h3 data-number="11.3.2" class="anchored" data-anchor-id="tono-y-escalas-de-grises">
 <span class="header-section-number">11.3.2</span> Tono y escalas de grises</h3>
 <p>El esquema de color predeterminado selecciona tonos espaciados uniformemente alrededor de la rueda de colores HCL. Esto funciona bien con hasta ocho colores, pero después resulta difícil distinguir los diferentes colores. Puedes controlar el croma y la luminancia predeterminados, y el rango de tonos, con los argumentos <code>h</code>, <code>c</code> y <code>l</code>: </p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span></span>
 <span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_hue</span><span class="op">(</span>c <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></span>
-<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_hue</span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">180</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_hue</span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">180</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -915,9 +918,9 @@ div.csl-indent {
 </div>
 </div>
 <p>Hay algunos problemas con este esquema predeterminado. Una es que, a diferencia de muchas de las otras paletas analizadas en este capítulo, no son seguras para los daltónicos (lo que se analiza en <span class="quarto-unresolved-ref">?sec-color-blindness</span>). La segunda es que, debido a que todos los colores tienen la misma luminancia y croma, todos aparecen con un tono de gris idéntico cuando se imprimen en blanco y negro. Si desea imprimir una escala de color discreta en blanco y negro, es mejor usar explícitamente <code>scale_fill_grey()</code> que asigna datos discretos a grises, de claro a oscuro: </p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_grey</span><span class="op">(</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_grey</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_grey</span><span class="op">(</span>start <span class="op">=</span> <span class="fl">0.5</span>, end <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_grey</span><span class="op">(</span>start <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">scale_fill_grey</span><span class="op">(</span>start <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -934,9 +937,9 @@ div.csl-indent {
 </section><section id="básculas-paletizadoras" class="level3" data-number="11.3.3"><h3 data-number="11.3.3" class="anchored" data-anchor-id="básculas-paletizadoras">
 <span class="header-section-number">11.3.3</span> Básculas paletizadoras</h3>
 <p>Otra alternativa la proporciona el paquete Paletteer, discutido anteriormente en relación con las escalas de color continuas en <a href="#sec-particular-palettes" class="quarto-xref"><span>Sección 11.2.1</span></a>. Al proporcionar una interfaz unificada que abarca una gran cantidad de paquetes, Paletteer permite elegir entre una gran cantidad de paletas de manera consistente:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-discrete.html">scale_fill_paletteer_d</a></span><span class="op">(</span><span class="st">"rtist::vangogh"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-discrete.html">scale_fill_paletteer_d</a></span><span class="op">(</span><span class="st">"rtist::vangogh"</span><span class="op">)</span></span>
 <span><span class="va">bars</span> <span class="op">+</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-discrete.html">scale_fill_paletteer_d</a></span><span class="op">(</span><span class="st">"colorBlindness::paletteMartin"</span><span class="op">)</span></span>
-<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-discrete.html">scale_fill_paletteer_d</a></span><span class="op">(</span><span class="st">"wesanderson::FantasticFox1"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">bars</span> <span class="op">+</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-discrete.html">scale_fill_paletteer_d</a></span><span class="op">(</span><span class="st">"wesanderson::FantasticFox1"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -953,7 +956,7 @@ div.csl-indent {
 </section><section id="sec-manual-colour" class="level3" data-number="11.3.4"><h3 data-number="11.3.4" class="anchored" data-anchor-id="sec-manual-colour">
 <span class="header-section-number">11.3.4</span> Balanzas manuales</h3>
 <p>Si ninguna de las paletas preexistentes es adecuada, o si tiene sus propios colores preferidos, puede usar <code>scale_fill_manual()</code> para configurar los colores manualmente. Esto puede resultar útil si desea elegir colores que resalten una estructura de agrupación secundaria o llamen la atención sobre diferentes comparaciones: </p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_fill_manual</span><span class="op">(</span></span>
 <span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sienna1"</span>, <span class="st">"sienna4"</span>, <span class="st">"hotpink1"</span>, <span class="st">"hotpink4"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
@@ -966,7 +969,7 @@ div.csl-indent {
 <span><span class="va">bars</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_fill_manual</span><span class="op">(</span></span>
 <span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"black"</span>, <span class="st">"grey"</span>, <span class="st">"grey"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -982,7 +985,7 @@ div.csl-indent {
 </div>
 <p>También puede utilizar un vector con nombre para especificar los colores que se asignarán a cada nivel, lo que le permite especificar los niveles en el orden que desee:</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bars</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_fill_manual</span><span class="op">(</span></span>
 <span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>      <span class="st">"d"</span> <span class="op">=</span> <span class="st">"grey"</span>,</span>
@@ -990,7 +993,7 @@ div.csl-indent {
 <span>      <span class="st">"b"</span> <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>      <span class="st">"a"</span> <span class="op">=</span> <span class="st">"grey"</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-colour_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1002,14 +1005,14 @@ div.csl-indent {
 </section><section id="sec-colour-discrete-limits" class="level3" data-number="11.3.5"><h3 data-number="11.3.5" class="anchored" data-anchor-id="sec-colour-discrete-limits">
 <span class="header-section-number">11.3.5</span> Límites, rupturas y etiquetas</h3>
 <p>Los límites de escala para escalas de colores discretas se pueden establecer usando el argumento <code>limits</code> para el argumento de escala, o usando la función auxiliar <code>lims()</code>. Esto puede ser importante cuando la misma variable se representa en diferentes gráficos y desea asegurarse de que los colores sean consistentes en todos los gráficos. Para demostrar esto, ampliaremos el ejemplo de <a href="scales-position.html#sec-position-continuous-limits" class="quarto-xref"><span>Sección 10.1.1</span></a>. El color representa el tipo de combustible, que puede ser <strong>r</strong>regular, <strong>e</strong>tanol, <strong>d</strong>diesel, <strong>p</strong>remium o <strong>c</strong>gas natural comprimido.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mpg_99</span> <span class="op">&lt;-</span> <span class="va">mpg</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">1999</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mpg_99</span> <span class="op">&lt;-</span> <span class="va">mpg</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">1999</span><span class="op">)</span></span>
 <span><span class="va">mpg_08</span> <span class="op">&lt;-</span> <span class="va">mpg</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2008</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base_99</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg_99</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="va">fl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> </span>
 <span><span class="va">base_08</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg_08</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="va">fl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">base_99</span></span>
-<span><span class="va">base_08</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base_08</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1021,8 +1024,8 @@ div.csl-indent {
 </div>
 </div>
 <p>Cada gráfica tiene sentido por sí sola, pero la comparación visual entre las dos es difícil. Los límites de los ejes son diferentes y, debido a que en los datos de 1998 sólo se representan los combustibles regular, premium y diésel, los colores se asignan de manera inconsistente. Para garantizar un mapeo consistente para la estética del color, podemos usar <code>lims()</code> para establecer los límites manualmente. Como se analiza en <a href="scales-position.html#sec-position-continuous-limits" class="quarto-xref"><span>Sección 10.1.1</span></a>, toma pares nombre-valor como entrada, donde el nombre especifica la estética y el valor especifica los límites:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_99</span> <span class="op">+</span> <span class="fu">lims</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"p"</span>, <span class="st">"r"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base_08</span> <span class="op">+</span> <span class="fu">lims</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"p"</span>, <span class="st">"r"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_99</span> <span class="op">+</span> <span class="fu">lims</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"p"</span>, <span class="st">"r"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">base_08</span> <span class="op">+</span> <span class="fu">lims</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"p"</span>, <span class="st">"r"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1034,7 +1037,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Lo bueno de <code>lims()</code> es que podemos establecer límites para múltiples estéticas a la vez. Para garantizar que x, y y color utilicen límites consistentes, podemos hacer esto:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_99</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_99</span> <span class="op">+</span> </span>
 <span>  <span class="fu">lims</span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span><span class="op">)</span>, </span>
 <span>    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">45</span><span class="op">)</span>, </span>
@@ -1046,7 +1049,7 @@ div.csl-indent {
 <span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span><span class="op">)</span>, </span>
 <span>    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">45</span><span class="op">)</span>, </span>
 <span>    colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"p"</span>, <span class="st">"r"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1059,12 +1062,12 @@ div.csl-indent {
 </div>
 <p>Hay dos limitaciones potenciales para estas gráficas. En primer lugar, si bien establecer los límites de la escala garantiza que los colores se representen de manera idéntica en ambos gráficos, también significa que el gráfico de los datos de 1999 muestra etiquetas para los cinco tipos de combustible, a pesar de que no se utilizaban etanol ni gas natural comprimido. En ese tiempo. Podemos solucionar esto configurando manualmente los saltos de escala, asegurándonos de que solo los tipos de combustible que aparecen en los datos se muestren en la leyenda. La segunda limitación es que las etiquetas no son particularmente útiles, lo que podemos solucionar especificándolas manualmente. Al configurar múltiples propiedades de una sola escala, puede ser más útil personalizar usando los argumentos de la función de escala en lugar de usar la función auxiliar <code>lims()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_99</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_99</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_color_discrete</span><span class="op">(</span></span>
 <span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"p"</span>, <span class="st">"r"</span><span class="op">)</span>, </span>
 <span>    breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"d"</span>, <span class="st">"p"</span>, <span class="st">"r"</span><span class="op">)</span>,</span>
 <span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"diesel"</span>, <span class="st">"premium"</span>, <span class="st">"regular"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-colour_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1073,7 +1076,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Sin embargo, no hay nada que le impida usar <code>lims()</code> para controlar los límites estéticos de la posición, mientras usa <code>scale_colour_discrete()</code> para ejercer un control más detallado sobre la estética del color:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_99</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_99</span> <span class="op">+</span> </span>
 <span>  <span class="fu">lims</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_color_discrete</span><span class="op">(</span></span>
 <span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"p"</span>, <span class="st">"r"</span><span class="op">)</span>, </span>
@@ -1086,7 +1089,7 @@ div.csl-indent {
 <span>  <span class="fu">scale_color_discrete</span><span class="op">(</span></span>
 <span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"p"</span>, <span class="st">"r"</span><span class="op">)</span>, </span>
 <span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"compressed"</span>, <span class="st">"diesel"</span>, <span class="st">"ethanol"</span>, <span class="st">"premium"</span>, <span class="st">"regular"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1104,11 +1107,11 @@ div.csl-indent {
 <ul>
 <li>
 <p><code>nrow</code> o <code>ncol</code> que especifican las dimensiones de la mesa. <code>byrow</code> controla cómo se llena la tabla: <code>FALSE</code> la llena por columna (el valor predeterminado), <code>TRUE</code> la llena por fila.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">drv</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">drv</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">base</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -1125,8 +1128,8 @@ div.csl-indent {
 </li>
 <li>
 <p><code>reverse</code> invierte el orden de las claves:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span></span>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1140,11 +1143,11 @@ div.csl-indent {
 </li>
 <li>
 <p><code>override.aes</code> es útil cuando desea que los elementos de la leyenda se muestren de manera diferente a las geomas del gráfico. Esto suele ser necesario cuando se ha utilizado transparencia o tamaño para tratar un sobretrazado moderado y también se ha utilizado color en el trazado. </p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span>, alpha <span class="op">=</span> <span class="fl">.2</span>, stroke <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1173,9 +1176,9 @@ div.csl-indent {
 </section></section><section id="sec-binned-colour" class="level2" data-number="11.4"><h2 data-number="11.4" class="anchored" data-anchor-id="sec-binned-colour">
 <span class="header-section-number">11.4</span> Escalas de colores agrupadas</h2>
 <p>Las escalas de colores también vienen en versiones agrupadas. La escala predeterminada es <code>scale_fill_binned()</code> que a su vez es <code>scale_fill_steps()</code>. Al igual que con las escalas de posición agrupadas analizadas en <a href="scales-position.html#sec-binned-position" class="quarto-xref"><span>Sección 10.4</span></a>, estas escalas tienen un argumento <code>n.breaks</code> que controla el número de categorías de color discretas creadas por la escala. Contrariamente a la intuición, debido a que el sistema visual humano es muy bueno para detectar bordes, esto a veces puede hacer que un gradiente de color continuo sea más fácil de percibir:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_binned</span><span class="op">(</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_binned</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_steps</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_steps</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_steps</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -1190,7 +1193,7 @@ div.csl-indent {
 </div>
 </div>
 <p>En otros aspectos, <code>scale_fill_steps()</code> es análogo a <code>scale_fill_gradient()</code> y te permite construir tus propios degradados de dos colores. También hay una variante de tres colores <code>scale_fill_steps2()</code> y una variante de escala de n colores <code>scale_fill_stepsn()</code> que se comportan de manera similar a sus contrapartes continuas:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_steps</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"grey"</span>, high <span class="op">=</span> <span class="st">"brown"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_steps</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"grey"</span>, high <span class="op">=</span> <span class="st">"brown"</span><span class="op">)</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_fill_steps2</span><span class="op">(</span></span>
 <span>    low <span class="op">=</span> <span class="st">"grey"</span>, </span>
@@ -1198,7 +1201,7 @@ div.csl-indent {
 <span>    high <span class="op">=</span> <span class="st">"brown"</span>, </span>
 <span>    midpoint <span class="op">=</span> <span class="fl">.02</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_stepsn</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">12</span>, colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">terrain.colors</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_stepsn</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">12</span>, colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">terrain.colors</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -1213,9 +1216,9 @@ div.csl-indent {
 </div>
 </div>
 <p>Las paletas viridis se pueden usar de la misma manera, llamando directamente a las funciones generadoras de paletas al especificar el argumento <code>colors</code> para <code>scale_fill_stepsn()</code>:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_stepsn</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span>, colours <span class="op">=</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">viridis</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_stepsn</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span>, colours <span class="op">=</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">viridis</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_stepsn</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span>, colours <span class="op">=</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">magma</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_stepsn</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span>, colours <span class="op">=</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">inferno</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_stepsn</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span>, colours <span class="op">=</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">inferno</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -1230,9 +1233,9 @@ div.csl-indent {
 </div>
 </div>
 <p>Alternativamente, también existe un análogo de cerveza para básculas agrupadas, y se llama <code>scale_fill_fermenter()</code>:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_fermenter</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_fermenter</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
 <span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_fermenter</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span>, palette <span class="op">=</span> <span class="st">"Oranges"</span><span class="op">)</span></span>
-<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_fermenter</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span>, palette <span class="op">=</span> <span class="st">"PuOr"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">erupt</span> <span class="op">+</span> <span class="fu">scale_fill_fermenter</span><span class="op">(</span>n.breaks <span class="op">=</span> <span class="fl">9</span>, palette <span class="op">=</span> <span class="st">"PuOr"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -1257,12 +1260,12 @@ div.csl-indent {
 <ul>
 <li>
 <p><code>show.limits</code> indica si los valores deben mostrarse en los extremos de la barra de color escalonada, de forma análoga al argumento correspondiente en <code>guide_bins()</code></p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">cyl</span>, <span class="va">displ</span>, colour <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">cyl</span>, <span class="va">displ</span>, colour <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_color_binned</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span> </span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_coloursteps</span><span class="op">(</span>show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu">guide_coloursteps</span><span class="op">(</span>show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1279,7 +1282,7 @@ div.csl-indent {
 </ul></section></section><section id="sec-date-colour-scales" class="level2" data-number="11.5"><h2 data-number="11.5" class="anchored" data-anchor-id="sec-date-colour-scales">
 <span class="header-section-number">11.5</span> Escalas de color de fecha y hora</h2>
 <p>Cuando una estética de color se asigna a un tipo de fecha/hora, ggplot2 usa <code>scale_colour_date()</code> o <code>scale_colour_datetime()</code> para especificar la escala. Están diseñados para manejar datos de fechas, de forma análoga a las escalas de fechas analizadas en <a href="scales-position.html#sec-date-scales" class="quarto-xref"><span>Sección 10.2</span></a>. Estas escalas tienen argumentos <code>date_breaks</code> y <code>date_labels</code> que hacen que sea un poco más fácil trabajar con estos datos, como lo ilustra el siguiente ejemplo ligeramente artificial:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">economics</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">psavert</span>, <span class="va">uempmed</span>, colour <span class="op">=</span> <span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">economics</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">psavert</span>, <span class="va">uempmed</span>, colour <span class="op">=</span> <span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">base</span></span>
@@ -1287,7 +1290,7 @@ div.csl-indent {
 <span>  <span class="fu">scale_colour_date</span><span class="op">(</span></span>
 <span>    date_breaks <span class="op">=</span> <span class="st">"142 months"</span>, </span>
 <span>    date_labels <span class="op">=</span> <span class="st">"%b %Y"</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1302,10 +1305,10 @@ div.csl-indent {
 <span class="header-section-number">11.6</span> Escalas alfa</h2>
 <p>Las escalas alfa asignan la transparencia de una sombra a un valor en los datos. No suelen ser útiles, pero pueden ser una manera conveniente de restar importancia visual a observaciones menos importantes. <code>scale_alpha()</code> es un alias para <code>scale_alpha_continuous()</code> ya que ese es el uso más común de alpha y ahorra un poco de escritura. A continuación se muestra un ejemplo de una escala alfa utilizando los datos de las erupciones:</p>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span>, alpha <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span>, alpha <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_raster</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"maroon"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-colour_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -1317,7 +1320,7 @@ div.csl-indent {
 <span class="header-section-number">11.7</span> Posición de la leyenda</h2>
 <p>Una serie de configuraciones que afectan la visualización general de las leyendas se controlan a través del sistema de temas. Aprenderás más sobre eso en <a href="themes.html#sec-themes" class="quarto-xref"><span>Sección 17.2</span></a>, pero por ahora, todo lo que necesitas saber es que modificas la configuración del tema con la función <code>theme()</code>. </p>
 <p>La posición y justificación de las leyendas están controladas por la configuración del tema <code>legend.position</code>, que toma valores “right”, “left”, “top”, “bottom” o “none” (sin leyenda). </p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">up</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">up</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">txt</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
@@ -1325,8 +1328,8 @@ div.csl-indent {
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span> <span class="co"># el valor por defecto</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-nrow="2">
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell quarto-layout-panel" data-layout-nrow="2" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="scales-colour_files/figure-html/legend-position-1.png" class="img-fluid" width="1200"></p>
@@ -1351,7 +1354,7 @@ div.csl-indent {
 <li><p><code>legend.box.just</code>: justificación de cada leyenda dentro del cuadro delimitador general, cuando hay varias leyendas (“top”, “bottom”, “left”, o “right”).</p></li>
 </ul>
 <p>Alternativamente, si hay mucho espacio en blanco en su gráfica, es posible que desee colocar la leyenda dentro de la gráfica. Puede hacer esto estableciendo <code>legend.position</code> en un vector numérico de longitud dos. Los números representan una ubicación relativa en el área del panel: <code>c(0, 1)</code> es la esquina superior izquierda y <code>c(1, 0)</code> es la esquina inferior derecha. Usted controla a qué esquina de la leyenda se refiere <code>legend.position</code> con <code>legend.justification</code>, que se especifica de manera similar. Desafortunadamente, colocar la leyenda exactamente donde la desea requiere mucho ensayo y error.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">up</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">toy</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">up</span>, <span class="va">up</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">txt</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span> <span class="op">+</span> </span>
@@ -1373,7 +1376,7 @@ div.csl-indent {
 <span>  <span class="fu">theme</span><span class="op">(</span></span>
 <span>    legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, </span>
 <span>    legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -1429,7 +1432,76 @@ Wickham, Charlotte. 2018. <em>munsell: Utilities for Using Munsell Colours</em>.
 Zeileis, Achim, Kurt Hornik, y Paul Murrell. 2008. <span>«Escaping <span>RGB</span>land: Selecting Colors for Statistical Graphics»</span>. <em>Computational Statistics &amp; Data Analysis</em>. <a href="http://statmath.wu-wien.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2008.pdf">http://statmath.wu-wien.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2008.pdf</a>.
 </div>
 </div>
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1480,13 +1552,14 @@ Zeileis, Achim, Kurt Hornik, y Paul Murrell. 2008. <span>«Escaping <span>RGB</s
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>8&nbsp; Anotaciones – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -86,14 +86,15 @@ div.csl-indent {
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,7 +108,7 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -137,7 +138,9 @@ div.csl-indent {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -150,7 +153,7 @@ div.csl-indent {
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -416,7 +419,7 @@ div.csl-indent {
 <span class="header-section-number">8.1</span> Títulos de trama y eje</h2>
 <p>Al personalizar un gráfico, suele ser útil modificar los títulos asociados con el gráfico, los ejes y las leyendas. Para ayudar con esta tarea, ggplot2 proporciona la función auxiliar <code>labs()</code>, que le permite configurar los diversos títulos usando pares de nombre-valor como <code>título = "Título de mi gráfico</code>, <code>x = "Eje X"</code> o <code>fill = "fill legend"</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">labs</span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="st">"Cilindrada del motor (litros)"</span>, </span>
@@ -424,7 +427,7 @@ div.csl-indent {
 <span>    colour <span class="op">=</span> <span class="st">"Número de cilindros"</span>,</span>
 <span>    title <span class="op">=</span> <span class="st">"Kilometraje por tamaño de motor y cilindros."</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Fuente: https://fueleconomy.gov"</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/guide-names-helper-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -434,11 +437,11 @@ div.csl-indent {
 </div>
 <p>Los valores proporcionados a <code>labs()</code> suelen ser cadenas de texto, y <code>\n</code> se usa para especificar saltos de línea, pero también puede proporcionar expresiones matemáticas envueltas en <code><a href="https://rdrr.io/r/base/substitute.html">quote()</a></code>. Las reglas mediante las cuales se interpretan estas expresiones se pueden encontrar escribiendo <code><a href="https://rdrr.io/r/grDevices/plotmath.html">?plotmath</a></code>. </p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, to <span class="op">=</span> <span class="fl">2</span>, by <span class="op">=</span> <span class="fl">.01</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, to <span class="op">=</span> <span class="fl">2</span>, by <span class="op">=</span> <span class="fl">.01</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, y <span class="op">=</span> <span class="va">values</span> <span class="op">^</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_path</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="va">x</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="va">x</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/guide-names-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -447,13 +450,13 @@ div.csl-indent {
 </div>
 </div>
 <p>También es posible incluir (algunas) rebajas en los títulos de ejes y leyendas con la ayuda del paquete ggtext <span class="citation" data-cites="ggtext">(<a href="#ref-ggtext" role="doc-biblioref">Wilke 2020</a>)</span> y el sistema de temas ggplot2 (ver <span class="quarto-unresolved-ref">?sec-polish</span>). Para habilitar la reducción, debe configurar el elemento del tema relevante en <code><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">ggtext::element_markdown()</a></code>, como se demuestra a continuación:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Título del eje con *cursiva* y **negrita**"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span> </span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.title.x <span class="op">=</span> <span class="fu">ggtext</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.title.x <span class="op">=</span> <span class="fu">ggtext</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -475,9 +478,9 @@ div.csl-indent {
 <li>
 <p>La estética <code>family</code> proporciona el nombre de una fuente. Esta estética <em>sí</em> le permite usar el nombre de una fuente del sistema, pero se requiere algo de cuidado. Sólo hay tres fuentes que garantizan su funcionamiento en todas partes: “sans” (la predeterminada), “serif” o “mono”. Para ilustrar estos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">1</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sans"</span>, <span class="st">"serif"</span>, <span class="st">"mono"</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">1</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sans"</span>, <span class="st">"serif"</span>, <span class="st">"mono"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">family</span>, family <span class="op">=</span> <span class="va">family</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">family</span>, family <span class="op">=</span> <span class="va">family</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/text-family-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -495,9 +498,9 @@ div.csl-indent {
 <li>
 <p>La estética <code>fontface</code> especifica el formato y puede tomar tres valores: “plain” (el valor predeterminado), “bold” para negrita o “italic” para cursiva. Por ejemplo: </p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">1</span>, face <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plain"</span>, <span class="st">"bold"</span>, <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">1</span>, face <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plain"</span>, <span class="st">"bold"</span>, <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">face</span>, fontface <span class="op">=</span> <span class="va">face</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">face</span>, fontface <span class="op">=</span> <span class="va">face</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/text-face-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -508,7 +511,7 @@ div.csl-indent {
 </li>
 <li>
 <p>Puede ajustar la alineación del texto con las estéticas <code>hjust</code> (“left”, “center”, “right”, “inward”, “outward”) y <code>vjust</code> (“bottom”, “middle”, “top” , “inward”, “outward”). La alineación está centrada de forma predeterminada, pero a menudo hay buenas razones para anularla. Una de las alineaciones más útiles es la “inward”. Alinea el texto hacia el centro de la trama, lo que garantiza que las etiquetas permanezcan dentro de los límites de la trama: </p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1.5</span><span class="op">)</span>,</span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1.5</span><span class="op">)</span>,</span>
 <span>  text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
@@ -519,7 +522,7 @@ div.csl-indent {
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">text</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">text</span><span class="op">)</span>, vjust <span class="op">=</span> <span class="st">"inward"</span>, hjust <span class="op">=</span> <span class="st">"inward"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">text</span><span class="op">)</span>, vjust <span class="op">=</span> <span class="st">"inward"</span>, hjust <span class="op">=</span> <span class="st">"inward"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -540,7 +543,7 @@ div.csl-indent {
 <li>
 <p>A menudo desea etiquetar puntos existentes en el gráfico, pero no desea que el texto se superponga con los puntos (o barras, etc.). En esta situación es útil desplazar un poco el texto, lo que puedes hacer con los parámetros <code>nudge_x</code> y <code>nudge_y</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  treatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span>, </span>
 <span>  response <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.2</span>, <span class="fl">3.4</span>, <span class="fl">2.5</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -551,7 +554,7 @@ div.csl-indent {
 <span>    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"("</span>, <span class="va">response</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>    nudge_x <span class="op">=</span> <span class="op">-</span><span class="fl">0.3</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">ylim</span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">3.6</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">ylim</span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">3.6</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/text-nudge-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -563,13 +566,13 @@ div.csl-indent {
 </li>
 <li>
 <p>El tercer parámetro es <code>check_overlap</code>. Si <code>check_overlap = TRUE</code>, las etiquetas superpuestas se eliminarán automáticamente del gráfico. El algoritmo es simple: las etiquetas se trazan en el orden en que aparecen en el marco de datos; si una etiqueta se superpone con un punto existente, se omite. </p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">xlim</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">model</span><span class="op">)</span>, check_overlap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">xlim</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">xlim</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -585,7 +588,7 @@ div.csl-indent {
 </ul>
 <p>Una variación de <code>geom_text()</code> es <code>geom_label()</code>: dibuja un rectángulo redondeado detrás del texto. Esto lo hace útil para agregar etiquetas a gráficos con fondos ocupados: </p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  waiting <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">55</span>, <span class="fl">80</span><span class="op">)</span>, </span>
 <span>  eruptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4.3</span><span class="op">)</span>, </span>
 <span>  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"peak one"</span>, <span class="st">"peak two"</span><span class="op">)</span></span>
@@ -593,7 +596,7 @@ div.csl-indent {
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_tile</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_label</span><span class="op">(</span>data <span class="op">=</span> <span class="va">label</span>, <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">label</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_label</span><span class="op">(</span>data <span class="op">=</span> <span class="va">label</span>, <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">label</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/label-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -607,10 +610,10 @@ div.csl-indent {
 <li>
 <p>Si desea etiquetar muchos puntos, es difícil evitar superposiciones. <code>check_overlap = TRUE</code> es útil, pero ofrece poco control sobre qué etiquetas se eliminan. Una técnica popular para solucionar este problema es utilizar el paquete ggrepel <a href="https://github.com/slowkow/ggrepel" class="uri">https://github.com/slowkow/ggrepel</a> de Kamil Slowikowski. El paquete proporciona <code>geom_text_repel()</code>, que optimiza la posición de la etiqueta para evitar la superposición. Funciona bastante bien siempre que el número de etiquetas no sea excesivo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mini_mpg</span> <span class="op">&lt;-</span> <span class="va">mpg</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>, <span class="op">]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mini_mpg</span> <span class="op">&lt;-</span> <span class="va">mpg</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://ggrepel.slowkow.com/reference/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mini_mpg</span>, <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://ggrepel.slowkow.com/reference/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mini_mpg</span>, <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/ggrepel-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -632,8 +635,8 @@ div.csl-indent {
 </ul>
 <p>Normalmente, puede colocar anotaciones en primer plano (usando <code>alpha</code> si es necesario para poder seguir viendo los datos) o en segundo plano. Con el fondo predeterminado, una línea blanca gruesa es una referencia útil: es fácil de ver pero no llama la atención. Para ilustrar cómo se pueden utilizar las herramientas ggplot2 para anotar gráficos, comenzaremos con una serie temporal que representa el desempleo en EE. UU. a lo largo del tiempo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">economics</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">unemploy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">economics</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">unemploy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/umep-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -643,7 +646,7 @@ div.csl-indent {
 </div>
 <p>Una forma útil de anotar este gráfico es utilizar sombreado para indicar qué presidente estaba en el poder en ese momento. Para hacer esto, usamos <code>geom_rect()</code> para introducir sombreado, <code>geom_vline()</code> para introducir separadores, <code>geom_text()</code> para agregar etiquetas y luego usamos <code>geom_line()</code> para superponer los datos sobre estos fondos. elementos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">presidential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">presidential</span>, <span class="va">start</span> <span class="op">&gt;</span> <span class="va">economics</span><span class="op">$</span><span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">presidential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">presidential</span>, <span class="va">start</span> <span class="op">&gt;</span> <span class="va">economics</span><span class="op">$</span><span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">economics</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_rect</span><span class="op">(</span></span>
@@ -664,7 +667,7 @@ div.csl-indent {
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">unemploy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Fecha"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Deseempleo"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Deseempleo"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/unemp-pres-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -675,7 +678,7 @@ div.csl-indent {
 <p>Tenga en cuenta que hay pocas novedades aquí: en su mayor parte, anotar gráficos en <code>ggplot2</code> es una manipulación sencilla de geoms existentes. Dicho esto, hay una cosa especial a tener en cuenta en este código: el uso de <code>-Inf</code> e <code>Inf</code> como posiciones. Estos se refieren a los límites superior e inferior (o izquierdo y derecho) del gráfico. </p>
 <p>Esta técnica también se puede aplicar de otras formas. Por ejemplo, puedes usarlo para agregar una sola anotación a un gráfico, pero es un poco complicado porque tienes que crear un marco de datos de una fila:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yrng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">economics</span><span class="op">$</span><span class="va">unemploy</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yrng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">economics</span><span class="op">$</span><span class="va">unemploy</span><span class="op">)</span></span>
 <span><span class="va">xrng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">economics</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span>
 <span><span class="va">caption</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strwrap.html">strwrap</a></span><span class="op">(</span><span class="st">"Las tasas de desempleo en EE.UU. han</span></span>
 <span><span class="st">  varió mucho a lo largo de los años"</span>, <span class="fl">40</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
@@ -686,16 +689,16 @@ div.csl-indent {
 <span>    <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, label <span class="op">=</span> <span class="va">caption</span><span class="op">)</span>, </span>
 <span>    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">xrng</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">yrng</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, caption <span class="op">=</span> <span class="va">caption</span><span class="op">)</span>, </span>
 <span>    hjust <span class="op">=</span> <span class="fl">0</span>, vjust <span class="op">=</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">4</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Este código funciona y genera la trama deseada, pero es muy engorroso. Sería molesto tener que hacer esto cada vez que quieras agregar una sola anotación, por lo que ggplot2 incluye la función auxiliar <code>annotate()</code> que crea el marco de datos por ti: </p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">economics</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">unemploy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">economics</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">unemploy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">annotate</span><span class="op">(</span></span>
 <span>    geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="va">xrng</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">yrng</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, </span>
 <span>    label <span class="op">=</span> <span class="va">caption</span>, hjust <span class="op">=</span> <span class="fl">0</span>, vjust <span class="op">=</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">4</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/annotate_easyway-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -705,20 +708,20 @@ div.csl-indent {
 </div>
 <p>La conveniencia de la función <code>annotate()</code> resulta útil en otras situaciones. Por ejemplo, una forma común de anotación es resaltar un subconjunto de puntos dibujando puntos más grandes en un color diferente debajo del conjunto de datos principal. Para resaltar los vehículos fabricados por Subaru, puedes usar esto para crear la trama básica:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">manufacturer</span> <span class="op">==</span> <span class="st">"subaru"</span><span class="op">)</span>, </span>
 <span>    colour <span class="op">=</span> <span class="st">"orange"</span>,</span>
 <span>    size <span class="op">=</span> <span class="fl">3</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El problema con esto es que la categoría resaltada no estaría etiquetada. Esto se soluciona fácilmente usando <code>annotate()</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> </span>
 <span>  <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"point"</span>, x <span class="op">=</span> <span class="fl">5.5</span>, y <span class="op">=</span> <span class="fl">40</span>, colour <span class="op">=</span> <span class="st">"orange"</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"point"</span>, x <span class="op">=</span> <span class="fl">5.5</span>, y <span class="op">=</span> <span class="fl">40</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">5.6</span>, y <span class="op">=</span> <span class="fl">40</span>, label <span class="op">=</span> <span class="st">"subaru"</span>, hjust <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">5.6</span>, y <span class="op">=</span> <span class="fl">40</span>, label <span class="op">=</span> <span class="st">"subaru"</span>, hjust <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/underplot-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -728,12 +731,12 @@ div.csl-indent {
 </div>
 <p>Este enfoque tiene la ventaja de crear una etiqueta dentro de la región del trazado, pero el inconveniente es que la etiqueta está distante de los puntos que selecciona (de lo contrario, el punto naranja y negro adyacente a la etiqueta podría confundirse con datos reales). Un enfoque alternativo es utilizar una geom diferente para hacer el trabajo. <code>geom_curve()</code> y <code>geom_segment()</code> se pueden usar para dibujar curvas y líneas que conectan puntos con etiquetas, y se pueden usar junto con <code>annotate()</code> como se ilustra a continuación:</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> </span>
 <span>  <span class="fu">annotate</span><span class="op">(</span></span>
 <span>    geom <span class="op">=</span> <span class="st">"curve"</span>, x <span class="op">=</span> <span class="fl">4</span>, y <span class="op">=</span> <span class="fl">35</span>, xend <span class="op">=</span> <span class="fl">2.65</span>, yend <span class="op">=</span> <span class="fl">27</span>, </span>
 <span>    curvature <span class="op">=</span> <span class="fl">.3</span>, arrow <span class="op">=</span> <span class="fu">arrow</span><span class="op">(</span>length <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">4.1</span>, y <span class="op">=</span> <span class="fl">35</span>, label <span class="op">=</span> <span class="st">"subaru"</span>, hjust <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">4.1</span>, y <span class="op">=</span> <span class="fl">35</span>, label <span class="op">=</span> <span class="st">"subaru"</span>, hjust <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/curve_annotation-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -744,12 +747,12 @@ div.csl-indent {
 </section><section id="etiquetado-directo" class="level2" data-number="8.4"><h2 data-number="8.4" class="anchored" data-anchor-id="etiquetado-directo">
 <span class="header-section-number">8.4</span> Etiquetado directo</h2>
 <p>Los gráficos de Subaru anteriores proporcionan ejemplos de “etiquetado directo”, en los que la propia región del trazado contiene las etiquetas para grupos de puntos en lugar de utilizar una leyenda. Esto generalmente hace que el gráfico sea más fácil de leer porque acerca las etiquetas a los datos. El ecosistema más amplio de ggplot2 contiene una variedad de otras herramientas para lograr esto de una manera más automatizada. El paquete <a href="https://github.com/tdhock/directlabels">directlabels</a>, de Toby Dylan Hocking, proporciona una serie de herramientas para facilitar esto: </p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">directlabels</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/geom_dl.html">geom_dl</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">class</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"smart.grid"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">directlabels</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/geom_dl.html">geom_dl</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">class</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"smart.grid"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -763,9 +766,9 @@ div.csl-indent {
 <p>Directlabels proporciona varios métodos de posición. <code>smart.grid</code> es un lugar razonable para comenzar con los diagramas de dispersión, pero existen otros métodos que son más útiles para los polígonos de frecuencia y los diagramas de líneas. Consulte el sitio web de directlabels, <a href="http://directlabels.r-forge.r-project.org" class="uri">http://directlabels.r-forge.r-project.org</a>, para conocer otras técnicas.</p>
 <p>Otra versión de esta idea proviene del paquete ggforce de Thomas Lin Pedersen <a href="https://github.com/thomasp85/ggforce" class="uri">https://github.com/thomasp85/ggforce</a>. El paquete ggforce contiene muchas herramientas útiles para ampliar la funcionalidad de ggplot2, incluidas funciones como <code>geom_mark_ellipse()</code> que superpone un gráfico con marcas circulares “resaltadas”. Por ejemplo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_mark_ellipse.html">geom_mark_ellipse</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">cyl</span>, group <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_mark_ellipse.html">geom_mark_ellipse</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">cyl</span>, group <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/geom_mark_ellipse-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -775,7 +778,7 @@ div.csl-indent {
 </div>
 <p>Un tercer enfoque para el etiquetado directo lo proporciona el paquete gghighlight de Hiroaki Yutani <a href="https://github.com/yutannihilation/gghighlight" class="uri">https://github.com/yutannihilation/gghighlight</a>. En muchas situaciones es útil para resaltar puntos o líneas (o incluso una variedad de geoms diferentes) dentro de un gráfico, particularmente para datos longitudinales:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Oxboys</span>, package <span class="op">=</span> <span class="st">"nlme"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Oxboys</span>, package <span class="op">=</span> <span class="st">"nlme"</span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">Oxboys</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">age</span>, <span class="va">height</span>, group <span class="op">=</span> <span class="va">Subject</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -784,7 +787,7 @@ div.csl-indent {
 <span><span class="co">#&gt; Falling back to ungrouped filter operation...</span></span>
 <span><span class="co">#&gt; Tried to calculate with group_by(), but the calculation failed.</span></span>
 <span><span class="co">#&gt; Falling back to ungrouped filter operation...</span></span>
-<span><span class="co">#&gt; label_key: Subject</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; label_key: Subject</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/gghighlight-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -796,9 +799,9 @@ div.csl-indent {
 <span class="header-section-number">8.5</span> Anotación entre facetas</h2>
 <p>Cuando se usan bien, las anotaciones pueden ser una herramienta poderosa para ayudar al lector a entender sus datos. Un ejemplo de esto es cuando desea que el lector compare grupos entre facetas. Por ejemplo, en el gráfico siguiente es fácil ver la relación dentro de cada faceta, pero las diferencias sutiles entre las facetas no resaltan:</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu">aes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu">aes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_bin2d</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">cut</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">cut</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/faceted_noline-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -808,12 +811,12 @@ div.csl-indent {
 </div>
 <p>Es mucho más fácil ver estas sutiles diferencias si añadimos una línea de referencia:</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mod_coef</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mod_coef</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu">aes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_bin2d</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_abline</span><span class="op">(</span>intercept <span class="op">=</span> <span class="va">mod_coef</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, slope <span class="op">=</span> <span class="va">mod_coef</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, </span>
 <span>    colour <span class="op">=</span> <span class="st">"white"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">cut</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">cut</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/faceted_line-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -824,10 +827,10 @@ div.csl-indent {
 <p>En este gráfico, cada faceta muestra los datos de una categoría frente a la misma línea de regresión. Esto facilita la comparación de las facetas entre sí porque existe una línea de referencia compartida para ayudar en la comparación visual.</p>
 <p>Una variación de este tema surge cuando desea que cada faceta de un gráfico muestre datos de un solo grupo, con el conjunto de datos completo trazado discretamente en cada panel para ayudar a la comparación visual. El paquete gghighlight es particularmente útil en este contexto:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">gghighlight</span><span class="fu">::</span><span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="annotations_files/figure-html/gghighlight_facet-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -842,7 +845,76 @@ div.csl-indent {
 Wilke, Claus O. 2020. <em>ggtext: Improved Text Rendering Support for ’ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggtext">https://CRAN.R-project.org/package=ggtext</a>.
 </div>
 </div>
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -893,13 +965,14 @@ Wilke, Claus O. 2020. <em>ggtext: Improved Text Rendering Support for ’ggplot2
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

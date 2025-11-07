@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>12&nbsp; Otra estéticas – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -66,14 +66,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -87,7 +88,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -117,7 +118,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -130,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -403,11 +406,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">12.1</span> Tamaño</h2>
 <p></p>
 <p>La estética de tamaño se usa típicamente para escalar puntos y texto. La escala predeterminada para la estética de tamaño es <code>scale_size()</code>, donde un aumento lineal en la variable se asigna a un aumento lineal en el área (no en el radio) del geom. Escalar en función del área es una opción predeterminada sensata, ya que la percepción humana del tamaño se asemeja más al escalar el área que al escalar el radio. Por defecto, el valor más pequeño de los datos (más precisamente, en los límites de escala) se asigna a un tamaño de 1 y el más grande a un tamaño de 6. El argumento <code>range</code> permite escalar el tamaño de los geoms:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, size <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, size <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_size</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_size</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -429,7 +432,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">12.1.1</span> Escalas de tamaño de radio</h3>
 <p>Existen situaciones en las que el escalado de área no es deseable, y para ello se proporciona la función <code>scale_radius()</code>. Para ilustrar cuándo <code>scale_radius()</code> es apropiada, considere un conjunto de datos que contiene datos astronómicos que incluyen el radio de diferentes planetas:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">planets</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">planets</span></span>
 <span><span class="co">#&gt;      name  type position radius    orbit</span></span>
 <span><span class="co">#&gt; 1 Mercury Inner        1   2440 5.79e+07</span></span>
 <span><span class="co">#&gt; 2   Venus Inner        2   6052 1.08e+08</span></span>
@@ -438,10 +441,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co">#&gt; 5 Jupiter Outer        5  71400 7.78e+08</span></span>
 <span><span class="co">#&gt; 6  Saturn Outer        6  60330 1.43e+09</span></span>
 <span><span class="co">#&gt; 7  Uranus Outer        7  25559 2.87e+09</span></span>
-<span><span class="co">#&gt; 8 Neptune Outer        8  24764 4.50e+09</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; 8 Neptune Outer        8  24764 4.50e+09</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En este caso, un gráfico que utiliza la estética del tamaño para representar el radio de los planetas debe usar <code>scale_radius()</code> en lugar del <code>scale_size()</code> predeterminado. También es importante en este caso establecer los límites de escala para que un planeta con radio 0 se dibuje con un disco con radio 0.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">planets</span>, <span class="fu">aes</span><span class="op">(</span><span class="fl">1</span>, <span class="va">name</span>, size <span class="op">=</span> <span class="va">radius</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">planets</span>, <span class="fu">aes</span><span class="op">(</span><span class="fl">1</span>, <span class="va">name</span>, size <span class="op">=</span> <span class="va">radius</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>, size <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
@@ -449,7 +452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"not to scale"</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_radius</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="cn">NA</span><span class="op">)</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"to scale"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"to scale"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -465,11 +468,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">12.1.2</span> Escalas de tamaño agrupadas</h3>
 <p>Las escalas de tamaño agrupadas funcionan de forma similar a las escalas agrupadas para la estética de color y posición (<a href="scales-colour.html#sec-binned-colour" class="quarto-xref"><span>Sección 11.4</span></a> y <a href="scales-position.html#sec-binned-position" class="quarto-xref"><span>Sección 10.4</span></a>). Una diferencia radica en cómo se muestran las leyendas. La leyenda predeterminada para una escala de tamaño agrupada, y para todas las escalas agrupada, excepto la estética de posición y color, se rige por <code>guide_bins()</code>. Por ejemplo, en los datos <code>mpg</code>, podríamos usar <code>scale_size_binned()</code> para crear una versión agrupada de la variable continua <code>hwy</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">manufacturer</span>, size <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">manufacturer</span>, size <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_size_binned</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">base</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -482,8 +485,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <p><code>axis</code> indica si se debe dibujar el eje (el valor predeterminado es <code>TRUE</code>)</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>size <span class="op">=</span> <span class="fu">guide_bins</span><span class="op">(</span>axis <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Ignoring unknown argument to `guide_bins()`: `axis`.</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>size <span class="op">=</span> <span class="fu">guide_bins</span><span class="op">(</span>axis <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Ignoring unknown argument to `guide_bins()`: `axis`.</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -495,7 +498,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <p><code>direction</code> es una cadena de caracteres que especifica la dirección de la guía, ya sea <code>"vertical"</code> (por defecto) o <code>"horizontal"</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>size <span class="op">=</span> <span class="fu">guide_bins</span><span class="op">(</span>direction <span class="op">=</span> <span class="st">"horizontal"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>size <span class="op">=</span> <span class="fu">guide_bins</span><span class="op">(</span>direction <span class="op">=</span> <span class="st">"horizontal"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -507,7 +510,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <p><code>show.limits</code> especifica si se muestran marcas en los extremos del eje guía (el valor predeterminado es <code>FALSE</code>)</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>size <span class="op">=</span> <span class="fu">guide_bins</span><span class="op">(</span>show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span>size <span class="op">=</span> <span class="fu">guide_bins</span><span class="op">(</span>show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -519,7 +522,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <p><code>axis.colour</code>, <code>axis.linewidth</code> y <code>axis.arrow</code> se utilizan para controlar el eje guía que se muestra junto a las entradas de la leyenda</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">guides</span><span class="op">(</span></span>
 <span>  size <span class="op">=</span> <span class="fu">guide_bins</span><span class="op">(</span></span>
 <span>    axis.colour <span class="op">=</span> <span class="st">"red"</span>,</span>
 <span>    axis.arrow <span class="op">=</span> <span class="fu">arrow</span><span class="op">(</span></span>
@@ -530,7 +533,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Ignoring unknown arguments to `guide_bins()`: `axis.colour` and</span></span>
-<span><span class="co">#&gt; `axis.arrow`.</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; `axis.arrow`.</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -543,11 +546,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></section></section><section id="sec-scale-shape" class="level2" data-number="12.2"><h2 data-number="12.2" class="anchored" data-anchor-id="sec-scale-shape">
 <span class="header-section-number">12.2</span> Forma</h2>
 <p>Los valores se pueden asignar a la estética de la forma. El uso típico de esto es cuando tiene una pequeña cantidad de categorías discretas: si la variable de datos contiene más de 6 valores, resulta difícil distinguir entre formas y generará una advertencia. La función predeterminada <code>scale_shape()</code> contiene un solo argumento: establezca <code>solid = TRUE</code> (el valor predeterminado) para usar una “paleta” que consta de tres formas sólidas y tres formas huecas, o establezca <code>solid = FALSE</code> para usar seis formas huecas formas:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_shape</span><span class="op">(</span>solid <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">scale_shape</span><span class="op">(</span>solid <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -569,10 +572,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Puede especificar los tipos de marcador para cada valor de datos manualmente usando <code>scale_shape_manual()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> </span>
 <span>  <span class="fu">scale_shape_manual</span><span class="op">(</span></span>
 <span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"4"</span> <span class="op">=</span> <span class="fl">16</span>, <span class="st">"5"</span> <span class="op">=</span> <span class="fl">17</span>, <span class="st">"6"</span> <span class="op">=</span> <span class="fl">1</span> , <span class="st">"8"</span> <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -584,7 +587,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="sec-scale-linewidth" class="level2" data-number="12.3"><h2 data-number="12.3" class="anchored" data-anchor-id="sec-scale-linewidth">
 <span class="header-section-number">12.3</span> Ancho de línea</h2>
 <p>La estética del ancho de línea, introducida en ggplot2 3.4.0, se utiliza para controlar el ancho de las líneas. En versiones anteriores de ggplot2 se usaba la estética del tamaño para este propósito, lo que causaba algunas dificultades para geoms complejas como <code>geom_pointrange()</code> que contienen tanto puntos como líneas. Para estas geoms suele ser importante poder controlar por separado el tamaño de los puntos y el ancho de las líneas. Esto se ilustra en los gráficos siguientes. En el gráfico más a la izquierda, tanto la estética del tamaño como del ancho de línea se establecen en sus valores predeterminados. El gráfico del medio aumenta el tamaño de los puntos sin cambiar el ancho de línea, mientras que el gráfico de la derecha aumenta el ancho de línea sin cambiar el tamaño de los puntos.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">airquality</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Month</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">Temp</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">airquality</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Month</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">Temp</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_pointrange</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"summary"</span>, fun.data <span class="op">=</span> <span class="st">"median_hilow"</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_pointrange</span><span class="op">(</span></span>
@@ -596,7 +599,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  stat <span class="op">=</span> <span class="st">"summary"</span>, </span>
 <span>  fun.data <span class="op">=</span> <span class="st">"median_hilow"</span>, </span>
 <span>  linewidth <span class="op">=</span> <span class="fl">2</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -612,9 +615,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>En la práctica, lo más probable es que establezcas el ancho de línea como un parámetro fijo, como se muestra en el ejemplo anterior, pero es una verdadera estética y se puede asignar a valores de datos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">airquality</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Day</span>, <span class="va">Temp</span>, group <span class="op">=</span> <span class="va">Month</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">airquality</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Day</span>, <span class="va">Temp</span>, group <span class="op">=</span> <span class="va">Month</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>linewidth <span class="op">=</span> <span class="va">Month</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_linewidth</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">scale_linewidth</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -628,8 +631,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">12.4</span> Tipo de línea</h2>
 <p>Es posible asignar una variable a la estética del tipo de línea en ggplot2. Esto funciona mejor para variables discretas con una pequeña cantidad de categorías, y <code>scale_linetype()</code> es un alias para <code>scale_linetype_discrete()</code>. Las variables continuas no se pueden asignar a tipos de línea a menos que se use <code>scale_linetype_binned()</code>: aunque existe una función <code>scale_linetype_continuous()</code>, lo único que hace es producir un error. Para ver por qué la estética del tipo de línea es adecuada sólo para casos con unas pocas categorías, considere este gráfico:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">economics_long</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">value01</span>, linetype <span class="op">=</span> <span class="va">variable</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">economics_long</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">date</span>, <span class="va">value01</span>, linetype <span class="op">=</span> <span class="va">variable</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -639,7 +642,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Con cinco categorías, la gráfica es bastante difícil de leer y es poco probable que quieras utilizar la estética del tipo de línea para más que eso. La “paleta” predeterminada para el tipo de línea la proporciona la función <code><a href="https://scales.r-lib.org/reference/pal_linetype.html">scales::linetype_pal()</a></code> e incluye los 13 tipos de línea que se muestran a continuación:</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>value <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">13</span><span class="op">]</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>value <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">13</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_segment</span><span class="op">(</span></span>
 <span>    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, xend <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="va">value</span>, yend <span class="op">=</span> <span class="va">value</span><span class="op">)</span>,</span>
@@ -648,7 +651,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu">theme</span><span class="op">(</span>panel.grid <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="va">base</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -658,7 +661,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Puede controlar el tipo de línea especificando una cadena con hasta 8 valores hexadecimales (es decir, de 0 a F). En esta especificación, el primer valor es la longitud del primer segmento de línea, el segundo valor es la longitud del primer espacio entre segmentos, y así sucesivamente. Esto le permite especificar sus propios tipos de línea usando <code>scale_linetype_manual()</code>, o alternativamente, pasando una función personalizada al argumento <code>palette</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">linetypes</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">linetypes</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">types</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"55"</span>,  <span class="st">"75"</span>, <span class="st">"95"</span>, <span class="st">"1115"</span>, <span class="st">"111115"</span>, <span class="st">"11111115"</span>,</span>
 <span>             <span class="st">"5158"</span>, <span class="st">"9198"</span>, <span class="st">"c1c8"</span><span class="op">)</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">types</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
@@ -666,7 +669,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">discrete_scale</span><span class="op">(</span><span class="st">"linetype"</span>, palette <span class="op">=</span> <span class="va">linetypes</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 4 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_segment()`).</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -676,7 +679,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Tenga en cuenta que las últimas cuatro líneas están en blanco, porque la función <code>linetypes()</code> definida anteriormente devuelve <code>NA</code> cuando el número de categorías excede 9. La función <code>discrete_scale()</code> contiene un argumento <code>na.value</code> usado para especificar qué Se traza un tipo de línea para estos valores. De forma predeterminada, esto produce una línea en blanco, pero puede anular esto configurando <code>na.value = "dotted"</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">discrete_scale</span><span class="op">(</span><span class="st">"linetype"</span>, palette <span class="op">=</span> <span class="va">linetypes</span>, na.value <span class="op">=</span> <span class="st">"dotted"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">discrete_scale</span><span class="op">(</span><span class="st">"linetype"</span>, palette <span class="op">=</span> <span class="va">linetypes</span>, na.value <span class="op">=</span> <span class="st">"dotted"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -690,11 +693,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Las escalas manuales son solo una lista de valores válidos que se asignan a valores discretos únicos. Si desea personalizar estas escalas, necesita crear su propia escala nueva con la versión “manual” de cada una: <code>scale_linetype_manual()</code>, <code>scale_shape_manual()</code>, <code>scale_colour_manual()</code>, etc. La escala manual tiene una argumento importante, <code>values</code>, donde especifica los valores que la escala debe producir si se nombra este vector, hará coincidir los valores de la salida con los valores de la entrada; de lo contrario, coincidirá en el orden de los niveles de la variable discreta. Necesitará algunos conocimientos de los valores estéticos válidos, que se describen en <code>vignette("ggplot2-specs")</code>. </p>
 <p>Las escalas manuales aparecieron antes, en <span class="quarto-unresolved-ref">?sec-manual-color</span> y <a href="#sec-scale-shape" class="quarto-xref"><span>Sección 12.2</span></a>. En este ejemplo, mostraremos un uso creativo de <code>scale_colour_manual()</code> para mostrar múltiples variables en el mismo gráfico y mostrar una leyenda útil. En la mayoría de los sistemas de trazado, colorearías las líneas y luego agregarías una leyenda: </p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">huron</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1875</span><span class="op">:</span><span class="fl">1972</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">LakeHuron</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">huron</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1875</span><span class="op">:</span><span class="fl">1972</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">LakeHuron</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">huron</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">level</span> <span class="op">+</span> <span class="fl">5</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">level</span> <span class="op">-</span> <span class="fl">5</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">level</span> <span class="op">-</span> <span class="fl">5</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-huron" class="quarto-float quarto-figure quarto-figure-center anchored" width="2100">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-huron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -708,9 +711,9 @@ Figura&nbsp;12.1
 </div>
 <p>Eso no funciona en ggplot porque no hay forma de agregar una leyenda manualmente. En su lugar, asigne etiquetas informativas a las líneas:</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">huron</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">huron</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">level</span> <span class="op">+</span> <span class="fl">5</span>, colour <span class="op">=</span> <span class="st">"above"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">level</span> <span class="op">-</span> <span class="fl">5</span>, colour <span class="op">=</span> <span class="st">"below"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">level</span> <span class="op">-</span> <span class="fl">5</span>, colour <span class="op">=</span> <span class="st">"below"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-huron2" class="quarto-float quarto-figure quarto-figure-center anchored" width="2100">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-huron2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -724,12 +727,12 @@ Figura&nbsp;12.2
 </div>
 <p>Y luego dile a la escala cómo asignar etiquetas a colores:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">huron</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">huron</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">level</span> <span class="op">+</span> <span class="fl">5</span>, colour <span class="op">=</span> <span class="st">"above"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">level</span> <span class="op">-</span> <span class="fl">5</span>, colour <span class="op">=</span> <span class="st">"below"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_colour_manual</span><span class="op">(</span><span class="st">"Direction"</span>,</span>
 <span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"above"</span> <span class="op">=</span> <span class="st">"red"</span>, <span class="st">"below"</span> <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-huron3" class="quarto-float quarto-figure quarto-figure-center anchored" width="2100">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-huron3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -745,7 +748,7 @@ Figura&nbsp;12.3
 <span class="header-section-number">12.6</span> Escalas de identidad</h2>
 <p>Las escalas de identidad, como <code>scale_colour_identity()</code> y <code>scale_shape_identity()</code>, se utilizan cuando los datos ya están escalados de manera que los datos y los espacios estéticos sean los mismos. El siguiente código muestra un ejemplo en el que la escala de identidad es útil. <code>luv_colours</code> contiene las ubicaciones de todos los colores integrados de R en el espacio de color LUV (el espacio en el que se basa HCL). Una leyenda es innecesaria, porque el color del punto se representa a sí mismo: los datos y los espacios estéticos son los mismos. </p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">luv_colours</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">luv_colours</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      L         u    v           col</span></span>
 <span><span class="co">#&gt; 1 9342 -3.37e-12    0         white</span></span>
 <span><span class="co">#&gt; 2 9101 -4.75e+02 -635     aliceblue</span></span>
@@ -757,7 +760,7 @@ Figura&nbsp;12.3
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">luv_colours</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">u</span>, <span class="va">v</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span><span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">col</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> </span>
 <span><span class="fu">scale_color_identity</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span><span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="scales-other_files/figure-html/scale-identity-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -767,7 +770,76 @@ Figura&nbsp;12.3
 </div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -818,13 +890,14 @@ Figura&nbsp;12.3
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

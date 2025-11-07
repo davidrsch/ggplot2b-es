@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>20&nbsp; Extendiendo ggplot2 – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -66,14 +66,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -87,7 +88,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -117,7 +118,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -130,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -420,7 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">20.1.1</span> Modificando temas</h3>
 <p>Los temas son probablemente la forma más sencilla de extensiones, ya que solo requieren que escribas el código que normalmente escribirías al crear gráficos con ggplot2. Si bien es posible crear un nuevo tema desde cero, normalmente es más fácil y menos propenso a errores modificar un tema existente. Este enfoque se adopta a menudo en la fuente ggplot2. Por ejemplo, aquí está el código fuente de <code>theme_minimal()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">theme_minimal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base_size</span> <span class="op">=</span> <span class="fl">11</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">theme_minimal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base_size</span> <span class="op">=</span> <span class="fl">11</span>, </span>
 <span>                          <span class="va">base_family</span> <span class="op">=</span> <span class="st">""</span>, </span>
 <span>                          <span class="va">base_line_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">22</span>, </span>
 <span>                          <span class="va">base_rect_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">22</span><span class="op">)</span> <span class="op">{</span></span>
@@ -440,10 +443,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>      plot.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, </span>
 <span>      complete <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>    <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Como puede ver, el código no se ve muy diferente al código que normalmente escribe cuando diseña un gráfico (<span class="quarto-unresolved-ref">?sec-polish</span>). La función <code>theme_minimal()</code> usa <code>theme_bw()</code> como tema base y luego reemplaza ciertas partes con su propio estilo usando el operador <code>%+replace%</code>. Al escribir temas nuevos, es una buena idea proporcionar algunos parámetros al usuario para definir aspectos generales del tema. Un aspecto importante es el tamaño del texto y las líneas, pero otros aspectos podrían ser, p.e. colores clave y de acento del tema. Por ejemplo, podríamos crear una variante de <code>theme_minimal()</code> que permita al usuario especificar el color de fondo de la trama:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">theme_background</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">background</span> <span class="op">=</span> <span class="st">"white"</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">theme_background</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">background</span> <span class="op">=</span> <span class="st">"white"</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">%+replace%</span></span>
 <span>    <span class="fu">theme</span><span class="op">(</span></span>
 <span>      plot.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span></span>
@@ -457,7 +460,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_minimal</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_background</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_background</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span>, background <span class="op">=</span> <span class="st">"grey70"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_background</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span>, background <span class="op">=</span> <span class="st">"grey70"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -475,7 +478,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">20.1.2</span> Temas completos</h3>
 <p>Un punto importante a tener en cuenta es el uso de <code>complete = TRUE</code> en el código para <code>theme_minimal()</code> y <code>theme_background()</code>. Siempre es una buena práctica hacer esto al definir sus propios temas en un paquete de extensión ggplot2: esto asegurará que su tema se comporte de la misma manera que el tema predeterminado y, como consecuencia, será menos probable que sorprenda a los usuarios. Para ver por qué esto es necesario, compare estos dos temas:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Bueno </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Bueno </span></span>
 <span><span class="va">theme_predictable</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">%+replace%</span> </span>
 <span>    <span class="fu">theme</span><span class="op">(</span></span>
@@ -492,12 +495,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>      axis.line.x <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>      axis.line.y <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ambos temas están destinados a hacer lo mismo: cambiar los valores predeterminados a <code>theme_classic()</code> para que el eje x se dibuje con una línea azul y el eje y se dibuje con una línea naranja. A primera vista, parece que ambas versiones se comportan según las expectativas del usuario:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_predictable</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_surprising</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_surprising</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -512,9 +515,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Sin embargo, supongamos que el usuario de su tema quiere eliminar las líneas del eje:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_predictable</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_surprising</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">theme_surprising</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -530,13 +533,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>El comportamiento de <code>theme_predictable()</code> es el mismo que <code>theme_classic()</code> y las líneas del eje se eliminan, pero para <code>theme_surprising()</code> esto no sucede. La razón de esto es que ggplot2 trata los temas completos como una colección de valores “de respaldo”: cuando el usuario agrega <code>theme(axis.line = element_blank())</code> a un tema completo, no hay necesidad de confiar en el valor de respaldo para <code>axis.line.x</code> o <code>axis.line.y</code>, porque se heredan de <code>axis.line</code> en el comando de usuario. Esto es una amabilidad para sus usuarios, ya que les permite sobrescribir todo lo que hereda de <code>axis.line</code> usando un comando como <code>theme_predictable() + theme(axis.line = ...)</code>. Por el contrario, <code>theme_surprising()</code> no especifica un tema completo. Cuando el usuario llama a <code>theme_surprising()</code>, los valores alternativos se toman de <code>theme_classic()</code>, pero lo más importante es que ggplot2 trata el comando <code>theme()</code> que establece <code>axis.line.x</code> y <code>axis.line.y</code> exactamente como si el usuario lo hubiera escrito. En consecuencia, la especificación de la trama es equivalente a esto:</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> </span>
 <span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span></span>
 <span>      axis.line.x <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>      axis.line.y <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span>,</span>
 <span>      axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="extensions_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -549,7 +552,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">20.1.3</span> Definición de elementos del tema</h3>
 <p>En <span class="quarto-unresolved-ref">?sec-polising</span> vimos que la estructura de un tema ggplot2 está definida por el árbol de elementos. El árbol de elementos especifica qué tipo tiene cada elemento del tema y de dónde hereda su valor (puede usar la función <code>get_element_tree()</code> para devolver este árbol como una lista). El sistema de extensión para ggplot2 hace posible definir nuevos elementos de tema registrándolos como parte del árbol de elementos usando la función <code>register_theme_elements()</code>. Digamos que estás escribiendo un nuevo paquete llamado “ggxyz” que incluye una anotación de panel como parte del sistema de coordenadas y quieres que esta anotación de panel sea un elemento del tema:</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">register_theme_elements</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">register_theme_elements</span><span class="op">(</span></span>
 <span>  ggxyz.panel.annotation <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span></span>
 <span>    color <span class="op">=</span> <span class="st">"blue"</span>, </span>
 <span>    hjust <span class="op">=</span> <span class="fl">0.95</span>, </span>
@@ -561,7 +564,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>      inherit <span class="op">=</span> <span class="st">"text"</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Hay dos puntos a tener en cuenta aquí al definir nuevos elementos temáticos en un paquete:</p>
 <ul>
@@ -570,7 +573,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Una vez que se haya actualizado el árbol de elementos, el paquete puede definir un nuevo sistema de coordenadas que utilice el nuevo elemento temático. Una forma sencilla de hacer esto es definir una función que cree una nueva instancia del objeto ggproto <code>CoordCartesian</code>. Hablaremos más sobre esto en <a href="#sec-new-coords" class="quarto-xref"><span>Sección 20.4</span></a>, pero por ahora basta con tener en cuenta que este código funcionará:</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coord_annotate</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">label</span> <span class="op">=</span> <span class="st">"panel annotation"</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coord_annotate</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">label</span> <span class="op">=</span> <span class="st">"panel annotation"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">CoordCartesian</span>,</span>
 <span>          limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>          expand <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -584,11 +587,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>            <span class="op">)</span></span>
 <span>          <span class="op">}</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Entonces ahora esto funciona:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_annotate</span><span class="op">(</span><span class="st">"annotation in blue"</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_annotate</span><span class="op">(</span><span class="st">"annotation in blue"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_dark</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_annotate</span><span class="op">(</span><span class="st">"annotation in blue"</span><span class="op">)</span></span>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">coord_annotate</span><span class="op">(</span><span class="st">"annotation in blue"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_dark</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 
 </div>
@@ -618,17 +621,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Debido a esto, el único método que normalmente necesitas especificar como desarrollador es la función <code>compute_group()</code>, cuyo trabajo es tomar los datos de un único grupo y transformarlos apropiadamente. Esto será suficiente para crear una estadística funcional, aunque es posible que no produzca el mejor rendimiento. Como consecuencia, a veces los desarrolladores encuentran valioso descargar parte del trabajo a <code>compute_panel()</code> siempre que sea posible: hacerlo permite vectorizar los cálculos y evitar un costoso paso de división-combinación (veremos un ejemplo de esto más adelante en <span class="citation" data-cites="seg-primavera-estadística">(<a href="#ref-seg-primavera-estad%C3%ADstica" role="doc-biblioref"><strong>seg-primavera-estadística?</strong></a>)</span>). Sin embargo, como regla general es mejor comenzar modificando <code>compute_group()</code> únicamente y ver si el rendimiento es el adecuado.</p>
 <p>Para ilustrar esto, comenzaremos creando una estadística que calcule el casco convexo de un conjunto de puntos, usando la función <code><a href="https://rdrr.io/r/grDevices/chull.html">chull()</a></code> incluida en <code>grDevices</code>. Como es de esperar, la mayor parte del trabajo lo realiza un nuevo objeto ggproto que crearemos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatChull</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatChull"</span>, <span class="va">Stat</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatChull</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatChull"</span>, <span class="va">Stat</span>,</span>
 <span>  compute_group <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">scales</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/grDevices/chull.html">chull</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
 <span>  <span class="op">}</span>,</span>
 <span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Como se describe en <a href="internals.html#sec-ggproto" class="quarto-xref"><span>Sección 19.4</span></a>, los dos primeros argumentos de <code>ggproto()</code> se usan para indicar que este objeto define una nueva clase (convenientemente llamada <code>"StatChull"</code>) que hereda campos y métodos del objeto <code>Stat</code>. Luego especificamos solo aquellos campos y métodos que deben modificarse con respecto a los valores predeterminados proporcionados por <code>Stat</code>, en este caso <code>compute_group()</code> y <code>required_aes</code>. Nuestra función <code>compute_group()</code> toma dos entradas, <code>data</code> y <code>scales</code>—porque esto es lo que ggplot2 espera—pero el cálculo real depende sólo de los <code>data</code>. Tenga en cuenta que debido a que el cálculo necesariamente requiere que ambas estéticas de posición estén presentes, también hemos especificado el campo <code>required_aes</code> para asegurarnos de que ggplot2 sepa que estas estéticas son requeridas.</p>
 <p>Al crear este objeto ggproto tenemos una estadística funcional, pero aún no le hemos dado al usuario una forma de acceder a ella. Para solucionar esto escribimos una función de capa, <code>stat_chull()</code>. Todas las funciones de capa tienen la misma forma: usted especifica los valores predeterminados en los argumentos de la función y luego llama a <code>layer()</code>, enviando <code>...</code> al argumento <code>params</code>. Los argumentos en <code>...</code> serán argumentos para la geom (si estás creando un contenedor de estadísticas), argumentos para la estadística (si estás creando un contenedor de geom) o la estética que se establecerá. <code>layer()</code> se encarga de separar los diferentes parámetros y asegurarse de que estén almacenados en el lugar correcto. Entonces nuestra función <code>stat_chull()</code> se ve así</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stat_chull</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stat_chull</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                       <span class="va">geom</span> <span class="op">=</span> <span class="st">"polygon"</span>, <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
 <span>                       <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
 <span>                       <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
@@ -642,16 +645,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>, </span>
 <span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="va">na.rm</span>, <span class="va">...</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>y nuestra estadística ahora se puede utilizar en gráficos:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">stat_chull</span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, colour <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">stat_chull</span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">stat_chull</span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -674,15 +677,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>En el siguiente ejemplo, mostramos cómo utilizar el método <code>setup_params()</code> para definir una nueva estadística. Más adelante se incluye un ejemplo de modificación del método <code>setup_data()</code>, en <a href="#sec-modifying-geom-data" class="quarto-xref"><span>Sección 20.3.2</span></a>.</p>
 <p>Supongamos que queremos crear <code>StatDensityCommon</code>, una estadística que calcula una estimación de densidad de una variable después de estimar un ancho de banda predeterminado para aplicar a todos los grupos de los datos. Esto se puede hacer de muchas maneras diferentes, pero para simplificar, imaginemos que tenemos una función <code>common_bandwidth()</code> que estima el ancho de banda por separado para cada grupo usando la función <code><a href="https://rdrr.io/r/stats/bandwidth.html">bw.nrd0()</a></code> y luego devuelve el promedio:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">common_bandwidth</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">common_bandwidth</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">split_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">group</span><span class="op">)</span></span>
 <span>  <span class="va">bandwidth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span><span class="op">(</span><span class="va">split_data</span>, <span class="va">bw.nrd0</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">bandwidth</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Lo que queremos de <code>StatDensityCommon</code> es usar la función <code>common_bandwith()</code> para establecer un ancho de banda común antes de que los datos se separen por grupo y se pasen a la función <code>compute_group()</code>. Aquí es donde el método <code>setup_params()</code> resulta útil:</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatDensityCommon</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatDensityCommon"</span>, <span class="va">Stat</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">StatDensityCommon</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"StatDensityCommon"</span>, <span class="va">Stat</span>,</span>
 <span>  required_aes <span class="op">=</span> <span class="st">"x"</span>,</span>
 <span>  </span>
 <span>  setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
@@ -697,11 +700,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/density.html">density</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">x</span>, bw <span class="op">=</span> <span class="va">bandwidth</span><span class="op">)</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">x</span>, y <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span>  </span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Luego definimos una función <code>stat_*()</code> de la forma habitual:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stat_density_common</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stat_density_common</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                                <span class="va">geom</span> <span class="op">=</span> <span class="st">"line"</span>, <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
 <span>                                <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
 <span>                                <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">bandwidth</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
@@ -719,13 +722,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>      <span class="va">...</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora podemos aplicar nuestra nueva estadística</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, colour <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, colour <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">stat_density_common</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Picking bandwidth of 0.345</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; Picking bandwidth of 0.345</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="extensions_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -746,7 +749,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">20.3.1</span> Modificar los valores predeterminados de la geom</h3>
 <p>En muchas situaciones, su nueva geom puede ser simplemente una geom existente que espera entradas ligeramente diferentes o tiene valores de parámetros predeterminados diferentes. El ejemplo <code>stat_chull()</code> de la sección anterior es un buen ejemplo de esto. Tenga en cuenta que al crear gráficos usando <code>stat_chull()</code> teníamos que especificar manualmente los parámetros <code>fill</code> y <code>color</code> si no estaban asignados a la estética. La razón de esto es que <code>GeomPolygon</code> crea un polígono relleno sin bordes de forma predeterminada, y esto no se adapta bien a las necesidades de nuestra geom de casco convexo. Para hacernos la vida un poco más fácil, podemos crear una subclase de <code>GeomPolygon</code> que modifique los valores predeterminados para que produzca un polígono hueco de forma predeterminada. Podemos hacer esto de forma sencilla anulando el valor <code>default_aes</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomPolygonHollow</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomPolygonHollow"</span>, <span class="va">GeomPolygon</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomPolygonHollow</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomPolygonHollow"</span>, <span class="va">GeomPolygon</span>,</span>
 <span>  default_aes <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span></span>
 <span>    colour <span class="op">=</span> <span class="st">"black"</span>, </span>
 <span>    fill <span class="op">=</span> <span class="cn">NA</span>, </span>
@@ -754,11 +757,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    linetype <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    alpha <span class="op">=</span> <span class="cn">NA</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora podemos definir nuestra función constructora <code>geom_chull()</code> usando <code>GeomPolygonHollow</code> como geom predeterminado:</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_chull</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">stat</span> <span class="op">=</span> <span class="st">"chull"</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_chull</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">stat</span> <span class="op">=</span> <span class="st">"chull"</span>,</span>
 <span>                       <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, </span>
 <span>                       <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">layer</span><span class="op">(</span></span>
@@ -771,13 +774,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>,</span>
 <span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="va">na.rm</span>, <span class="va">...</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En aras de la coherencia, también definiríamos <code>stat_chull()</code> para usarlo como valor predeterminado. En cualquier caso, ahora tenemos una nueva función <code>geom_chull()</code> que funciona bastante bien sin que el usuario necesite configurar parámetros:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_chull</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="extensions_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -789,7 +792,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">20.3.2</span> Modificando datos de geom</h3>
 <p>En otros casos, es posible que desee definir una geom que sea visualmente equivalente a una geom existente, pero que acepte datos en un formato diferente. Un ejemplo de esto en el código fuente de ggplot2 es <code>geom_spoke()</code>, una variación de <code>geom_segment()</code> que acepta datos en coordenadas polares. Para que esto funcione, el objeto ggproto <code>GeomSpoke</code> tiene una subclase de <code>GeomSegment</code> y utiliza el método <code>setup_data()</code> para tomar datos de coordenadas polares del usuario y luego transformarlos al formato que espera <code>GeomSegment</code>. Para ilustrar esta técnica, crearemos <code>geom_spike()</code>, una geom que vuelve a implementar la funcionalidad de <code>geom_spoke()</code>. Esto requiere que sobrescribamos el campo <code>required_aes</code> así como el método <code>setup_data()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpike</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomSpike"</span>, <span class="va">GeomSegment</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomSpike</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomSpike"</span>, <span class="va">GeomSegment</span>,</span>
 <span>  </span>
 <span>  <span class="co"># Especificar la estética requerida                   </span></span>
 <span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"angle"</span>, <span class="st">"radius"</span><span class="op">)</span>,</span>
@@ -801,11 +804,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>      yend <span class="op">=</span> <span class="va">y</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">angle</span><span class="op">)</span> <span class="op">*</span> <span class="va">radius</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora escribimos la función <code>geom_spike()</code> frente al usuario:</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spike</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_spike</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                       <span class="va">stat</span> <span class="op">=</span> <span class="st">"identity"</span>, <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
 <span>                       <span class="va">...</span>, <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
 <span>                       <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
@@ -819,11 +822,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>, </span>
 <span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="va">na.rm</span>, <span class="va">...</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora podemos usar <code>geom_spike()</code> en los gráficos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
 <span>  y <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  angle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span>, length.out <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
@@ -831,7 +834,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">)</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_spike</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>angle <span class="op">=</span> <span class="va">angle</span>, radius <span class="op">=</span> <span class="va">radius</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">coord_equal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="extensions_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="2400"></p>
@@ -845,7 +848,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Una técnica útil para definir nuevas geoms es combinar la funcionalidad de diferentes geoms. Por ejemplo, la función <code>geom_smooth()</code> para dibujar líneas de regresión no paramétricas usa la funcionalidad de <code>geom_line()</code> para dibujar la línea de regresión y <code>geom_ribbon()</code> para dibujar las bandas de error sombreadas. Para hacer esto dentro de su nueva geom, es útil considerar el proceso de dibujo. De la misma manera que una estadística funciona mediante una sucesión escalonada de llamadas a <code>compute_layer()</code>, luego a <code>compute_panel()</code> y finalmente a <code>compute_group()</code>, una geom se construye mediante llamadas a <code>draw_layer()</code>, <code>draw_panel ()</code>, y <code>draw_group()</code>.</p>
 <p>Si desea combinar la funcionalidad de varias geoms, generalmente puede lograrlo preparando los datos para cada una de las geoms dentro de la llamada <code>draw_*()</code> y enviándolos a las diferentes geoms, recopilando la salida usando <code><a href="https://rdrr.io/r/grid/grid.grob.html">grid:: gList()</a></code> cuando se necesita una lista de grobs o <code><a href="https://rdrr.io/r/grid/grid.grob.html">grid::gTree()</a></code> si se requiere un único grob con varios hijos. Como ejemplo relativamente mínimo, considere el objeto ggproto <code>GeomBarbell</code> que crea geoms que constan de dos puntos conectados por una barra:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomBarbell</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomBarbell"</span>, <span class="va">Geom</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomBarbell</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"GeomBarbell"</span>, <span class="va">Geom</span>,</span>
 <span>  </span>
 <span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span>,</span>
 <span>  </span>
@@ -873,11 +876,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>      <span class="va">GeomPoint</span><span class="op">$</span><span class="fu">draw_panel</span><span class="op">(</span><span class="va">point2</span>, <span class="va">panel_params</span>, <span class="va">coord</span>, <span class="va">...</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
-<span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En este ejemplo, el método <code>draw_panel()</code> devuelve una lista de tres grobs, uno generado a partir de <code>GeomSegment</code> y dos de <code>GeomPoint</code>. Como es habitual, si queremos que la geom esté expuesta al usuario, agregamos una función contenedora:</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_barbell</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">geom_barbell</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>                         <span class="va">stat</span> <span class="op">=</span> <span class="st">"identity"</span>, <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>, </span>
 <span>                         <span class="va">...</span>, <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>, </span>
 <span>                         <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
@@ -891,14 +894,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>, </span>
 <span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="va">na.rm</span>, <span class="va">...</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora podemos utilizar la geom compuesta:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, xend <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, y <span class="op">=</span> <span class="fl">0</span>, yend <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, xend <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, y <span class="op">=</span> <span class="fl">0</span>, yend <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_barbell</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_barbell</span><span class="op">(</span>shape <span class="op">=</span> <span class="fl">4</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span>  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">base</span> <span class="op">+</span> <span class="fu">geom_barbell</span><span class="op">(</span>shape <span class="op">=</span> <span class="fl">4</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span>  </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -919,13 +922,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">20.5</span> Nuevas escalas</h2>
 <p>Hay tres formas en las que uno podría querer extender ggplot2 con nuevas escalas. El caso más simple es cuando desea proporcionar un envoltorio conveniente para una nueva paleta, generalmente para una estética de color o relleno. Como ejemplo poco práctico, supongamos que desea tomar muestras de colores aleatorios para llenar un violín o un diagrama de caja, utilizando una función de paleta como esta:</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">random_colours</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">random_colours</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/colors.html">colours</a></span><span class="op">(</span>distinct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="op">}</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Luego podemos escribir una función constructora <code>scale_fill_random()</code> que pase la paleta a <code>discrete_scale()</code> y luego usarla en los gráficos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_fill_random</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">aesthetics</span> <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scale_fill_random</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">aesthetics</span> <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">discrete_scale</span><span class="op">(</span></span>
 <span>    aesthetics <span class="op">=</span> <span class="va">aesthetics</span>, </span>
 <span>    scale_name <span class="op">=</span> <span class="st">"random"</span>, </span>
@@ -937,7 +940,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu">geom_violin</span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_fill_random</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: The `scale_name` argument of `discrete_scale()` is deprecated as of ggplot2</span></span>
-<span><span class="co">#&gt; 3.5.0.</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; 3.5.0.</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="extensions_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -952,13 +955,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>La clase ggproto <code>Position</code> es algo más simple que otras clases ggproto, lo que refleja el hecho de que las funciones <code>position_*()</code> tienen un alcance muy limitado. La función del puesto es recibir y modificar los datos inmediatamente antes de pasarlos a cualquier función de dibujo. Estrictamente hablando, la posición puede modificar los datos de cualquier forma, pero existe una expectativa implícita de que sólo modifica la estética de la posición. Una posición posee métodos <code>compute_layer()</code> y <code>compute_panel()</code> que se comportan de manera análoga a los métodos equivalentes para una estadística, pero no posee un método <code>compute_group()</code>. También contiene los métodos <code>setup_params()</code> y <code>setup_data()</code> que son similares a los métodos <code>setup_*()</code> para otras clases de ggproto, con una excepción notable: el método <code>setup_params()</code> solo recibe los datos como entrada, y no una lista de parámetros. La razón de esto es que las funciones <code>position_*()</code> nunca se usan solas en ggplot2: más bien, siempre se llaman dentro del comando principal <code>geom_*()</code> o <code>stat_*()</code> que especifica la capa y los parámetros del comando principal no se pasan a la llamada de función <code>position_*()</code>.</p>
 <p>Para dar un ejemplo simple, implementaremos una versión ligeramente simplificada de la función <code>position_jitternormal()</code> del paquete ggforce, que se comporta de la misma manera que <code>position_jitter()</code> excepto que las perturbaciones se muestrean a partir de una distribución normal en lugar de que una distribución uniforme. Para mantener la exposición simple, asumiremos que tenemos definida la siguiente función de conveniencia:</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">normal_transformer</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">sd</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">normal_transformer</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">sd</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, sd <span class="op">=</span> <span class="va">sd</span><span class="op">)</span><span class="op">}</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Cuando se llama, <code>normal_transformer()</code> devuelve una función que perturba el vector de entrada agregando ruido aleatorio con media cero y desviación estándar <code>sd</code>. El primer paso al crear nuestra nueva posición es crear una subclase del objeto <code>Position</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">PositionJitterNormal</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">'PositionJitterNormal'</span>, <span class="va">Position</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">PositionJitterNormal</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">'PositionJitterNormal'</span>, <span class="va">Position</span>,</span>
 <span>           </span>
 <span>  <span class="co"># Necesitamos una estética de posición xey                              </span></span>
 <span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'x'</span>, <span class="st">'y'</span><span class="op">)</span>,</span>
@@ -988,23 +991,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>      trans_y <span class="op">=</span> <span class="va">y_transformer</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El método <code>compute_layer()</code> hace uso de <code>transform_position()</code>, una función conveniente proporcionada por ggplot2 cuya función es aplicar las funciones proporcionadas por el usuario a toda la estética asociada con la escala de posición relevante (por ejemplo, no solo x e y, pero también xend y yend).</p>
 <p>En una implementación realista, el constructor <code>position_jitternormal()</code> aplicaría alguna validación de entrada para asegurarse de que el usuario no haya especificado desviaciones estándar negativas, pero en este contexto lo mantendremos simple:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">position_jitternormal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">sd_x</span> <span class="op">=</span> <span class="fl">.15</span>, <span class="va">sd_y</span> <span class="op">=</span> <span class="fl">.15</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">position_jitternormal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">sd_x</span> <span class="op">=</span> <span class="fl">.15</span>, <span class="va">sd_y</span> <span class="op">=</span> <span class="fl">.15</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">PositionJitterNormal</span>, sd_x <span class="op">=</span> <span class="va">sd_x</span>, sd_y <span class="op">=</span> <span class="va">sd_y</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora podemos utilizar nuestra nueva función de posición al crear gráficos. Para ver la diferencia entre <code>position_jitter()</code> y la función <code>position_jitternormal()</code> que acabamos de definir, compare los siguientes gráficos:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1500</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1500</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="fu">position_jitter</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="fu">position_jitternormal</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="fu">position_jitternormal</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1025,7 +1028,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Para ilustrar cómo se pueden crear nuevas facetas subclasificando una faceta existente, crearemos un sistema de facetas relativamente simple que “scatter” los paneles, colocándolos en ubicaciones aleatorias en una cuadrícula. Para hacer esto, crearemos un nuevo objeto ggproto llamado <code>FacetScatter</code> que es una subclase de <code>FacetWrap</code> y escribiremos un nuevo método <code>compute_layout()</code> que coloca cada panel en una celda elegida al azar de la cuadrícula de paneles:</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">FacetScatter</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"FacetScatter"</span>, <span class="va">FacetWrap</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">FacetScatter</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"FacetScatter"</span>, <span class="va">FacetWrap</span>,</span>
 <span>  </span>
 <span>  <span class="co"># Esto no es importante para el ejemplo: todo lo que</span></span>
 <span>  <span class="co"># estamos haciendo es forzar a todos los paneles a usar</span></span>
@@ -1072,7 +1075,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    <span class="co"># devuelva la especificación resultante.</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">layout</span>, <span class="va">panels</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span>                      </span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Para darle una idea de cómo se ve este resultado, esta es la especificación de diseño que se crea al construir el gráfico que se muestra al final de esta sección:</p>
 <div class="cell">
@@ -1095,7 +1098,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>A continuación, escribiremos la función constructora <code>facet_scatter()</code> para exponer esta funcionalidad al usuario. Para las facetas, esto es tan simple como crear una nueva instancia del objeto ggproto relevante (<code>FacetScatter</code> en este caso) que pasa parámetros especificados por el usuario a la faceta:</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facet_scatter</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">facets</span>, <span class="va">nrow</span>, <span class="va">ncol</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facet_scatter</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">facets</span>, <span class="va">nrow</span>, <span class="va">ncol</span>, </span>
 <span>                          <span class="va">strip.position</span> <span class="op">=</span> <span class="st">"top"</span>, </span>
 <span>                          <span class="va">labeller</span> <span class="op">=</span> <span class="st">"label_value"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
@@ -1108,14 +1111,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>      nrow <span class="op">=</span> <span class="va">nrow</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Hay un par de cosas a tener en cuenta sobre esta función constructora. Primero, para mantener el ejemplo simple, <code>facet_scatter()</code> contiene menos argumentos que <code>facet_wrap()</code>, y hemos creado argumentos obligatorios para <code>nrow</code> y <code>ncol</code>: el usuario necesita especificar el tamaño de la cuadrícula sobre la cual los paneles deben estar dispersos. En segundo lugar, la función <code>facet_scatter()</code> requiere que especifiques las facetas usando <code>vars()</code>. No funcionará si el usuario intenta proporcionar una fórmula. De manera relacionada, tenga en cuenta el uso de <code><a href="https://rlang.r-lib.org/reference/exprs_auto_name.html">rlang::quos_auto_name()</a></code>: la función <code>vars()</code> devuelve una lista de expresiones sin nombre (técnicamente, quosures), pero el código posterior requiere una lista con nombre. Mientras espere que el usuario use <code>vars()</code>, este es todo el preprocesamiento que necesita, pero si desea admitir otros formatos de entrada, deberá ser un poco más sofisticado (puede ver cómo hacerlo). mirando el código fuente de ggplot2).</p>
 <p>En cualquier caso, ya tenemos un lado de trabajo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">facet_scatter</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">manufacturer</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span>, ncol <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">facet_scatter</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">manufacturer</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span>, ncol <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -1129,7 +1132,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- >Should probably not mention anything until they have been ported to `ggproto` -->
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1180,13 +1252,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

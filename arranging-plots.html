@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>9&nbsp; Organizar gráficas – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -66,14 +66,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -87,7 +88,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -117,7 +118,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -130,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -403,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A menudo, uno quiere mostrar dos o más gráficas una al lado de la otra para mostrar diferentes aspectos de la misma historia de una manera convincente. Este es el escenario para el que se creó patchwork. En esencia, patchwork es un paquete que extiende el uso del operador <code>+</code> de ggplot2 para trabajar entre múltiples gráficos, así como también agrega operadores adicionales para composiciones especializadas y trabajar con composiciones de gráficos.</p>
 <p>Como ejemplo del uso más básico de patchwork, usaremos los siguientes 4 gráficos del conjunto de datos <code>mpg</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -416,13 +419,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">stat_summary</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">drv</span>, y <span class="op">=</span> <span class="va">hwy</span>, fill <span class="op">=</span> <span class="va">drv</span><span class="op">)</span>, geom <span class="op">=</span> <span class="st">"col"</span>, fun.data <span class="op">=</span> <span class="va">mean_se</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">stat_summary</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">drv</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span>, geom <span class="op">=</span> <span class="st">"errorbar"</span>, fun.data <span class="op">=</span> <span class="va">mean_se</span>, width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">stat_summary</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">drv</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span>, geom <span class="op">=</span> <span class="st">"errorbar"</span>, fun.data <span class="op">=</span> <span class="va">mean_se</span>, width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El uso más simple de patchwork es usar <code>+</code> para sumar gráficos, creando así un conjunto de gráficos para mostrar juntos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -432,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><code>+</code> no especifica ningún diseño específico, solo que los gráficos deben mostrarse juntos. En ausencia de un diseño, el mismo algoritmo que gobierna el número de filas y columnas en <code>facet_wrap()</code> decidirá el número de filas y columnas. Esto significa que sumar 3 gráficas creará una cuadrícula de 1x3, mientras que sumar 4 gráficas creará una cuadrícula de 2x2.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -445,7 +448,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">9.1.1</span> Tomando el control del diseño</h3>
 <p>A menudo, la cuadrícula creada automáticamente no es la que usted desea y, por supuesto, es posible controlarla. La forma más directa y poderosa de hacer esto es agregar una especificación <code><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout()</a></code> al gráfico:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -455,7 +458,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Un escenario común es querer forzar una sola fila o columna. patchwork proporciona dos operadores, <code>|</code> y <code>/</code> respectivamente, para facilitar esto (debajo del capó, simplemente establecen el número de filas o columnas en el diseño en 1).</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -464,8 +467,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Básicamente lo mismo que usar `+` pero la intención es más clara.</span></span>
-<span><span class="va">p3</span> <span class="op">|</span> <span class="va">p4</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Básicamente lo mismo que usar `+` pero la intención es más clara.</span></span>
+<span><span class="va">p3</span> <span class="op">|</span> <span class="va">p4</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -475,7 +478,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>patchwork permite anidar diseños, lo que significa que es posible crear diseños muy complejos utilizando sólo estos dos operadores.</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p3</span> <span class="op">|</span> <span class="op">(</span><span class="va">p2</span> <span class="op">/</span> <span class="op">(</span><span class="va">p1</span> <span class="op">|</span> <span class="va">p4</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p3</span> <span class="op">|</span> <span class="op">(</span><span class="va">p2</span> <span class="op">/</span> <span class="op">(</span><span class="va">p1</span> <span class="op">|</span> <span class="va">p4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -485,13 +488,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Alternativamente, para diseños muy complejos, es posible especificar diseños no tabulares con una representación textual en el argumento <code>design</code> en <code><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">layout</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">layout</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
 <span><span class="st">AAB</span></span>
 <span><span class="st">C#B</span></span>
 <span><span class="st">CDD</span></span>
 <span><span class="st">"</span></span>
 <span></span>
-<span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>design <span class="op">=</span> <span class="va">layout</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>design <span class="op">=</span> <span class="va">layout</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -501,7 +504,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Como ha sido evidente en las últimas gráficas, la leyenda a menudo se vuelve redundante entre gráficas. Si bien es posible eliminar la leyenda en todos los gráficos menos uno antes de ensamblarlos, el mosaico proporciona algo más fácil para el caso común:</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -511,7 +514,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>La elección de recopilar guías tomará todas las guías y las reunirá en la posición regida por el tema global. Además, eliminará cualquier guía duplicada y dejará solo guías únicas en la gráfica. La detección de duplicaciones analiza la apariencia de la guía y no la escala subyacente de la que proviene. Por lo tanto, sólo eliminará las guías que sean exactamente iguales. Si desea optimizar el uso del espacio colocando guías en un área vacía del diseño, puede especificar un área de trazado para las guías recopiladas:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/guide_area.html">guide_area</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/guide_area.html">guide_area</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -523,9 +526,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">9.1.2</span> Modificando subgráficas</h3>
 <p>Uno de los principios del patchwork es que los gráficos permanecen como objetos estándar de ggplot hasta que se renderizan. Esto significa que son susceptibles de modificación una vez ensamblados. Los gráficos específicos se pueden recuperar y configurar con la indexación <code>[[]]</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p12</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p12</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span>
 <span><span class="va">p12</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">p12</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">p12</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">p12</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -535,7 +538,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Sin embargo, a menudo es necesario modificar todas las subgráficas a la vez, por ejemplo. darles un tema común. patchwork proporciona el <code>&amp;</code> para este escenario:</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">&amp;</span> <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">&amp;</span> <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -545,7 +548,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Esto también se puede utilizar para darle a las gráficas un eje común si comparten la misma estética en ese eje:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">&amp;</span> <span class="fu">scale_y_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">45</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">&amp;</span> <span class="fu">scale_y_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">45</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -557,11 +560,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">9.1.3</span> Agregar anotaciones</h3>
 <p>Una vez ensambladas las gráficas, pasan a formar una sola unidad. Esto también significa que los títulos, subtítulos y subtítulos a menudo pertenecerán al conjunto completo y no a gráficas individuales. Se pueden agregar títulos, etc. a los gráficos de mosaico usando la función <code><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p34</span> <span class="op">&lt;-</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p34</span> <span class="op">&lt;-</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span></span>
 <span>  title <span class="op">=</span> <span class="st">"Una mirada más cercana al efecto de la transmisión en los automóviles"</span>,</span>
 <span>  caption <span class="op">=</span> <span class="st">"Fuente: conjunto de datos de mpg en ggplot2"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">p34</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">p34</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -571,7 +574,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Los títulos formateados según la especificación del tema en la llamada <code><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p34</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu">theme_gray</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"mono"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p34</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu">theme_gray</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"mono"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -581,7 +584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Como el tema global a menudo sigue el tema de las subgráficas, usar <code>&amp;</code> junto con un objeto de tema modificará el tema global así como los temas de las subgráficas.</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p34</span> <span class="op">&amp;</span> <span class="fu">theme_gray</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"mono"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p34</span> <span class="op">&amp;</span> <span class="fu">theme_gray</span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"mono"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -591,8 +594,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Otro tipo de anotación, conocida especialmente en la literatura científica, consiste en agregar etiquetas a cada subgráfica que luego se utilizarán para identificarlas en el texto y el título. ggplot2 tiene el elemento <code>tag</code> exactamente para esto y patchwork ofrece funcionalidad para configurarlo automáticamente usando el argumento <code>tag_levels</code>. Puede generar niveles automáticos en caracteres latinos, números arábigos o números romanos.</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p123</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">|</span> <span class="op">(</span><span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span><span class="op">)</span></span>
-<span><span class="va">p123</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"I"</span><span class="op">)</span> <span class="co"># Números romanos en mayúsculas</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p123</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">|</span> <span class="op">(</span><span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span><span class="op">)</span></span>
+<span><span class="va">p123</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"I"</span><span class="op">)</span> <span class="co"># Números romanos en mayúsculas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -602,8 +605,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Una característica adicional es que es posible utilizar el anidamiento para definir nuevos niveles de etiquetado:</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p123</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">p123</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>tag_level <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></span>
-<span><span class="va">p123</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="st">"a"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p123</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">p123</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>tag_level <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></span>
+<span><span class="va">p123</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="st">"a"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -617,7 +620,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">9.2</span> Organizar gráficas una encima de la otra.</h2>
 <p>Si bien gran parte de la funcionalidad del patchwork se refiere a alinear trazados en una cuadrícula, también permite hacer inserciones, es decir, pequeños trazados colocados encima de otro trazado. La funcionalidad para esto está incluida en la función <code><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element()</a></code> que sirve para marcar el gráfico dado como un recuadro que se colocará en el gráfico anterior, además de registrar la ubicación deseada, etc. El uso básico es el siguiente:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span><span class="va">p2</span>, left <span class="op">=</span> <span class="fl">0.5</span>, bottom <span class="op">=</span> <span class="fl">0.4</span>, right <span class="op">=</span> <span class="fl">0.9</span>, top <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span><span class="va">p2</span>, left <span class="op">=</span> <span class="fl">0.5</span>, bottom <span class="op">=</span> <span class="fl">0.4</span>, right <span class="op">=</span> <span class="fl">0.9</span>, top <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -627,7 +630,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>La posición se especifica mediante la ubicación izquierda, derecha, superior e inferior del recuadro. El valor predeterminado es usar unidades <code>npc</code> que van de 0 a 1 en el área dada, pero se puede usar cualquier <code><a href="https://rdrr.io/r/grid/unit.html">grid::unit()</a></code> brindándolas explícitamente. La ubicación está establecida de forma predeterminada en el área del panel, pero esto se puede cambiar con el argumento <code>align_to</code>. Combinando todo esto podemos colocar un recuadro exactamente a 15 mm de la esquina superior derecha así:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span></span>
 <span>    <span class="va">p2</span>, </span>
 <span>    left <span class="op">=</span> <span class="fl">0.4</span>, </span>
@@ -635,7 +638,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    right <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span> <span class="op">-</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">15</span>, <span class="st">"mm"</span><span class="op">)</span>, </span>
 <span>    top <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span> <span class="op">-</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">15</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
 <span>    align_to <span class="op">=</span> <span class="st">"full"</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -645,8 +648,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>los recuadros no se limitan a ggplots. Se puede utilizar cualquier gráfico compatible con <code><a href="https://patchwork.data-imaginist.com/reference/wrap_elements.html">wrap_elements()</a></code>, incluidos los mosaicos:</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p24</span> <span class="op">&lt;-</span> <span class="va">p2</span> <span class="op">/</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span>
-<span><span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span><span class="va">p24</span>, left <span class="op">=</span> <span class="fl">0.5</span>, bottom <span class="op">=</span> <span class="fl">0.05</span>, right <span class="op">=</span> <span class="fl">0.95</span>, top <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p24</span> <span class="op">&lt;-</span> <span class="va">p2</span> <span class="op">/</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span>
+<span><span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span><span class="va">p24</span>, left <span class="op">=</span> <span class="fl">0.5</span>, bottom <span class="op">=</span> <span class="fl">0.05</span>, right <span class="op">=</span> <span class="fl">0.95</span>, top <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -656,8 +659,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Una característica interesante de los recuadros es que se comportan como subgráficas estándar de mosaico hasta que se renderizan. Esto significa que son susceptibles de modificaciones después del montaje, p.e. usando <code>&amp;</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p12</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span><span class="va">p2</span>, left <span class="op">=</span> <span class="fl">0.5</span>, bottom <span class="op">=</span> <span class="fl">0.5</span>, right <span class="op">=</span> <span class="fl">0.9</span>, top <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
-<span><span class="va">p12</span> <span class="op">&amp;</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p12</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span><span class="va">p2</span>, left <span class="op">=</span> <span class="fl">0.5</span>, bottom <span class="op">=</span> <span class="fl">0.5</span>, right <span class="op">=</span> <span class="fl">0.9</span>, top <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
+<span><span class="va">p12</span> <span class="op">&amp;</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -667,7 +670,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Y el etiquetado automático también funciona como se esperaba:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p12</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p12</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="arranging-plots_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -680,7 +683,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Este capítulo ha ofrecido una breve descripción de algunas de las posibilidades de composición que ofrece el patchwork, pero de ninguna manera es exhaustivo. Patchwork proporciona soporte para algo más que ggplots y también le permite combinar elementos gráficos de cuadrícula y base con sus gráficos si es necesario. También permite diseños aún más complejos utilizando el constructor <code><a href="https://patchwork.data-imaginist.com/reference/area.html">area()</a></code> en lugar de la representación textual que se muestra aquí. Todas estas funcionalidades y muchas más están cubiertas en las diferentes guías disponibles en su sitio web: <a href="https://patchwork.data-imaginist.com" class="uri">https://patchwork.data-imaginist.com</a></p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -731,13 +803,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

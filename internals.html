@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen">
 <title>19&nbsp; Internos de ggplot2 – ggplot2: Gráficos elegantes para análisis de datos (3e)</title>
@@ -86,14 +86,15 @@ div.csl-indent {
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5fd9db47a040b21ac2cac9a0b3b722ba.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,7 +108,7 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -137,7 +138,9 @@ div.csl-indent {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">ggplot2: Gráficos elegantes para análisis de datos (3e)</a> 
         <div class="sidebar-tools-main">
@@ -150,7 +153,7 @@ div.csl-indent {
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2-bookes">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/davidrsch/ggplot2b-es">
             Traducción
             </a>
           </li>
@@ -441,25 +444,25 @@ div.csl-indent {
 </h2>
 <p>Para comprender la maquinaria que sustenta ggplot2, es importante reconocer que casi todo lo relacionado con el dibujo de la trama ocurre cuando imprimes el objeto ggplot, no cuando lo construyes. Por ejemplo, en el código siguiente, el objeto <code>p</code> es una especificación abstracta de los datos de la trama, las capas, etc. No construye la imagen en sí:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">displ</span>, <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"jitter"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"A plot for expository purposes"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"A plot for expository purposes"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>ggplot2 está diseñado de esta manera para permitir al usuario agregar nuevos elementos a un gráfico sin necesidad de volver a calcular nada. Una implicación de esto es que si quieres entender la mecánica de ggplot2, tienes que seguir tu trama a medida que avanza por la madriguera del conejo <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Puede inspeccionar el método de impresión para objetos ggplot escribiendo <code>ggplot2:::plot.ggplot</code> en la consola, pero para este capítulo trabajaremos con una versión simplificada. Reducido a lo esencial, el método de trazado ggplot2 tiene la misma estructura que la siguiente función <code>ggprint()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ggprint</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ggprint</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="va">gtable</span> <span class="op">&lt;-</span> <span class="fu">ggplot_gtable</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span>  <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">gtable</span><span class="op">)</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Esta función no maneja todos los casos de uso posibles, pero es suficiente para dibujar el gráfico especificado anteriormente:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggprint</span><span class="op">(</span><span class="va">p</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggprint</span><span class="op">(</span><span class="va">p</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="internals_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -589,15 +592,15 @@ div.csl-indent {
 <span class="header-section-number">19.3.4</span> Salida</h3>
 <p>En este punto, ggplot2 está listo para entregarse a grid. Nuestro proceso de renderizado es más o menos equivalente al código siguiente y el resultado final es, como se describe anteriormente, una gtable:</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_built</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_built</span> <span class="op">&lt;-</span> <span class="fu">ggplot_build</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
 <span><span class="va">p_gtable</span> <span class="op">&lt;-</span> <span class="fu">ggplot_gtable</span><span class="op">(</span><span class="va">p_built</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">p_gtable</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "gtable" "gTree"  "grob"   "gDesc"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; [1] "gtable" "gTree"  "grob"   "gDesc"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Lo que es menos obvio es que las dimensiones del objeto son impredecibles y dependerán tanto del facetado como de la ubicación de la leyenda y de los títulos que se dibujen. Por lo tanto, no se recomienda depender de la ubicación de las filas y columnas en su código, en caso de que desee modificar aún más la gtable. Sin embargo, todos los elementos de gtable tienen nombre, por lo que aún es posible recuperarlos de manera confiable, p.&nbsp;el grob sostiene el eje y superior izquierdo con un poco de trabajo. A modo de ilustración, la gtable para nuestro gráfico <code>p</code> se muestra en el siguiente código:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_gtable</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p_gtable</span></span>
 <span><span class="co">#&gt; TableGrob (17 x 17) "layout": 25 grobs</span></span>
 <span><span class="co">#&gt;     z         cells             name</span></span>
 <span><span class="co">#&gt; 1   0 ( 1-17, 1-17)       background</span></span>
@@ -650,12 +653,12 @@ div.csl-indent {
 <span><span class="co">#&gt; 22                                zeroGrob[NULL]</span></span>
 <span><span class="co">#&gt; 23         zeroGrob[plot.subtitle..zeroGrob.704]</span></span>
 <span><span class="co">#&gt; 24          titleGrob[plot.title..titleGrob.703]</span></span>
-<span><span class="co">#&gt; 25          zeroGrob[plot.caption..zeroGrob.705]</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; 25          zeroGrob[plot.caption..zeroGrob.705]</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La trama final, como era de esperar, parece idéntica a la original:</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">p_gtable</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.newpage.html">grid.newpage</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span><span class="op">(</span><span class="va">p_gtable</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="internals_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="2100"></p>
@@ -672,35 +675,35 @@ div.csl-indent {
 <span class="header-section-number">19.4.1</span> objetos ggproto</h3>
 <p>La creación de un nuevo objeto ggproto se realiza con la función <code>ggproto()</code>, que toma el nombre de la nueva clase como primer argumento, y otro objeto ggproto del cual heredará el nuevo como segundo argumento. Por ejemplo, podríamos crear un objeto ggproto (aunque no tenga ninguna funcionalidad útil) con el siguiente comando:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
 <span>  `_class` <span class="op">=</span> <span class="cn">NULL</span>, </span>
 <span>  `_inherits` <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Por convención, los objetos ggproto se denominan usando “UpperCamelCase”, en el que cada palabra comienza con una letra mayúscula. También es convencional omitir los nombres de los argumentos <code>`_class`</code> y <code>`_inherits`</code>, por lo que la forma convencional de este comando sería la siguiente:</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Si imprimimos este objeto vemos que efectivamente es un objeto ggproto, pero no aparece ninguna otra información.</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> </span>
-<span><span class="co">#&gt; &lt;ggproto object: Class gg&gt;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewObject</span> </span>
+<span><span class="co">#&gt; &lt;ggproto object: Class gg&gt;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="creando-nuevas-clases" class="level3" data-number="19.4.2"><h3 data-number="19.4.2" class="anchored" data-anchor-id="creando-nuevas-clases">
 <span class="header-section-number">19.4.2</span> Creando nuevas clases</h3>
 <p>Para crear una nueva clase ggproto, lo único que es estrictamente necesario es proporcionar un nombre de clase como primer argumento de <code>ggproto()</code>. Un comando mínimo que define una nueva clase podría verse así:</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"NewClass"</span>, <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"NewClass"</span>, <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La variable <code>NewClass</code> todavía hace referencia a un objeto ggproto, pero podemos verificar que tiene el nombre de clase deseado imprimiéndolo:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span></span>
-<span><span class="co">#&gt; &lt;ggproto object: Class NewClass, gg&gt;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NewClass</span></span>
+<span><span class="co">#&gt; &lt;ggproto object: Class NewClass, gg&gt;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Sin embargo, hasta ahora lo único que hemos hecho es crear un objeto que especifica una clase. El objeto <code>NewClass</code> no hace nada. Para crear una clase ggproto que haga algo útil, debemos proporcionar una lista de campos y métodos cuando definimos la clase. En este contexto, los “campos” se utilizan para almacenar datos relevantes para el objeto y los “métodos” son funciones que pueden utilizar los datos almacenados en el objeto. Los campos y métodos se construyen de la misma manera y no se tratan de manera diferente desde la perspectiva del usuario.</p>
 <p>Para ilustrar esto, crearemos una nueva clase llamada <code>Person</code> que se usará para almacenar y manipular información sobre una persona. Podemos hacer esto proporcionando a la función <code>ggproto()</code> pares nombre/valor:</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Person"</span>, <span class="cn">NULL</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Person"</span>, <span class="cn">NULL</span>,</span>
 <span>  </span>
 <span>  <span class="co"># campos                  </span></span>
 <span>  given_name <span class="op">=</span> <span class="cn">NA</span>,</span>
@@ -721,24 +724,24 @@ div.csl-indent {
 <span>  description <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">full_name</span><span class="op">(</span><span class="op">)</span>, <span class="st">"is"</span>, <span class="va">self</span><span class="op">$</span><span class="fu">age</span><span class="op">(</span><span class="op">)</span>, <span class="st">"years old"</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La clase <code>Person</code> ahora está asociada con tres campos, correspondientes a <code>given_name</code> y <code>family_name</code> de una persona, así como su <code>birth_date</code>. También posee tres métodos: el método <code>full_name()</code> es una función que construye el nombre completo de la persona, usando la convención de colocar el nombre de pila primero y el apellido segundo, el método <code>age()</code> calcula la edad de la persona en años, y el método <code>description()</code> imprime una breve descripción de la persona.</p>
 <p>Al imprimir el objeto se muestran los campos y métodos a los que está asociado:</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span></span>
 <span><span class="co">#&gt; &lt;ggproto object: Class Person, gg&gt;</span></span>
 <span><span class="co">#&gt;     age: function</span></span>
 <span><span class="co">#&gt;     birth_date: NA</span></span>
 <span><span class="co">#&gt;     description: function</span></span>
 <span><span class="co">#&gt;     family_name: NA</span></span>
 <span><span class="co">#&gt;     full_name: function</span></span>
-<span><span class="co">#&gt;     given_name: NA</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt;     given_name: NA</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El objeto ggproto <code>Person</code> es esencialmente una plantilla para la clase, y podemos usarlo para crear registros específicos de personas individuales (discutido en <a href="#sec-ggproto-instances" class="quarto-xref"><span>Sección 19.4.3</span></a>). Si está familiarizado con otros sistemas de programación orientados a objetos, es posible que esperara algo un poco diferente: a menudo las nuevas clases se definen con una función constructora dedicada. Una peculiaridad de ggproto es que <code>ggproto()</code> no hace esto: más bien, el constructor de la clase es en sí mismo un objeto.</p>
 <p>Otra cosa a tener en cuenta al definir métodos es el uso de <code>self</code> como primer argumento. Este es un argumento especial que se utiliza para darle al método acceso a los campos y métodos asociados con el objeto ggproto (consulte <a href="#sec-ggproto-subclass" class="quarto-xref"><span>Sección 19.4.4</span></a> para ver un ejemplo). El estatus especial de este argumento es evidente al imprimir un método ggproto:</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span><span class="op">$</span><span class="va">full_name</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Person</span><span class="op">$</span><span class="va">full_name</span></span>
 <span><span class="co">#&gt; &lt;ggproto method&gt;</span></span>
 <span><span class="co">#&gt;   &lt;Wrapper function&gt;</span></span>
 <span><span class="co">#&gt;     function(...) !!call2(name, !!!args)</span></span>
@@ -750,14 +753,14 @@ div.csl-indent {
 <span><span class="co">#&gt;         return(paste(self$given_name, self$family_name))</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;     return(paste(self$family_name, self$given_name))</span></span>
-<span><span class="co">#&gt; }</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; }</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Este resultado puede parecer un poco sorprendente: cuando definimos <code>full_name()</code> anteriormente solo proporcionamos el código listado como “función interna”. Lo que sucedió es que <code>ggproto()</code> automáticamente incluyó mi función dentro de una función contenedora que llama a mi código como función interna, al tiempo que garantiza que se use una definición apropiada de <code>self</code>. Cuando se imprime el método, la consola muestra tanto la función contenedora (normalmente de poco interés) como la función interna. La salida en este formato aparece en <a href="extensions.html" class="quarto-xref"><span>Capítulo 20</span></a> y <a href="ext-springs.html" class="quarto-xref"><span>Capítulo 21</span></a>.</p>
 </section><section id="sec-ggproto-instances" class="level3" data-number="19.4.3"><h3 data-number="19.4.3" class="anchored" data-anchor-id="sec-ggproto-instances">
 <span class="header-section-number">19.4.3</span> Creando nuevas instancias</h3>
 <p>Ahora que hemos definido la clase <code>Person</code>, podemos crear instancias de la clase. Esto se hace pasando un objeto ggproto como segundo argumento a <code>ggproto()</code> y sin especificar un nuevo nombre de clase en el primer argumento. Por ejemplo, podemos crear nuevos objetos <code>Thomas</code> y <code>Danielle</code> que sean instancias de la clase <code>Person</code> de la siguiente manera:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Person</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Person</span>,</span>
 <span>  given_name <span class="op">=</span> <span class="st">"Thomas Lin"</span>,</span>
 <span>  family_name <span class="op">=</span> <span class="st">"Pedersen"</span>,</span>
 <span>  birth_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1985/10/12"</span><span class="op">)</span></span>
@@ -767,21 +770,21 @@ div.csl-indent {
 <span>  given_name <span class="op">=</span> <span class="st">"Danielle Jasmine"</span>,</span>
 <span>  family_name <span class="op">=</span> <span class="st">"Navarro"</span>,</span>
 <span>  birth_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1977/09/12"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Al especificar <code>NULL</code> como primer argumento, se le indica a <code>ggproto()</code> que no defina una nueva clase, sino que cree una nueva instancia de la clase especificada en el segundo argumento. Debido a que <code>Thomas</code> y <code>Danielle</code> son instancias de la clase <code>Person</code>, heredan automáticamente sus métodos <code>age()</code>, <code>full_name()</code> y <code>description()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Thomas Lin Pedersen is 39 years old"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Thomas</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Thomas Lin Pedersen is 40 years old"</span></span>
 <span></span>
 <span><span class="va">Danielle</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Danielle Jasmine Navarro is 47 years old"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; [1] "Danielle Jasmine Navarro is 48 years old"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="sec-ggproto-subclass" class="level3" data-number="19.4.4"><h3 data-number="19.4.4" class="anchored" data-anchor-id="sec-ggproto-subclass">
 <span class="header-section-number">19.4.4</span> Creando subclases</h3>
 <p>En el ejemplo anterior creamos <code>Person</code> como una clase completamente nueva. En la práctica, casi nunca necesitarás hacer esto: en su lugar, probablemente crearás una subclase usando un objeto ggproto existente. Puede hacer esto especificando el nombre de la subclase y el objeto del cual debe heredar en la llamada a <code>ggproto()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># definir la subclase</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># definir la subclase</span></span>
 <span><span class="va">NewSubClass</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"NewSubClass"</span>, <span class="va">Person</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># verificar que esto funcione</span></span>
@@ -793,43 +796,43 @@ div.csl-indent {
 <span><span class="co">#&gt;     family_name: NA</span></span>
 <span><span class="co">#&gt;     full_name: function</span></span>
 <span><span class="co">#&gt;     given_name: NA</span></span>
-<span><span class="co">#&gt;     super:  &lt;ggproto object: Class Person, gg&gt;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt;     super:  &lt;ggproto object: Class Person, gg&gt;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El resultado que se muestra arriba ilustra que <code>NewSubClass</code> ahora proporciona su propia clase y que hereda todos los campos y métodos del objeto <code>Persona</code> que creamos anteriormente. Sin embargo, esta nueva subclase no agrega ninguna funcionalidad nueva.</p>
 <p>Al crear una subclase, a menudo queremos agregar nuevos campos o métodos y sobrescribir algunos de los existentes. Por ejemplo, supongamos que queremos definir <code>Royalty</code> como una subclase de <code>Person</code> y agregar campos correspondientes al <code>rank</code> de la realeza en cuestión y el <code>territory</code> sobre el que gobernaban. Debido a que a menudo se hace referencia a la realeza por título y territorio en lugar de en términos de nombre y apellido, también necesitaremos cambiar la forma en que se define el método <code>full_name()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Royalty</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Royalty"</span>, <span class="va">Person</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Royalty</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Royalty"</span>, <span class="va">Person</span>,</span>
 <span>  rank <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  territory <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  full_name <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">rank</span>, <span class="va">self</span><span class="op">$</span><span class="va">given_name</span>, <span class="st">"of"</span>, <span class="va">self</span><span class="op">$</span><span class="va">territory</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El objeto <code>Royalty</code> ahora define una subclase de persona que hereda algunos campos (<code>given_name</code>, <code>family_name</code>, <code>birth_date</code>) de la clase <code>Person</code> y proporciona otros campos (<code>rank</code>, <code>territory</code>). Hereda los métodos <code>age()</code> y <code>description()</code> de <code>Person</code>, pero sobrescribe el método <code>full_name()</code>.</p>
 <p>Ahora podemos crear una nueva instancia de la subclase <code>Royalty</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Royalty</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Royalty</span>,</span>
 <span>  given_name <span class="op">=</span> <span class="st">"Victoria"</span>,</span>
 <span>  family_name <span class="op">=</span> <span class="st">"Hanover"</span>,</span>
 <span>  rank <span class="op">=</span> <span class="st">"Queen"</span>,</span>
 <span>  territory <span class="op">=</span> <span class="st">"the United Kingdom"</span>,</span>
 <span>  birth_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1819/05/24"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Entonces, cuando llamamos al método <code>full_name()</code> para <code>Victoria</code>, la salida usa el método especificado en la clase <code>Royalty</code> en lugar del definido en la clase <code>Persona</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">full_name</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Queen Victoria of the United Kingdom"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">full_name</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Queen Victoria of the United Kingdom"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Vale la pena señalar lo que sucede cuando llamamos al método <code>description()</code>. Este método se hereda de <code>Person</code>, pero la definición de este método invoca <code>self$full_name()</code>. Aunque <code>description()</code> está definida en <code>Person</code>, en este contexto <code>self</code> todavía se refiere a <code>Victoria</code>, que sigue siendo <code>Royalty</code>. Lo que esto significa es que la salida del método heredado <code>description()</code> utiliza el método <code>full_name()</code> definido para la subclase:</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Queen Victoria of the United Kingdom is 206 years old"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Victoria</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Queen Victoria of the United Kingdom is 206 years old"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La creación de subclases a veces requiere que accedamos a la clase principal y sus métodos, lo que podemos hacer con la ayuda de la función <code>ggproto_parent()</code>. Por ejemplo, podemos definir una subclase <code>Police</code> que incluya un campo <code>rank</code> de la misma manera que lo hace la subclase <code>Royalty</code>, pero solo usa este rango como parte del método <code>description()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Police</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Police"</span>, <span class="va">Person</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Police</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="st">"Police"</span>, <span class="va">Person</span>,</span>
 <span>  rank <span class="op">=</span> <span class="cn">NA</span>, </span>
 <span>  description <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span></span>
@@ -837,11 +840,11 @@ div.csl-indent {
 <span>      <span class="fu">ggproto_parent</span><span class="op">(</span><span class="va">Person</span>, <span class="va">self</span><span class="op">)</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>En este ejemplo, el método <code>description()</code> para la subclase <code>Police</code> se define de una manera que se refiere explícitamente al método <code>description()</code> para la clase principal <code>Person</code>. Al usar <code>ggproto_parent(Person, self)</code> de esta manera, podemos hacer referencia al método dentro de la clase principal, manteniendo la definición local apropiada de <code>self</code>. Como antes, crearemos una instancia específica y verificaremos que funcione como se esperaba:</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">John</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Police</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">John</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">Police</span>,</span>
 <span>  given_name <span class="op">=</span> <span class="st">"John"</span>,</span>
 <span>  family_name <span class="op">=</span> <span class="st">"McClane"</span>,</span>
 <span>  rank <span class="op">=</span> <span class="st">"Detective"</span>,</span>
@@ -852,7 +855,7 @@ div.csl-indent {
 <span><span class="co">#&gt; [1] "John McClane"</span></span>
 <span></span>
 <span><span class="va">John</span><span class="op">$</span><span class="fu">description</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Detective John McClane is 70 years old"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#&gt; [1] "Detective John McClane is 70 years old"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Por razones que discutiremos a continuación, el uso de <code>ggproto_parent()</code> no es tan frecuente en el código fuente de ggplot2.</p>
 </section><section id="sec-ggproto-style" class="level3" data-number="19.4.5"><h3 data-number="19.4.5" class="anchored" data-anchor-id="sec-ggproto-style">
@@ -864,13 +867,13 @@ div.csl-indent {
 <li>
 <p><strong>las clases ggproto tienen herencia simple</strong>. Debido a que las instancias de la clase ggproto no tienen estado, es relativamente seguro llamar a métodos definidos dentro de otras clases, en lugar de heredar explícitamente de la clase. Esta es la razón por la cual la función <code>ggproto_parent()</code> rara vez se llama dentro del código fuente de ggplot2. Como ejemplo, el método <code>setup_params()</code> en <code>GeomErrorbar</code> se define como:</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomErrorbar</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">GeomErrorbar</span> <span class="op">&lt;-</span> <span class="fu">ggproto</span><span class="op">(</span></span>
 <span>  <span class="co"># ...</span></span>
 <span>  setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">GeomLinerange</span><span class="op">$</span><span class="fu">setup_params</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span>  <span class="co"># ...</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Este patrón suele ser más fácil de leer que usar <code>ggproto_parent()</code> y como los objetos ggproto no tienen estado, es igual de seguro.</p>
 </li>
@@ -889,7 +892,76 @@ Grothendieck, Gabor, Louis Kates, y Thomas Petzoldt. 2016. <em>proto: Prototype 
 <ol>
 <li id="fn1"><p>Por lo general, no se llama a este método <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> directamente, ya que lo invoca el método print y, por lo tanto, se llama cada vez que se imprime un objeto ggplot.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Es posible que una estadística evite esta división sobrescribiendo métodos <code>compute_*()</code> específicos y así realizar cierta optimización.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</ol></section></main><!-- /main --><script>
+
+  // Chapter name
+  const currentChapterFile = window.location.pathname.split('/').pop().replace('.html', '');
+
+  //Defining urls
+  const originalURL = "https://github.com/hadley/ggplot2-book";
+  const translationURL = "https://github.com/davidrsch/ggplot2b-es";
+
+  //Defining texts
+  const edit_text = "Editar esta página";
+  const issue_text = "Informar de un problema"
+
+  //Defining git_i
+  const git_i = '<div><i class="bi bi-github"></i></div>';
+
+  // Adding TOC if not exist
+  const sidebarmargin = document.getElementById('quarto-margin-sidebar');
+  const buscar_TOC = document.getElementById('TOC');
+
+  if (!buscar_TOC) {
+    const crear_TOC = document.createElement('nav');
+    crear_TOC.id = 'TOC';
+    crear_TOC.role = "doc-toc";
+    crear_TOC.class = "toc-active";
+    sidebarmargin.appendChild(crear_TOC);
+  }
+
+
+  // Adding original github actions
+  const TOC = document.getElementById('TOC');
+  const originalga = document.createElement('h2');
+  originalga.textContent = "Original";
+  originalga.style["border-top"] = "1px solid #ccc";
+  originalga.style["padding-top"] = "0.5rem";
+  const toc_act_O = document.createElement('div');
+  toc_act_O.className = 'toc-actions';
+  toc_act_O.id = 'toc-act-O';
+  const act_link_O = document.createElement('div');
+  act_link_O.className='action-links';
+  act_link_O.id='act-link-O';
+  const edit_issue_O ='<p><a href="'+originalURL+'/edit/master/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+originalURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(originalga);
+  TOC.appendChild(toc_act_O);
+  toc_act_O.innerHTML += git_i;
+  toc_act_O.appendChild(act_link_O);
+  act_link_O.innerHTML += edit_issue_O;
+
+  // Adding translation github actions
+  const translationga = document.createElement('h2');
+  translationga.textContent = "Traducción";
+  const toc_act_T = document.createElement('div');
+  toc_act_T.className = 'toc-actions';
+  toc_act_T.id = 'toc-act-T';
+  const act_link_T = document.createElement('div');
+  act_link_T.className='action-links';
+  act_link_T.id='act-link-T';
+  const edit_issue_T ='<p><a href="'+translationURL+'/edit/main/'+currentChapterFile+'.qmd" class="toc-action">'+edit_text+'</p><p><a href="'+translationURL+'/issues/new" class="toc-action">'+issue_text+'</p>';
+
+
+  TOC.appendChild(translationga);
+  TOC.appendChild(toc_act_T);
+  toc_act_T.innerHTML += git_i;
+  toc_act_T.appendChild(act_link_T);
+  act_link_T.innerHTML += edit_issue_T;
+
+
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -940,13 +1012,14 @@ Grothendieck, Gabor, Louis Kates, y Thomas Petzoldt. 2016. <em>proto: Prototype 
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
