@@ -34,7 +34,7 @@ book:
           - text: Original
             url: https://github.com/hadley/ggplot2-book/
           - text: Traducción
-            url: https://github.com/davidrsch/ggplot2-bookes
+            url: https://github.com/davidrsch/ggplot2b-es
   page-navigation: true
 
   chapters:
@@ -84,6 +84,7 @@ format:
       - cosmo
     code-link: true
     author-meta: "Hadley Wickham, Danielle Navarro, y Thomas Lin Pedersen"
+    include-after-body: [ddrsch_script.html]
     include-in-header:
       - ga_script.html
     callout-appearance: simple
