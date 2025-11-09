@@ -9,6 +9,7 @@ bibliography: references.bib
 book:
   title: "ggplot2: Gráficos elegantes para análisis de datos (3e)"
   reader-mode: true
+  site-url: https://davidrsch.github.io/ggplot2b-es/
 
   page-footer:
     left: |
