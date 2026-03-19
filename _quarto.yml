@@ -9,6 +9,12 @@ bibliography: references.bib
 book:
   title: "ggplot2: Gráficos elegantes para análisis de datos (3e)"
   reader-mode: true
+  site-url: https://davidrsch.github.io/ggplot2b-es/
+  description: |
+    Traducción al español de "ggplot2: Elegant Graphics for Data Analysis" (3ª ed.)
+    de Hadley Wickham, Danielle Navarro y Thomas Lin Pedersen. Domina la gramática
+    de gráficos para crear visualizaciones de datos elegantes en R.
+  open-graph: true
 
   page-footer:
     left: |
@@ -78,6 +84,8 @@ book:
         - extensions.qmd
         - ext-springs.qmd
 
+lang: es
+
 format:
   html:
     theme:
@@ -88,6 +96,5 @@ format:
     include-in-header:
       - ga_script.html
     callout-appearance: simple
-    lang: es
 
 editor: source
