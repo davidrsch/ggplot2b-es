@@ -2,118 +2,118 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/index.html</loc>
-    <lastmod>2026-03-19T12:03:11.218Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.035Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/preface-3e.html</loc>
-    <lastmod>2026-03-19T12:03:11.220Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.037Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/preface-2e.html</loc>
-    <lastmod>2026-03-19T12:03:11.220Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.037Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/start.html</loc>
-    <lastmod>2026-03-19T12:03:11.229Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.046Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/introduction.html</loc>
-    <lastmod>2026-03-19T12:03:11.219Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.035Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/getting-started.html</loc>
-    <lastmod>2026-03-19T12:03:11.121Z</lastmod>
+    <lastmod>2026-03-20T04:02:59.938Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/toolbox.html</loc>
-    <lastmod>2026-03-19T12:03:11.230Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.047Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/individual-geoms.html</loc>
-    <lastmod>2026-03-19T12:03:11.218Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.035Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/collective-geoms.html</loc>
-    <lastmod>2026-03-19T12:03:11.113Z</lastmod>
+    <lastmod>2026-03-20T04:02:59.930Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/statistical-summaries.html</loc>
-    <lastmod>2026-03-19T12:03:11.229Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.046Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/maps.html</loc>
-    <lastmod>2026-03-19T12:03:11.219Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.036Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/networks.html</loc>
-    <lastmod>2026-03-19T12:03:11.220Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.036Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/annotations.html</loc>
-    <lastmod>2026-03-19T12:03:11.111Z</lastmod>
+    <lastmod>2026-03-20T04:02:59.928Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/arranging-plots.html</loc>
-    <lastmod>2026-03-19T12:03:11.111Z</lastmod>
+    <lastmod>2026-03-20T04:02:59.928Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/scales.html</loc>
-    <lastmod>2026-03-19T12:03:11.222Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.039Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/scales-position.html</loc>
-    <lastmod>2026-03-19T12:03:11.222Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.039Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/scales-colour.html</loc>
-    <lastmod>2026-03-19T12:03:11.222Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.039Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/scales-other.html</loc>
-    <lastmod>2026-03-19T12:03:11.222Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.039Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/mastery.html</loc>
-    <lastmod>2026-03-19T12:03:11.220Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.036Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/layers.html</loc>
-    <lastmod>2026-03-19T12:03:11.219Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.035Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/scales-guides.html</loc>
-    <lastmod>2026-03-19T12:03:11.222Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.039Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/coord.html</loc>
-    <lastmod>2026-03-19T12:03:11.113Z</lastmod>
+    <lastmod>2026-03-20T04:02:59.930Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/facet.html</loc>
-    <lastmod>2026-03-19T12:03:11.121Z</lastmod>
+    <lastmod>2026-03-20T04:02:59.938Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/themes.html</loc>
-    <lastmod>2026-03-19T12:03:11.230Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.046Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/extending.html</loc>
-    <lastmod>2026-03-19T12:03:11.121Z</lastmod>
+    <lastmod>2026-03-20T04:02:59.938Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/programming.html</loc>
-    <lastmod>2026-03-19T12:03:11.220Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.037Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/internals.html</loc>
-    <lastmod>2026-03-19T12:03:11.218Z</lastmod>
+    <lastmod>2026-03-20T04:03:00.035Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/extensions.html</loc>
-    <lastmod>2026-03-19T12:03:11.121Z</lastmod>
+    <lastmod>2026-03-20T04:02:59.938Z</lastmod>
   </url>
   <url>
     <loc>https://davidrsch.github.io/ggplot2b-es/ext-springs.html</loc>
-    <lastmod>2026-03-19T12:03:11.121Z</lastmod>
+    <lastmod>2026-03-20T04:02:59.938Z</lastmod>
   </url>
 </urlset>
